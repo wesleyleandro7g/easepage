@@ -1,5 +1,4 @@
 import { ReactNode } from 'react'
-import { InputWithLabel } from '../input-label'
 import { Button } from '../ui/button'
 import {
   Drawer,
@@ -27,11 +26,6 @@ export function EditPriceBtn({ children }: EditPriceBtnProps) {
             Informe o link de compra do seu produto
           </DrawerDescription>
         </DrawerHeader>
-
-        <div className='px-4 space-y-4'>
-          <InputWithLabel />
-          <InputWithLabel />
-        </div>
 
         <DrawerFooter>
           <Button>Salvar</Button>
