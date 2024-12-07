@@ -1,12 +1,11 @@
 'use client'
 
 // import { Zap, Type, Palette, Hexagon } from 'lucide-react'
-import { useRef, useEffect } from 'react'
+
+import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
 
-import contentV0 from './content-v0.json'
 import { EditHeroBtn } from '@/components/drawers/edit-hero-btn'
 import {
   Form,
@@ -16,54 +15,13 @@ import {
   FormItem,
 } from '@/components/ui/form'
 import { CustomAlert } from '@/components/custom-alert'
+import { useAutoResizeTextarea } from '@/hooks/useAutoResizeTextarea'
+import { formSchema } from './formSchema'
+import { FloatButtonPopover } from '@/components/float-button-poppover'
 
-const formSchema = z.object({
-  headline: z
-    .string()
-    .min(
-      30,
-      'A sua HEADLINE está muito curta! Fale sobre o resultado imediato que você irá gerar.'
-    )
-    .max(
-      80,
-      'A sua HEADLINE está muito grande! Mantenha ela um pouco menor e mais direta.'
-    ),
-  subheadline: z
-    .string()
-    .min(
-      30,
-      'A sua SUBHEADLINE está muito curta! Fale sobre o resultado imediato que você irá gerar.'
-    )
-    .max(
-      240,
-      'A sua SUBHEADLINE está muito grande! Mantenha ela um pouco menor e mais direta.'
-    ),
-  heroButtonText: z.string().min(10, 'O texto do botão não pode estar vazio.'),
-  heroButtonLink: z
-    .string({ required_error: 'O link do botão é obrigatório.' })
-    .url('O link do botão deve ser uma URL válida.'),
-})
-
-// const formSchemaType = z.infer<typeof formSchema>
-
-function useAutoResizeTextarea() {
-  const textareaRef = useRef<HTMLTextAreaElement>(null)
-
-  useEffect(() => {
-    const textarea = textareaRef.current
-    if (textarea) {
-      const adjustHeight = () => {
-        textarea.style.height = 'auto'
-        textarea.style.height = `${textarea.scrollHeight}px`
-      }
-      textarea.addEventListener('input', adjustHeight)
-      adjustHeight()
-      return () => textarea.removeEventListener('input', adjustHeight)
-    }
-  }, [])
-
-  return textareaRef
-}
+import { themes, setTheme } from '@/config/theme'
+import type { themeType } from '@/config/theme/theme'
+import contentV0 from './content-v0.json'
 
 export default function PageEditor() {
   const headlineTextareaRef = useAutoResizeTextarea()
@@ -83,8 +41,13 @@ export default function PageEditor() {
     console.log(data)
   }
 
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme') as themeType
+    setTheme(storedTheme ? storedTheme : themes[0])
+  }, [])
+
   return (
-    <div className='min-h-screen bg-gradient-to-b from-orange-100 via-pink-100 to-yellow-100 relative'>
+    <div className='min-h-screen relative'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <main className='pt-20 pb-16 text-center lg:text-left max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -97,7 +60,7 @@ export default function PageEditor() {
                     <FormAlert />
                     <FormControl>
                       <textarea
-                        className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-black max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none'
+                        className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-headline max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none'
                         {...field}
                         ref={headlineTextareaRef}
                       />
@@ -114,7 +77,7 @@ export default function PageEditor() {
                     <FormAlert />
                     <FormControl>
                       <textarea
-                        className='text-md font-normal tracking-tight text-gray-600 w-full max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none'
+                        className='text-md font-normal tracking-tight text-subheadline w-full max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none'
                         {...field}
                         ref={subheadlineTextareaRef}
                       />
@@ -147,6 +110,8 @@ export default function PageEditor() {
           </main>
         </form>
       </Form>
+
+      <FloatButtonPopover />
     </div>
   )
 }

@@ -49,7 +49,7 @@ export default function LandingPage() {
 
         <main className='pt-20 pb-16 text-center lg:text-left'>
           <div className='flex flex-col gap-3 max-w-4xl text-left'>
-            <h1 className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-headline animate__animated animate__bounceInUp text-headline'>
+            <h1 className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp text-headline'>
               Crie uma página de alta conversão para o seu negócio em segundos.
             </h1>
             <p className='text-lg font-normal text-subheadline max-w-2xl animate__animated animate__bounceInUp'>

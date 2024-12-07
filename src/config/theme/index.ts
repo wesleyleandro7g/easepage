@@ -24,11 +24,12 @@ export const themes: themeType[] = [
 
 export function setTheme(theme: themeType) {
   document.body.className = theme
+  localStorage.setItem('theme', theme)
 }
 
 export const themesColors: Record<themeType, themeColorsType> = {
   lucy: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -56,7 +57,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   sunrise: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -84,7 +85,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   blush: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -112,7 +113,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   skyline: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -140,7 +141,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   aura: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -168,7 +169,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   void: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#ffffff',
     subheadline: '#dcdcdc',
     foreground: '#1a1a1a',
@@ -196,7 +197,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   frost: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -224,7 +225,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   twilight: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -252,7 +253,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   eclipse: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#DADAFF',
     subheadline: '#DADAFF',
     foreground: '#1a1a1a',
@@ -280,7 +281,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   glow: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -308,7 +309,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   bliss: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -336,7 +337,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   serene: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -364,7 +365,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   shimmer: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -392,7 +393,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   peachy: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -420,7 +421,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   lilac: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -448,7 +449,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   obsidian: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#ffffff',
     subheadline: '#dcdcdc',
     foreground: '#1a1a1a',
@@ -476,7 +477,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   slate: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -504,7 +505,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   myst: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
@@ -532,7 +533,7 @@ export const themesColors: Record<themeType, themeColorsType> = {
     chart5: '#f9f9f9',
   },
   midnight: {
-    background: 'transparent',
+    background: '#ffffff',
     headline: '#1a1a1a',
     subheadline: '#252525',
     foreground: '#1a1a1a',
