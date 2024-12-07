@@ -1,6 +1,6 @@
 export type themeType =
-  | 'lucy'
   | 'sunrise'
+  | 'lucy'
   | 'blush'
   | 'skyline'
   | 'aura'

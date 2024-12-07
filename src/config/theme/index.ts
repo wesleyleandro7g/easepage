@@ -1,8 +1,8 @@
 import type { themeColorsType, themeType } from './theme'
 
 export const themes: themeType[] = [
-  'lucy',
   'sunrise',
+  'lucy',
   'blush',
   'skyline',
   'aura',
