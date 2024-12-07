@@ -41,7 +41,7 @@ export function EditHeroBtn({ children, form }: EditHeroBtnProps) {
             name='heroButtonText'
             render={({ field }) => (
               <FormItem>
-                <FormControl>
+                <FormControl autoFocus>
                   <InputWithLabel
                     label='Texto do botão:'
                     type='text'

@@ -1,11 +1,29 @@
+'use client'
+
 import 'animate.css'
+import { useState } from 'react'
 import { Type, Palette, MoveRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { setTheme, themes } from '@/config/theme'
+
 export default function LandingPage() {
+  const [currentTheme, setCurrentTheme] = useState(0)
+
+  function handleNextTheme() {
+    if (currentTheme === themes.length - 1) {
+      setCurrentTheme(0)
+      setTheme(themes[0])
+      return
+    }
+
+    setTheme(themes[currentTheme + 1])
+    setCurrentTheme(currentTheme + 1)
+  }
+
   return (
-    <div className='min-h-screen bg-gradient-to-b from-orange-100 via-pink-100 to-yellow-100'>
+    <div className='min-h-screen'>
       <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
         <header className='py-6 flex justify-between items-center animate__animated animate__bounceInDown'>
           <div className='flex items-center space-x-2 text-black'>
@@ -20,18 +38,21 @@ export default function LandingPage() {
             <button className='p-2 hover:bg-black/5 rounded-lg'>
               <Type className='w-5 h-5' />
             </button>
-            <button className='p-2 hover:bg-black/5 rounded-lg'>
-              <Palette className='w-5 h-5' />
+            <button
+              className='p-2 hover:bg-black/5 rounded-lg'
+              onClick={handleNextTheme}
+            >
+              <Palette className='w-5 h-5 text-headline' />
             </button>
           </div>
         </header>
 
         <main className='pt-20 pb-16 text-center lg:text-left'>
           <div className='flex flex-col gap-3 max-w-4xl text-left'>
-            <h1 className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-black animate__animated animate__bounceInUp'>
+            <h1 className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-headline animate__animated animate__bounceInUp text-headline'>
               Crie uma página de alta conversão para o seu negócio em segundos.
             </h1>
-            <p className='text-md text-gray-600 max-w-2xl animate__animated animate__bounceInUp'>
+            <p className='text-lg font-normal text-subheadline max-w-2xl animate__animated animate__bounceInUp'>
               Uma breve explicação dos resultados que você irá gerar para os
               seus clientes, lembre-se, use uma linguagem que converse com o seu
               público alvo.

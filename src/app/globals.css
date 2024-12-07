@@ -3,17 +3,88 @@
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Inter, Poppons, Nunito, Montserrat, Arial, Helvetica, sans-serif;
 }
 
-/* .animate__animated.animate__pulse {
-  --animate-duration: 2s;
-  animation-iteration-count: infinite;
-} */
+.lucy {
+  background: linear-gradient(45deg, #f8acff95, #fff95b95);
+}
+
+.sunrise {
+  background: linear-gradient(135deg, #ffd70060, #ff69b460);
+}
+
+.blush {
+  background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+}
+
+.skyline {
+  background: linear-gradient(135deg, #1e90ff80, #87ceeb80);
+}
+
+.aura {
+  background: linear-gradient(135deg, #ffddc1, #b5ead7);
+}
+
+.void {
+  background: #000000;
+}
+
+.frost {
+  background: #ffffff;
+}
+
+.twilight {
+  background: linear-gradient(135deg, #6a5acd60, #483d8b95);
+}
+
+.eclipse {
+  background: linear-gradient(135deg, #191970, #000080);
+}
+
+.glow {
+  background: linear-gradient(135deg, #fff8dc, #ffe4e1);
+}
+
+.bliss {
+  background: linear-gradient(135deg, #ffc0cb, #ffd1dc);
+}
+
+.serene {
+  background: linear-gradient(135deg, #add8e6, #b0e0e6);
+}
+
+.shimmer {
+  background: linear-gradient(135deg, #f5f5f5, #dcdcdc);
+}
+
+.peachy {
+  background: linear-gradient(135deg, #ffdab9, #ff7f50);
+}
+
+.lilac {
+  background: linear-gradient(135deg, #e6e6fa, #d8bfd8);
+}
+
+.obsidian {
+  background: linear-gradient(135deg, #0b0b0b, #1c1c1c);
+}
+
+.slate {
+  background: linear-gradient(135deg, #2f4f4f, #202831);
+}
+
+.myst {
+  background: linear-gradient(135deg, #9370db, #7b68ee);
+}
+
+.midnight {
+  background: linear-gradient(135deg, #4b0082, #2c2c54);
+}
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: #2c2c54;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;
