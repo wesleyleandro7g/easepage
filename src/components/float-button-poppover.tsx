@@ -31,8 +31,8 @@ export function FloatButtonPopover() {
 
   return (
     <Popover>
-      <PopoverTrigger className='bg-gradient-to-bl from-[#F8ACFF] to-[#FFF95B] p-2 rounded-full shadow-xl absolute right-8 bottom-10'>
-        <Zap className='w-8 h-8 fill-[#D9D9D9]' />
+      <PopoverTrigger className='bg-gradient-to-bl from-[#F8ACFF] to-[#FFF95B] p-2 rounded-full shadow-xl fixed right-8 bottom-10'>
+        <Zap className='w-10 h-10 fill-[#D9D9D9]' />
       </PopoverTrigger>
       <PopoverContent className='w-screen shadow-none mx-auto bg-transparent border-0'>
         <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border outline-none relative'>
