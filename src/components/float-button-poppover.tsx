@@ -1,5 +1,5 @@
 import { Check, Zap } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   Popover,
@@ -11,16 +11,23 @@ import type { themeType } from '@/config/theme/theme'
 import { Button } from './ui/button'
 
 export function FloatButtonPopover() {
-  const storedTheme = localStorage.getItem('theme')
-
-  const [selectedTheme, setSelectedTheme] = useState(
-    storedTheme ? storedTheme : themes[0]
-  )
+  const [selectedTheme, setSelectedTheme] = useState(themes[0])
 
   function handleChangeTheme(theme: themeType) {
     setTheme(theme)
     setSelectedTheme(theme)
   }
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('theme') as themeType
+
+      if (storedTheme) {
+        setTheme(storedTheme ? storedTheme : themes[0])
+        setSelectedTheme(storedTheme)
+      }
+    }
+  }, [])
 
   return (
     <Popover>

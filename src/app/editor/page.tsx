@@ -42,8 +42,12 @@ export default function PageEditor() {
   }
 
   useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') as themeType
-    setTheme(storedTheme ? storedTheme : themes[0])
+    if (typeof window !== 'undefined') {
+      const storedTheme = localStorage.getItem('theme') as themeType
+      if (storedTheme) {
+        setTheme(storedTheme ? storedTheme : themes[0])
+      }
+    }
   }, [])
 
   return (
