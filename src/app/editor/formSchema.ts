@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 export const formSchema = z.object({
+  email: z.string().email('O email inserido não é válido.'),
+  name: z.string().min(3, 'O nome inserido é muito curto.'),
   title: z
     .string()
     .min(5, 'O título do seu site deve ter no mínimo 5 caracteres.'),

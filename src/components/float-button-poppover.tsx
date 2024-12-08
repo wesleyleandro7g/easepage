@@ -24,13 +24,15 @@ interface FloatButtonPopoverProps {
   isSubmitting: boolean
 }
 
+type configStepType = 'theme' | 'pageInfo' | 'userInfo'
+
 export function FloatButtonPopover({
   osPublish,
   form,
   isSubmitting,
 }: FloatButtonPopoverProps) {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
-  const [startPublishing, setStartPublishing] = useState(false)
+  const [configStep, setConfigStep] = useState<configStepType>('theme')
 
   function handleChangeTheme(theme: themeType) {
     setTheme(theme)
@@ -54,7 +56,7 @@ export function FloatButtonPopover({
         <Zap className='w-8 h-8 fill-[#D9D9D9]' />
       </PopoverTrigger>
       <PopoverContent className='w-screen shadow-none mx-auto bg-transparent border-0'>
-        {!startPublishing ? (
+        {configStep === 'theme' && (
           <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border outline-none relative'>
             <div className='space-y-2'>
               <span className='text-sm'>Temas</span>
@@ -63,7 +65,8 @@ export function FloatButtonPopover({
                   return (
                     <label
                       key={theme}
-                      className={`flex items-center justify-center w-full h-[62px] rounded-lg border border-black/20 ${theme}`}
+                      className={`flex items-center justify-center w-full h-[62px] rounded-lg border border-black/20 data-[isSubmitting=true]:opacity-50 ${theme}`}
+                      data-isSubmitting={isSubmitting}
                     >
                       <input
                         type='radio'
@@ -71,6 +74,7 @@ export function FloatButtonPopover({
                         value={theme}
                         className='hidden'
                         onChange={() => handleChangeTheme(theme)}
+                        disabled={isSubmitting}
                       />
                       {selectedTheme === theme && (
                         <Check className='text-[#797979]' />
@@ -87,20 +91,28 @@ export function FloatButtonPopover({
             </div>
 
             <Button
-              className='w-full'
+              className='w-full gap-2 data-[isSubmitting=true]:animate-pulse'
+              data-isSubmitting={isSubmitting}
+              disabled={isSubmitting}
               type='button'
-              onClick={() => setStartPublishing(true)}
+              onClick={() => setConfigStep('pageInfo')}
             >
-              Publicar meu site
+              {isSubmitting ? 'Publicando...' : 'Publicar meu site'}
+              <Zap
+                className='w-6 h-6 data-[isSubmitting=true]:animate-spin'
+                data-isSubmitting={isSubmitting}
+              />
             </Button>
             <div className='absolute bottom-[-7px] right-[6%] transform -translate-x-[0%] w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white rounded-t-sm'></div>
           </div>
-        ) : (
+        )}
+
+        {configStep === 'pageInfo' && (
           <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border outline-none relative'>
             <div className='flex w-full items-center justify-start gap-2 mb-4'>
               <button
                 className='bg-gray-200 p-1 rounded-md'
-                onClick={() => setStartPublishing(false)}
+                onClick={() => setConfigStep('theme')}
               >
                 <ChevronLeft className='w-5 h-5' />
               </button>
@@ -141,10 +153,70 @@ export function FloatButtonPopover({
                 )}
               />
             </div>
-            {/* 
-            <div className='w-full h-full flex justify-center items-center'>
-              <Zap className='w-6 h-6 bg-red-300' />
-            </div> */}
+
+            <Button
+              className='w-full gap-2 data-[isSubmitting=true]:animate-pulse'
+              data-isSubmitting={isSubmitting}
+              disabled={isSubmitting}
+              type='button'
+              onClick={() => setConfigStep('userInfo')}
+            >
+              {isSubmitting ? 'Publicando...' : 'Publicar meu site 1/2'}
+              <Zap
+                className='w-6 h-6 hidden data-[isSubmitting=true]:flex data-[isSubmitting=true]:animate-spin'
+                data-isSubmitting={isSubmitting}
+              />
+            </Button>
+            <div className='absolute bottom-[-7px] right-[6%] transform -translate-x-[0%] w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white rounded-t-sm'></div>
+          </div>
+        )}
+
+        {configStep === 'userInfo' && (
+          <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border outline-none relative'>
+            <div className='flex w-full items-center justify-start gap-2 mb-4'>
+              <button
+                className='bg-gray-200 p-1 rounded-md'
+                onClick={() => setConfigStep('pageInfo')}
+              >
+                <ChevronLeft className='w-5 h-5' />
+              </button>
+              <h6 className='text-lg font-semibold'>Configure seu site</h6>
+            </div>
+            <div className='space-y-4'>
+              <FormField
+                control={form?.control}
+                name='name'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <InputWithLabel
+                        label='Seu nome:'
+                        type='text'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form?.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <InputWithLabel
+                        label='Seu melhor email:'
+                        type='email'
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
 
             <Button
               className='w-full gap-2 data-[isSubmitting=true]:animate-pulse'
@@ -153,9 +225,9 @@ export function FloatButtonPopover({
               type='button'
               onClick={osPublish}
             >
-              {isSubmitting ? 'Publicando...' : 'Publicar meu site'}
+              {isSubmitting ? 'Publicando...' : 'Publicar meu site 2/2'}
               <Zap
-                className='w-6 h-6 data-[isSubmitting=true]:animate-spin'
+                className='w-6 h-6 hidden data-[isSubmitting=true]:flex data-[isSubmitting=true]:animate-spin'
                 data-isSubmitting={isSubmitting}
               />
             </Button>

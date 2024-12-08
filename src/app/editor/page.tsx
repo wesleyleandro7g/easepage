@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/navigation'
 
 import { EditHeroBtn } from '@/components/drawers/edit-hero-btn'
 import {
@@ -18,20 +19,27 @@ import { formSchema, FormSchemaType } from './formSchema'
 import { FloatButtonPopover } from '@/components/float-button-poppover'
 
 import { supabase } from '@/db/supabase/client'
+import { useToast } from '@/hooks/use-toast'
 
 import { themes, setTheme } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
 import contentV0 from './content-v0.json'
 
 export default function PageEditor() {
-  const [isSubmitting, setIsSubmitting] = useState(true)
-
+  const router = useRouter()
   const headlineTextareaRef = useAutoResizeTextarea()
   const subheadlineTextareaRef = useAutoResizeTextarea()
 
+  const { toast } = useToast()
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(formSchema),
+    disabled: isSubmitting,
     defaultValues: {
+      email: '',
+      name: '',
       title: '',
       description: '',
       headline: contentV0.heroSection.headline.text,
@@ -48,10 +56,33 @@ export default function PageEditor() {
     const storedTheme = localStorage.getItem('theme') as themeType
 
     const shortUUID = crypto.randomUUID().split('-')[0]
+    const password = crypto.randomUUID().split('-')[0]
 
     setIsSubmitting(true)
 
-    const result = await supabase
+    const signUpUser = await supabase.auth.signUp({
+      email: data.email,
+      password,
+      options: {
+        emailRedirectTo: 'http://localhost:3000/panel',
+        data: {
+          first_name: data.name.split(' ')[0],
+          last_name: data.name.split(' ')[1],
+        },
+      },
+    })
+
+    if (signUpUser.error) {
+      toast({
+        title: 'Ops! Algo deu errado',
+        description: 'Por favor tente novamente',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return console.error(signUpUser.error)
+    }
+
+    const createdPage = await supabase
       .from('pages')
       .insert({
         title,
@@ -60,11 +91,25 @@ export default function PageEditor() {
         theme: storedTheme,
         is_active: true,
         page_structure: dataJSON,
+        user_id: signUpUser.data.user?.id,
       })
       .select('id, slug')
+      .single()
 
     setIsSubmitting(false)
-    console.log(result)
+
+    if (createdPage.error) {
+      toast({
+        title: 'Ops! Algo deu errado ao gerar o seu site',
+        description: 'Por favor tente novamente',
+        variant: 'destructive',
+      })
+      return console.error(createdPage.error)
+    }
+
+    router.push(
+      `/pricing/?slug=${createdPage.data.slug}&id=${createdPage.data.id}`
+    )
   }
 
   useEffect(() => {
