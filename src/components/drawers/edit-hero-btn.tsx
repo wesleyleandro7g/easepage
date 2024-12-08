@@ -5,7 +5,6 @@ import { Button } from '../ui/button'
 import {
   Drawer,
   DrawerContent,
-  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -28,11 +27,7 @@ export function EditHeroBtn({ children, form }: EditHeroBtnProps) {
 
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Botão de CTA</DrawerTitle>
-          <DrawerDescription>
-            Use o CTA em primeira pessoa para aumentar em até 90% as chances de
-            conversão.
-          </DrawerDescription>
+          <DrawerTitle>Botão inicial</DrawerTitle>
         </DrawerHeader>
 
         <div className='px-4 space-y-4'>

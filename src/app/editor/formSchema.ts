@@ -1,7 +1,12 @@
 import { z } from 'zod'
 
 export const formSchema = z.object({
-  theme: z.string(),
+  title: z
+    .string()
+    .min(5, 'O título do seu site deve ter no mínimo 5 caracteres.'),
+  description: z
+    .string()
+    .min(10, 'A descrição do seu site deve ter no mínimo 10 caracteres.'),
   headline: z
     .string()
     .min(

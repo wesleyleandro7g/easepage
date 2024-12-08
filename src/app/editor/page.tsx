@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 
@@ -17,42 +17,53 @@ import { useAutoResizeTextarea } from '@/hooks/useAutoResizeTextarea'
 import { formSchema, FormSchemaType } from './formSchema'
 import { FloatButtonPopover } from '@/components/float-button-poppover'
 
-import { supabase } from '@/supabase/client'
+import { supabase } from '@/db/supabase/client'
 
 import { themes, setTheme } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
 import contentV0 from './content-v0.json'
 
 export default function PageEditor() {
+  const [isSubmitting, setIsSubmitting] = useState(true)
+
   const headlineTextareaRef = useAutoResizeTextarea()
   const subheadlineTextareaRef = useAutoResizeTextarea()
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      title: '',
+      description: '',
       headline: contentV0.heroSection.headline.text,
       subheadline: contentV0.heroSection.subheadline.text,
       heroButtonText: contentV0.heroSection.heroButtonCTA.text,
       heroButtonLink: '',
-      theme: themes[0],
     },
   })
 
   async function onSubmit(data: FormSchemaType) {
-    const { theme, ...dataToSaveInJson } = data
+    const { title, description, ...dataToSaveInJson } = data
     const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
+
+    const storedTheme = localStorage.getItem('theme') as themeType
+
+    const shortUUID = crypto.randomUUID().split('-')[0]
+
+    setIsSubmitting(true)
 
     const result = await supabase
       .from('pages')
       .insert({
-        title: 'Página teste 2',
-        description: 'Descrição teste 2',
-        slug: 'pagina-teste-2',
-        theme,
+        title,
+        description,
+        slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${shortUUID}`,
+        theme: storedTheme,
+        is_active: true,
         page_structure: dataJSON,
       })
-      .select('*')
+      .select('id, slug')
 
+    setIsSubmitting(false)
     console.log(result)
   }
 
@@ -126,8 +137,12 @@ export default function PageEditor() {
             </div>
           </main>
         </form>
+        <FloatButtonPopover
+          osPublish={form.handleSubmit(onSubmit)}
+          form={form}
+          isSubmitting={isSubmitting}
+        />
       </Form>
-      <FloatButtonPopover onClick={form.handleSubmit(onSubmit)} />
     </div>
   )
 }

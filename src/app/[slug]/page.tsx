@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-import { useFetchPage } from './query-page'
+import { useFetchPage } from '@/db/queries/query-page'
 
 export default function PageEditor() {
   const { slug } = useParams()
