@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 export const formSchema = z.object({
+  theme: z.string(),
   headline: z
     .string()
     .min(
@@ -26,3 +27,5 @@ export const formSchema = z.object({
     .string({ required_error: 'O link do botão é obrigatório.' })
     .url('O link do botão deve ser uma URL válida.'),
 })
+
+export type FormSchemaType = z.infer<typeof formSchema>

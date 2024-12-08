@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Check, Zap } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -10,7 +11,11 @@ import { themes, setTheme } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
 import { Button } from './ui/button'
 
-export function FloatButtonPopover() {
+interface FloatButtonPopoverProps {
+  onClick: () => void
+}
+
+export function FloatButtonPopover({ onClick }: FloatButtonPopoverProps) {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
 
   function handleChangeTheme(theme: themeType) {
@@ -60,12 +65,15 @@ export function FloatButtonPopover() {
               })}
             </div>
           </div>
+
           <div className='space-y-2'>
             <span className='text-sm'>Fontes</span>
             <div className='grid grid-cols-6 gap-2'></div>
           </div>
 
-          <Button className='w-full'>Publicar meu site</Button>
+          <Button className='w-full' type='button' onClick={onClick}>
+            Publicar meu site
+          </Button>
           <div className='absolute bottom-[-7px] right-[10%] transform -translate-x-[5%] w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white rounded-t-sm'></div>
         </div>
       </PopoverContent>

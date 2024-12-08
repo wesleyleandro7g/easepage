@@ -2,6 +2,8 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { AppProvider } from '@/providers/app-provider'
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -20,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='pt-BR' className={inter.className}>
-      <body className='antialiased sunrise'>{children}</body>
+      <AppProvider>
+        <body className='antialiased sunrise'>{children}</body>
+      </AppProvider>
     </html>
   )
 }

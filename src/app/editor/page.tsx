@@ -1,7 +1,5 @@
 'use client'
 
-// import { Zap, Type, Palette, Hexagon } from 'lucide-react'
-
 import { useEffect } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -16,8 +14,10 @@ import {
 } from '@/components/ui/form'
 import { CustomAlert } from '@/components/custom-alert'
 import { useAutoResizeTextarea } from '@/hooks/useAutoResizeTextarea'
-import { formSchema } from './formSchema'
+import { formSchema, FormSchemaType } from './formSchema'
 import { FloatButtonPopover } from '@/components/float-button-poppover'
+
+import { supabase } from '@/supabase/client'
 
 import { themes, setTheme } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
@@ -34,11 +34,26 @@ export default function PageEditor() {
       subheadline: contentV0.heroSection.subheadline.text,
       heroButtonText: contentV0.heroSection.heroButtonCTA.text,
       heroButtonLink: '',
+      theme: themes[0],
     },
   })
 
-  function onSubmit(data: unknown) {
-    console.log(data)
+  async function onSubmit(data: FormSchemaType) {
+    const { theme, ...dataToSaveInJson } = data
+    const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
+
+    const result = await supabase
+      .from('pages')
+      .insert({
+        title: 'Página teste 2',
+        description: 'Descrição teste 2',
+        slug: 'pagina-teste-2',
+        theme,
+        page_structure: dataJSON,
+      })
+      .select('*')
+
+    console.log(result)
   }
 
   useEffect(() => {
@@ -108,14 +123,11 @@ export default function PageEditor() {
                   +500 pessoas amaram este produto
                 </p>
               </div>
-
-              <button>enviar</button>
             </div>
           </main>
         </form>
       </Form>
-
-      <FloatButtonPopover />
+      <FloatButtonPopover onClick={form.handleSubmit(onSubmit)} />
     </div>
   )
 }
