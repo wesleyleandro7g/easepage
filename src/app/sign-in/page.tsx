@@ -1,3 +1,5 @@
+'use client'
+
 import { supabase } from '@/db/supabase/client'
 
 export default function SignIn() {
