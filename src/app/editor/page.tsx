@@ -108,7 +108,7 @@ export default function PageEditor() {
     }
 
     router.push(
-      `/pricing/?slug=${createdPage.data.slug}&id=${createdPage.data.id}`
+      `/pricing/?slug=${createdPage.data.slug}&pageId=${createdPage.data.id}&userId=${signUpUser.data.user?.id}`
     )
   }
 
