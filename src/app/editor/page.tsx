@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
@@ -55,8 +56,8 @@ export default function PageEditor() {
 
     const storedTheme = localStorage.getItem('theme') as themeType
 
-    const shortUUID = crypto.randomUUID().split('-')[0]
-    const password = crypto.randomUUID().split('-')[0]
+    const shortUUID = uuidv4().split('-')[0]
+    const password = uuidv4().split('-')[0]
 
     setIsSubmitting(true)
 

@@ -14,6 +14,7 @@ import { supabase } from '@/db/supabase/client'
 import { Progress } from '@/components/ui/progress'
 
 import { createChargeByPix } from './actions'
+import { unsecuredCopyToClipboard } from '@/utils/copy-to-clipboard'
 
 const pagePrice = process.env.NEXT_PUBLIC_PAGE_PRICE
 
@@ -96,12 +97,20 @@ export default function LandingPage() {
     setProcessingPayment(false)
   }
 
-  function handleCopyCode() {
-    navigator.clipboard.writeText(pixInfo.pixCopiaECola).then(() => {
+  async function handleCopyCode() {
+    try {
+      unsecuredCopyToClipboard(pixInfo.pixCopiaECola)
       setCodeCopied(true)
       setCodeCopiedOneTime(true)
       setTimeout(() => setCodeCopied(false), 5000)
-    })
+    } catch {
+      toast({
+        title: 'Ops! Algo deu errado',
+        description:
+          'Não foi possível copiar o código, recarregue a página e tente novamente',
+        variant: 'destructive',
+      })
+    }
   }
 
   const generateQR = async () => {
