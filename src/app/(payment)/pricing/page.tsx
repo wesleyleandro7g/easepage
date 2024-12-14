@@ -13,7 +13,7 @@ import { supabase } from '@/db/supabase/client'
 
 import { Progress } from '@/components/ui/progress'
 
-import { createChargeByPix } from './actions'
+import { createChargeByPix } from '@/actions/createChargeByPix'
 import { unsecuredCopyToClipboard } from '@/utils/copy-to-clipboard'
 
 const pagePrice = process.env.NEXT_PUBLIC_PAGE_PRICE

@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast'
 
 import { supabase } from '@/db/supabase/client'
 
-import { verifyChargeByPix } from '../pricing/actions'
+import { verifyChargeByPix } from '@/actions/verifyChargeByPix'
 import { handleParticles } from './particles-effect'
 import { unsecuredCopyToClipboard } from '@/utils/copy-to-clipboard'
 

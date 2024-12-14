@@ -2,11 +2,11 @@
 
 import { efipay } from '@/pay/efi'
 
-interface CreateChargeRequest {
+interface CreateChargeByPixParams {
   amount: string
 }
 
-export async function createChargeByPix({ amount }: CreateChargeRequest) {
+export async function createChargeByPix({ amount }: CreateChargeByPixParams) {
   const result = await efipay.pixCreateImmediateCharge(
     {},
     {
@@ -19,14 +19,6 @@ export async function createChargeByPix({ amount }: CreateChargeRequest) {
       chave: process.env.EFI_PIX_KEY!,
     }
   )
-
-  console.log(result)
-
-  return result
-}
-
-export async function verifyChargeByPix({ txid }: { txid: string }) {
-  const result = await efipay.pixDetailCharge({ txid })
 
   console.log(result)
 
