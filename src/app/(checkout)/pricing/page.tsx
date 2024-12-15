@@ -12,6 +12,7 @@ import { useToast } from '@/hooks/use-toast'
 import { supabase } from '@/db/supabase/client'
 
 import { Progress } from '@/components/ui/progress'
+import { PaymentButton } from '@/components/payment-button'
 
 import { createChargeByPix } from '@/actions/createChargeByPix'
 import { unsecuredCopyToClipboard } from '@/utils/copy-to-clipboard'
@@ -217,7 +218,7 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <button
+                {/* <button
                   onClick={handleCreateCharge}
                   className='flex items-center justify-center gap-2 text-md font-bold px-8 py-3 rounded-lg w-full bg-white text-[#171E2C] shadow-xl hover:bg-black/90 animate__animated focus:bg-white hover:bg-white'
                   disabled={processingPayment}
@@ -227,7 +228,16 @@ export default function LandingPage() {
                     className='w-6 h-6 hidden data-[issubmitting=true]:flex data-[issubmitting=true]:animate-spin text-[#171E2C]'
                     data-issubmitting={processingPayment}
                   />
-                </button>
+                </button> */}
+                <PaymentButton recurrence_type='monthly'>
+                  Assinar mensalmente 49/mês
+                </PaymentButton>
+                <PaymentButton recurrence_type='quarterly'>
+                  Assinar trimestralmente 39/mês
+                </PaymentButton>
+                <PaymentButton recurrence_type='yearly'>
+                  Assinar anualmente 29/mês
+                </PaymentButton>
               </div>
             </div>
           </main>
