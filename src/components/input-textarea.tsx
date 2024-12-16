@@ -1,15 +1,15 @@
 import { cn } from '@/lib/utils'
 
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
 
 interface InputWithLabelProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string
   wrapperClassName?: string
 }
 
-export function InputWithLabel(props: InputWithLabelProps) {
+export function InputTextArea(props: InputWithLabelProps) {
   const { label, wrapperClassName, ...rest } = props
 
   return (
@@ -20,7 +20,7 @@ export function InputWithLabel(props: InputWithLabelProps) {
       )}
     >
       <Label htmlFor={props.name}>{label}</Label>
-      <Input {...rest} />
+      <Textarea {...rest} />
     </div>
   )
 }

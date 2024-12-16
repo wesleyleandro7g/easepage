@@ -1,11 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 
 import { AppProvider } from '@/providers/app-provider'
 import { Toaster } from '@/components/ui/toaster'
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ['latin'],
   display: 'swap',
 })
@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang='pt-BR' className={inter.className}>
+    <html lang='pt-BR' className={montserrat.className}>
       <AppProvider>
         <body className='antialiased sunrise'>{children}</body>
       </AppProvider>
