@@ -5,18 +5,27 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { MoveLeft, MoveRight, Zap } from 'lucide-react'
+import { v4 as uuidv4 } from 'uuid'
+import { useRouter } from 'next/navigation'
 
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
+import { supabase } from '@/db/supabase/client'
+import { useToast } from '@/hooks/use-toast'
+
 import { steps, StepType } from './utils/steps'
 import { onboardingFormScheme } from './utils/onboardingFormScheme'
+import { getLoadingMessage } from './utils/loadingMessages'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
 export default function Onboarding() {
+  const { toast } = useToast()
+  const router = useRouter()
   const [formSteps, setFormSteps] = useState<StepType>('step-1')
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm({
     resolver: zodResolver(onboardingFormScheme),
@@ -48,9 +57,68 @@ export default function Onboarding() {
     })
   }
 
-  const onSubmit = (data: OnboardingFormSchemaType) => {
-    console.log(data)
-    alert('Formulário enviado com sucesso!')
+  async function onSubmit(data: OnboardingFormSchemaType) {
+    const { title, description, name, email, phone, style, theme, type } = data
+    // const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
+
+    const shortUUID = uuidv4().split('-')[0]
+    const password = uuidv4().split('-')[0]
+
+    setIsSubmitting(true)
+
+    const signUpUser = await supabase.auth.signUp({
+      email: email,
+      password,
+      phone,
+      options: {
+        emailRedirectTo: 'http://localhost:3000/panel',
+        data: {
+          first_name: name.split(' ')[0],
+          last_name: name.split(' ')[1],
+        },
+      },
+    })
+
+    if (signUpUser.error) {
+      toast({
+        title: 'Ops! Algo deu errado',
+        description: 'Por favor tente novamente',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return console.error(signUpUser.error)
+    }
+
+    const createdPage = await supabase
+      .from('pages')
+      .insert({
+        title,
+        description,
+        slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${shortUUID}`,
+        theme,
+        style,
+        type,
+        is_active: false,
+        // page_structure: dataJSON,
+        user_id: signUpUser.data.user?.id,
+      })
+      .select('id, slug')
+      .single()
+
+    if (createdPage.error) {
+      toast({
+        title: 'Ops! Algo deu errado ao gerar o seu site',
+        description: 'Por favor tente novamente',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return console.error(createdPage.error)
+    }
+
+    router.push(
+      `/editor/${createdPage.data.id}?userId=${signUpUser.data.user?.id}`
+    )
+    setIsSubmitting(false)
   }
 
   const isDisabled =
@@ -61,6 +129,20 @@ export default function Onboarding() {
       (form.watch('name').length < 3 ||
         form.watch('email').length < 3 ||
         form.watch('phone').length < 3))
+
+  if (isSubmitting) {
+    return (
+      <div className='min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
+        <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
+          <Zap className='w-20 h-20' />
+          <span className='text-sm text-black'>Gerando seu site...</span>
+        </div>
+        <span className='text-center text-xl italic'>
+          &ldquo;{getLoadingMessage()}&quot;
+        </span>
+      </div>
+    )
+  }
 
   return (
     <div className='min-h-screen'>
