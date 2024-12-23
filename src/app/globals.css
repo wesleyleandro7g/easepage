@@ -82,6 +82,58 @@ body {
   background: linear-gradient(135deg, #4b0082, #2c2c54);
 }
 
+.bg-purple-radial {
+  background: rgb(141, 68, 246);
+  background: radial-gradient(
+    circle,
+    rgba(141, 68, 246, 1) 0%,
+    rgba(3, 1, 20, 1) 52%
+  );
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background: linear-gradient(45deg, #8d44f6, #3e40f4, #ff69b4, #ffc300);
+  background-size: 400% 400%;
+  animation: gradientAnimation 6s ease infinite;
+  &:hover {
+    box-shadow: 0 0 40px rgba(141, 68, 246, 0.7),
+      0 0 30px rgba(62, 64, 244, 0.7);
+  }
+}
+
+.animate-gradient-2 {
+  transition-duration: 300ms;
+  &:hover {
+    background: linear-gradient(45deg, #8d44f6, #3e40f4, #ff69b4, #ffc300);
+    background-size: 400% 400%;
+    animation: gradientAnimation 6s ease infinite;
+  }
+}
+
+.animate-gradient-3 {
+  background: linear-gradient(45deg, #8d44f6, #3e40f4, #ff69b4, #ffc300);
+  background-size: 400% 400%;
+  animation: gradientAnimation 6s ease infinite;
+}
+
 @layer base {
   :root {
     --background: #2c2c54;
@@ -109,6 +161,7 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --animate-delay-300: 0.3s;
   }
   .dark {
     --background: 240 10% 3.9%;

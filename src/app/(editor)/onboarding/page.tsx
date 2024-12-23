@@ -150,13 +150,13 @@ export default function Onboarding() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-            <main className='pt-12 md:pt-20 pb-16 text-center w-full'>
+            <main className='pt-12 md:pt-20 pb-16 text-center w-full flex flex-col justify-center items-center'>
               {createElement(steps[formSteps], {
                 form,
                 nextStep: handleNextStep,
               })}
 
-              <div className='flex flex-row w-full justify-end max-w-4xl gap-2 mt-8'>
+              <div className='flex flex-row w-full justify-end max-w-3xl gap-2 mt-8'>
                 <Button
                   variant='outline'
                   className='text-headline px-4 w-fit data-[disabled=true]:hidden focus:bg-transparent focus:text-black'

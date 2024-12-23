@@ -43,7 +43,7 @@ const productType = [
 
 export function Step01({ form, nextStep }: Step01Props) {
   return (
-    <section className='flex flex-col gap-8 max-w-5xl items-center text-center'>
+    <section className='flex flex-col gap-8 max-w-5xl items-center text-center w-full'>
       <h1 className='text-3xl md:text-6xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
         O que você quer vender ou exibir no seu site?
       </h1>
