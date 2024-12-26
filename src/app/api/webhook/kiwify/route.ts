@@ -1,6 +1,5 @@
 export async function POST(request: Request) {
-  //   const { event } = await request.json()
-  const data = request.body
+  const data = await request.json()
 
   console.log('Received data:', data)
 
