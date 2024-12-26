@@ -113,7 +113,7 @@ export function Step03({ form, nextStep }: Step03Props) {
                   {projectsCover.map((project) => (
                     <label
                       key={project.id}
-                      className={`flex flex-col items-center justify-center w-full p-4 h-24 md:h-36 rounded-lg border border-black/20 bg-black/10 cursor-pointer font-semibold text-sm data-[checked=true]:border-2 data-[checked=true]:border-emerald-500 data-[checked=true]:text-white transition`}
+                      className={`flex flex-col items-center justify-center w-full p-4 h-24 md:h-32 rounded-lg border border-black/20 bg-black/10 cursor-pointer font-semibold text-sm data-[checked=true]:border-2 data-[checked=true]:border-emerald-500 data-[checked=true]:text-white transition`}
                       data-checked={field.value === project.slug}
                       style={{
                         backgroundImage: `url(${project.src})`,
