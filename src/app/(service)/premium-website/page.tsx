@@ -34,7 +34,7 @@ export default function LandingPage() {
               height={40}
             />
           </div>
-          <div className='text-xs text-white space-x-6 justify-center border border-white/20 rounded-full p-3 bg-gradient-to-br from-white/10 to-white/5'>
+          <div className='text-xs text-white flex justify-between border border-white/20 rounded-full py-3 px-6 bg-gradient-to-br from-white/10 to-white/5'>
             <a href='#benefits'>Benefícios</a>
             <a href='#process'>Processo</a>
             <a href='#portfolio'>Portfólio</a>
@@ -47,7 +47,7 @@ export default function LandingPage() {
             </a>
           </div>
           <div className='flex items-center justify-end space-x-2 text-white'>
-            <Link href='/onboarding' className='w-fit'>
+            <Link href='/premium-website/briefing' className='w-fit'>
               <Button
                 variant='outline'
                 size='lg'
@@ -73,7 +73,7 @@ export default function LandingPage() {
               veja suas vendas decolarem! 🚀
             </p>
             <Link
-              href='/onboarding'
+              href='/premium-website/briefing'
               className='w-full md:w-fit mt-4 z-20 animate__animated animate__bounceInUp'
             >
               <Button className='w-full md:w-full animate-gradient'>
@@ -186,13 +186,13 @@ export default function LandingPage() {
             className='flex flex-col gap-4 max-w-6xl mt-16 px-4 md:px-0'
           >
             <div className='max-w-5xl flex flex-col gap-4 items-center mx-auto'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 Como funciona?
               </Badge>
-              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight animate__animated animate__bounceInUp z-20'>
+              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight z-20'>
                 O processo mais simples e rápido do mercado
               </h1>
-              <p className='text-lg font-normal text-white text-center max-w-2xl animate__animated animate__bounceInUp z-20'>
+              <p className='text-lg font-normal text-white text-center max-w-2xl z-20'>
                 Em 5 passos simples e rápidos, você terá um site premium pronto
                 para gerar vendas por você!
               </p>
@@ -290,46 +290,46 @@ export default function LandingPage() {
               </div>
             </div>
             <div className='text-start max-w-[600px] space-y-4 px-4 md:px-0'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 <MonitorSmartphone className='w-4 h-4' />
                 Design Mobile First
               </Badge>
-              <h2 className='text-5xl font-bold text-white animate__animated animate__bounceInUp'>
+              <h2 className='text-5xl font-bold text-white'>
                 Visual premium e performance que trazem resultados
               </h2>
               <ul>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Design alinhado com a sua marca
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Acessível por todos os dispositivos
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Desenvolvimento em tempo récorde
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Visual premium
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Transmite mais credibilidade e autoridade
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Estrutura feita para converter seus leads
                 </li>
-                <li className='inline-flex items-center gap-2 text-white animate__animated animate__fadeInUp'>
+                <li className='inline-flex items-center gap-2 text-white'>
                   <Check className='text-green-500' />
                   Copy pensada para gerar vendas
                 </li>
               </ul>
               <Link
-                href='/onboarding'
-                className='w-full md:w-fit z-20 animate__animated animate__bounceInUp'
+                href='/premium-website/briefing'
+                className='w-full md:w-fit z-20'
               >
                 <Button className='w-full md:w-fit mt-8 animate-gradient'>
                   Criar meu site
@@ -344,13 +344,13 @@ export default function LandingPage() {
             className='flex flex-col gap-4 max-w-6xl mt-32'
           >
             <div className='max-w-5xl flex flex-col gap-4 items-center mx-auto px-4 md:px-0'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 Portfólio
               </Badge>
-              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight animate__animated animate__bounceInUp z-20'>
+              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight z-20'>
                 Design Premium + Performance = Vendas
               </h1>
-              <p className='text-lg font-normal text-white text-center max-w-2xl animate__animated animate__bounceInUp z-20'>
+              <p className='text-lg font-normal text-white text-center max-w-2xl z-20'>
                 Esses são alguns dos sites que já criamos para nossos clientes.
               </p>
             </div>
@@ -382,18 +382,18 @@ export default function LandingPage() {
             className='flex flex-col items-center gap-4 max-w-6xl mt-32 px-4 md:px-0'
           >
             <div className='max-w-5xl flex flex-col gap-4 items-center mx-auto'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 Investimento
               </Badge>
-              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight animate__animated animate__bounceInUp z-20'>
+              <h1 className='text-5xl md:text-7xl font-extrabold text-white tracking-tight z-20'>
                 O design premium mais barato que você já viu!
               </h1>
-              <p className='text-lg font-normal text-white text-center max-w-2xl animate__animated animate__bounceInUp z-20'>
+              <p className='text-lg font-normal text-white text-center max-w-2xl z-20'>
                 Invista em um site premium e alcance resultados incríveis
               </p>
             </div>
             <div className='p-0.5 mt-5 rounded-3xl w-full animate-gradient-3 max-w-[400px]'>
-              <div className='w-full max-w-[400px] flex flex-col items-start gap-5 p-6 rounded-3xl bg-[#030114] shadow-xl animate__animated animate__bounceInUp'>
+              <div className='w-full max-w-[400px] flex flex-col items-start gap-5 p-6 rounded-3xl bg-[#03011498] shadow-xl'>
                 <div className='w-full flex flex-col items-start'>
                   <div className='flex justify-end w-full'></div>
                   <h2 className='text-white text-7xl font-extrabold text-start'>
@@ -417,11 +417,8 @@ export default function LandingPage() {
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href='/onboarding'
-                  className='w-full z-20 animate__animated animate__bounceInUp'
-                >
-                  <Button className='w-full animate-gradient'>
+                <Link href='/premium-website/briefing' className='w-full z-20'>
+                  <Button className='w-full bg-white text-black hover:bg-white hover:text-black'>
                     Criar meu site
                     <Zap />
                   </Button>
@@ -435,13 +432,13 @@ export default function LandingPage() {
             className='flex flex-col items-center gap-4 max-w-6xl mt-32 px-4 md:px-0'
           >
             <div className='max-w-5xl flex flex-col gap-4 items-center mx-auto'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 FAQ
               </Badge>
-              <h1 className='text-5xl md:text-4xl font-extrabold text-white tracking-tight animate__animated animate__bounceInUp z-20'>
+              <h1 className='text-5xl md:text-4xl font-extrabold text-white tracking-tight z-20'>
                 Ficou com alguma dúvida?
               </h1>
-              <p className='text-md font-normal text-white text-center max-w-2xl animate__animated animate__bounceInUp z-20'>
+              <p className='text-md font-normal text-white text-center max-w-2xl z-20'>
                 Confira algumas perguntas frequentes que sempre recebemos
               </p>
             </div>
@@ -467,13 +464,13 @@ export default function LandingPage() {
 
           <section className='flex flex-col items-center gap-4 w-full mt-32 px-4 md:px-0 py-12 md:rounded-lg animate-gradient-3'>
             <div className='flex flex-col gap-4 items-center mx-auto'>
-              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 animate__animated animate__bounceInUp z-20'>
+              <Badge className='rounded-full px-4 py-2 shadow-none bg-white/10 border-white/20 text-white gap-2 z-20'>
                 Contato
               </Badge>
-              <h1 className='text-5xl md:text-4xl font-extrabold text-white tracking-tight animate__animated animate__bounceInUp z-20'>
+              <h1 className='text-5xl md:text-4xl font-extrabold text-white tracking-tight z-20'>
                 Ainda está com dúvidas?
               </h1>
-              <p className='text-md font-normal text-white text-center max-w-2xl animate__animated animate__bounceInUp z-20'>
+              <p className='text-md font-normal text-white text-center max-w-2xl z-20'>
                 Clique no botão abaixo e fale com a gente pelo WhatsApp. Fique a
                 vontade para entrar em contato conosco, estamos prontos para te
                 ajudar!
@@ -482,7 +479,7 @@ export default function LandingPage() {
                 target='_blank'
                 href='https://wa.me/5538999932655?text=Ol%C3%A1!%20Vim%20pela%20EasePage%20e%20quero%20falar%20sobre%20um%20site'
               >
-                <Button className='bg-emerald-600 hover:bg-emerald-500 rounded-full animate__delay-5s animate__animated animate__bounceInRight shadow-xl'>
+                <Button className='bg-emerald-600 hover:bg-emerald-500 rounded-full shadow-xl'>
                   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'>
                     <path
                       d='M414.73 97.1A222.14 222.14 0 00256.94 32C134 32 33.92 131.58 33.87 254a220.61 220.61 0 0029.78 111L32 480l118.25-30.87a223.63 223.63 0 00106.6 27h.09c122.93 0 223-99.59 223.06-222A220.18 220.18 0 00414.73 97.1zM256.94 438.66h-.08a185.75 185.75 0 01-94.36-25.72l-6.77-4-70.17 18.32 18.73-68.09-4.41-7A183.46 183.46 0 0171.53 254c0-101.73 83.21-184.5 185.48-184.5a185 185 0 01185.33 184.64c-.04 101.74-83.21 184.52-185.4 184.52zm101.69-138.19c-5.57-2.78-33-16.2-38.08-18.05s-8.83-2.78-12.54 2.78-14.4 18-17.65 21.75-6.5 4.16-12.07 1.38-23.54-8.63-44.83-27.53c-16.57-14.71-27.75-32.87-31-38.42s-.35-8.56 2.44-11.32c2.51-2.49 5.57-6.48 8.36-9.72s3.72-5.56 5.57-9.26.93-6.94-.46-9.71-12.54-30.08-17.18-41.19c-4.53-10.82-9.12-9.35-12.54-9.52-3.25-.16-7-.2-10.69-.2a20.53 20.53 0 00-14.86 6.94c-5.11 5.56-19.51 19-19.51 46.28s20 53.68 22.76 57.38 39.3 59.73 95.21 83.76a323.11 323.11 0 0031.78 11.68c13.35 4.22 25.5 3.63 35.1 2.2 10.71-1.59 33-13.42 37.63-26.38s4.64-24.06 3.25-26.37-5.11-3.71-10.69-6.48z'

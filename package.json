@@ -27,6 +27,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@tanstack/react-query": "^5.62.3",
     "animate.css": "^4.1.1",
+    "canvas-confetti": "^1.9.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.5.1",

@@ -3,41 +3,49 @@ export const projectsCover = [
     id: 1,
     src: '/assets/site-cover/tuany-project-2.png',
     alt: 'Tuany Miranda Project',
+    slug: 'tuany-miranda-2',
   },
   {
     id: 2,
     src: '/assets/site-cover/james-project.png',
     alt: 'James Moto Shop Project',
+    slug: 'james-moto-shop',
   },
   {
     id: 3,
     src: '/assets/site-cover/farol-project.png',
     alt: 'Farol Contabilidade Project',
+    slug: 'farol-contabilidade',
   },
   {
     id: 4,
     src: '/assets/site-cover/ismael-project.png',
     alt: 'Ismael Costa Project',
+    slug: 'ismael-costa',
   },
   {
     id: 5,
     src: '/assets/site-cover/tecport-project.png',
     alt: 'TecPort Project',
+    slug: 'tecport',
   },
   {
     id: 6,
     src: '/assets/site-cover/celia-project.png',
     alt: 'Celia Cannavino Project',
+    slug: 'celia-cannavino',
   },
   {
     id: 7,
     src: '/assets/site-cover/wesley-project.png',
     alt: 'Wesley Leandro Project',
+    slug: 'wesley-leandro',
   },
   {
     id: 8,
     src: '/assets/site-cover/tuany-project.png',
     alt: 'Tuany Miranda Project',
+    slug: 'tuany-miranda',
   },
 ]
 
@@ -86,7 +94,7 @@ export const projectsSite = [
 
 export const bennefits = [
   { title: 'Site no ar por 1 ano', active: true },
-  { title: 'Visual premium', active: true },
+  { title: 'Design premium', active: true },
   { title: 'Domínio personalizado', active: true },
   { title: 'Suporte dedicado', active: true },
   { title: 'Copy assertiva', active: true },
