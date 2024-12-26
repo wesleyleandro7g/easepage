@@ -1,16 +1,21 @@
 'use client'
 
 import { Check } from 'lucide-react'
-import { bennefits } from '../../utils'
 import Image from 'next/image'
-import { PaymentButton } from './stripe-payment-button'
-import { useParams, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
-export default function Checkout() {
-  const { order } = useParams()
+import { Button } from '@/components/ui/button'
+
+import { bennefits } from '../../utils'
+
+const checkoutURL = process.env.NEXT_PUBLIC_KIWIFY_CHECKOUT_URL
+
+export default function CheckoutV1() {
   const searchParams = useSearchParams()
 
+  const user_name = searchParams.get('user_name')
   const user_email = searchParams.get('user_email')
+  const user_phone = searchParams.get('user_phone')
 
   return (
     <div className='min-h-screen bg-[#030114] relative py-12'>
@@ -55,12 +60,15 @@ export default function Checkout() {
                 </li>
               ))}
             </ul>
-            <PaymentButton
-              service_order_id={order as string}
-              user_email={user_email}
+            <a
+              target='_blank'
+              href={`${checkoutURL}?name=${user_name}&email=${user_email}&phone=${user_phone}`}
+              className='w-full'
             >
-              Realizar pagamento
-            </PaymentButton>
+              <Button className='w-full flex items-center justify-center gap-2 text-md font-bold px-8 py-3 rounded-lg bg-white text-[#171E2C] shadow-xl hover:bg-black/90 animate__animated focus:bg-white hover:bg-white disabled:opacity-50'>
+                Continuar para o checkout
+              </Button>
+            </a>
           </div>
         </div>
 

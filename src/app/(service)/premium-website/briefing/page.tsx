@@ -85,7 +85,7 @@ export default function Briefing() {
     }
 
     router.push(
-      `/premium-website/checkout/${order.data.id}?user_email=${data.email}`
+      `/premium-website/checkout/v1/?user_email=${data.email}&user_name=${data.name}&user_phone=${data.phone}`
     )
     setIsSubmitting(false)
   }

@@ -1,33 +1,33 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import { Zap } from 'lucide-react'
-import { supabase } from '@/db/supabase/client'
+// import { supabase } from '@/db/supabase/client'
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 
 import { handleParticles } from './particles-effect'
 
 export default function Welcome() {
-  const searchParams = useSearchParams()
+  // const searchParams = useSearchParams()
 
-  const serviceOrderId = searchParams.get('service_order_id')
-  const sessionId = searchParams.get('session_id')
+  // const serviceOrderId = searchParams.get('service_order_id')
+  // const sessionId = searchParams.get('session_id')
 
-  async function updateServiceOrder() {
-    await supabase
-      .from('service_orders')
-      .update({
-        status: 'paid',
-        method: 'stripe',
-        session_id: sessionId,
-      })
-      .eq('id', serviceOrderId)
-  }
+  // async function updateServiceOrder() {
+  //   await supabase
+  //     .from('service_orders')
+  //     .update({
+  //       status: 'paid',
+  //       method: 'stripe',
+  //       session_id: sessionId,
+  //     })
+  //     .eq('id', serviceOrderId)
+  // }
 
-  useEffect(() => {
-    updateServiceOrder()
-  }, [serviceOrderId, sessionId])
+  // useEffect(() => {
+  //   updateServiceOrder()
+  // }, [serviceOrderId, sessionId])
 
   useEffect(() => {
     if (typeof window === 'undefined') return
