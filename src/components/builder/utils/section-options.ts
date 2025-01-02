@@ -76,11 +76,11 @@ export const sectionOptions: SectionOptionType[] = [
     image: '/assets/sections-layout/features-section-layout-default.svg',
     component: FeaturesVariants,
     content: {
-      'headline-title': 'Crie sites incríveis em um passe de mágica! Teste',
-      'headline-description':
-        'Crie páginas de alta conversão de forma simples e rápida, mesmo sem experiência técnica ou um orçamento alto!',
+      'features-title': 'Quais são os principais benefícios?',
+      'features-description':
+        'Descreva quais são os principais benefícios que o seu produto ou serviço oferece.',
     },
-    contentList: ['headline-title', 'headline-description'],
+    contentList: ['features-title', 'features-description'],
     variants: [
       {
         id: 'features-section-default',
