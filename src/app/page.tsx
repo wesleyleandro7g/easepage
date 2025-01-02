@@ -14,24 +14,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  // CarouselNext,
-  // CarouselPrevious,
 } from '@/components/ui/carousel'
-
-const projectsCover = [
-  { id: 1, src: '/assets/tuany-project-2.png', alt: 'Tuany Miranda Project' },
-  { id: 2, src: '/assets/james-project.png', alt: 'James Moto Shop Project' },
-  {
-    id: 3,
-    src: '/assets/farol-project.png',
-    alt: 'Farol Contabilidade Project',
-  },
-  { id: 4, src: '/assets/ismael-project.png', alt: 'Ismael Costa Project' },
-  { id: 5, src: '/assets/tecport-project.png', alt: 'TecPort Project' },
-  { id: 6, src: '/assets/celia-project.png', alt: 'Celia Cannavino Project' },
-  { id: 7, src: '/assets/wesley-project.png', alt: 'Wesley Leandro Project' },
-  { id: 8, src: '/assets/tuany-project.png', alt: 'Tuany Miranda Project' },
-]
+import { projectsCover } from './(service)/premium-website/utils'
 
 export default function LandingPage() {
   const [currentTheme, setCurrentTheme] = useState(0)
@@ -77,7 +61,7 @@ export default function LandingPage() {
           <section className='flex flex-col gap-4 max-w-6xl items-center text-center'>
             <Badge className='rounded-full px-4 py-2 shadow-none bg-white/60 gap-2 animate__animated animate__bounceInUp'>
               <Sparkles className='w-4 h-4' />
-              Tenha um site turbinado
+              Crie seu site com Inteligência Artificial
             </Badge>
             <h1 className='text-5xl md:text-8xl font-extrabold tracking-tight animate__animated animate__bounceInUp text-headline'>
               Crie sites incríveis em um passe de mágica!
@@ -87,7 +71,7 @@ export default function LandingPage() {
               sem experiência técnica ou um orçamento alto!
             </p>
             <div className='flex flex-col md:flex-row w-full justify-center'>
-              <Link href='/onboarding' className='w-full md:w-fit'>
+              <Link href='/briefing' className='w-full md:w-fit'>
                 <Button className='animate__animated animate__bounceInUp w-full md:w-full'>
                   Criar meu site
                   <Zap />
@@ -118,66 +102,36 @@ export default function LandingPage() {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                {/* <CarouselPrevious />
-                <CarouselNext /> */}
               </Carousel>
             </div>
           </section>
 
           <section className='grid grid-cols-4 gap-4 max-w-6xl mt-16'>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg bg-gradient-to-br from-black/60 to-black/40'>
-              <Image src='/premium.svg' alt='' width={40} height={40} />
-              <h6 className='font-semibold text-white'>Design premium</h6>
-              <p className='text-sm text-white/80'>
-                Visual premium assim como as maiores marcas do mundo
-              </p>
-            </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg  animate__animated animate__fadeInUp'>
-              <Image src='/premium-black.svg' alt='' width={40} height={40} />
+            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg border border-black/20'>
+              {/* <Image src='/premium.svg' alt='' width={40} height={40} /> */}
               <h6 className='font-semibold text-black'>Design premium</h6>
               <p className='text-sm text-black/80'>
                 Visual premium assim como as maiores marcas do mundo
               </p>
             </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg  animate__animated animate__fadeInUp'>
-              <Image src='/premium-black-2.svg' alt='' width={40} height={40} />
+            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg border border-black/20'>
+              {/* <Image src='/premium-black.svg' alt='' width={40} height={40} /> */}
               <h6 className='font-semibold text-black'>Design premium</h6>
               <p className='text-sm text-black/80'>
                 Visual premium assim como as maiores marcas do mundo
               </p>
             </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg  animate__animated animate__fadeInUp'>
-              <Image src='/premium-black.svg' alt='' width={40} height={40} />
+            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg border border-black/20'>
+              {/* <Image src='/premium-black-2.svg' alt='' width={40} height={40} /> */}
               <h6 className='font-semibold text-black'>Design premium</h6>
               <p className='text-sm text-black/80'>
                 Visual premium assim como as maiores marcas do mundo
               </p>
             </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg  animate__animated animate__fadeInUp'>
-              <Image src='/premium-black.svg' alt='' width={40} height={40} />
+            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg border border-black/20'>
+              {/* <Image src='/premium-black.svg' alt='' width={40} height={40} /> */}
               <h6 className='font-semibold text-black'>Design premium</h6>
               <p className='text-sm text-black/80'>
-                Visual premium assim como as maiores marcas do mundo
-              </p>
-            </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg bg-black animate__animated animate__fadeInUp'>
-              <Image src='/premium.svg' alt='' width={40} height={40} />
-              <h6 className='font-semibold text-white'>Design premium</h6>
-              <p className='text-sm text-white/80'>
-                Visual premium assim como as maiores marcas do mundo
-              </p>
-            </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg bg-black animate__animated animate__fadeInUp'>
-              <Image src='/premium.svg' alt='' width={40} height={40} />
-              <h6 className='font-semibold text-white'>Design premium</h6>
-              <p className='text-sm text-white/80'>
-                Visual premium assim como as maiores marcas do mundo
-              </p>
-            </div>
-            <div className='flex flex-col p-4 gap-0.5 text-start rounded-lg bg-black animate__animated animate__fadeInUp'>
-              <Image src='/premium.svg' alt='' width={40} height={40} />
-              <h6 className='font-semibold text-white'>Design premium</h6>
-              <p className='text-sm text-white/80'>
                 Visual premium assim como as maiores marcas do mundo
               </p>
             </div>

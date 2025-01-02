@@ -1,9 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 import { EditHeroBtn } from '@/components/drawers/edit-hero-btn'
 import {
@@ -15,20 +16,17 @@ import {
 } from '@/components/ui/form'
 import { CustomAlert } from '@/components/custom-alert'
 import { useAutoResizeTextarea } from '@/hooks/useAutoResizeTextarea'
+import { formSchema, FormSchemaType } from './formSchema'
 import { FloatButtonPopover } from '@/components/float-button-poppover'
 
 import { supabase } from '@/db/supabase/client'
 import { useToast } from '@/hooks/use-toast'
-import { useFetchPageById } from '@/db/queries/query-page'
 
-import contentV0 from '../content-v0.json'
-import { EditorFormSchemeType, editorFormScheme } from './editorFormScheme'
+import { themes, setTheme } from '@/config/theme'
+import type { themeType } from '@/config/theme/theme'
+import contentV0 from './content-v0.json'
 
 export default function PageEditor() {
-  const searchParams = useSearchParams()
-  const userId = searchParams.get('userId')
-  const { pageId } = useParams()
-
   const router = useRouter()
   const headlineTextareaRef = useAutoResizeTextarea()
   const subheadlineTextareaRef = useAutoResizeTextarea()
@@ -37,17 +35,14 @@ export default function PageEditor() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const { data } = useFetchPageById({
-    id: pageId as string,
-  })
-
-  console.log('Page data: ', data)
-
   const form = useForm({
-    resolver: zodResolver(editorFormScheme),
+    resolver: zodResolver(formSchema),
     disabled: isSubmitting,
     defaultValues: {
-      theme: data?.theme,
+      email: '',
+      name: '',
+      title: '',
+      description: '',
       headline: contentV0.heroSection.headline.text,
       subheadline: contentV0.heroSection.subheadline.text,
       heroButtonText: contentV0.heroSection.heroButtonCTA.text,
@@ -55,48 +50,84 @@ export default function PageEditor() {
     },
   })
 
-  async function onSubmit(data: EditorFormSchemeType) {
-    const { theme, ...dataToSaveInJson } = data
+  async function onSubmit(data: FormSchemaType) {
+    const { title, description, ...dataToSaveInJson } = data
     const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
+
+    const storedTheme = localStorage.getItem('theme') as themeType
+
+    const shortUUID = uuidv4().split('-')[0]
+    const password = uuidv4().split('-')[0]
 
     setIsSubmitting(true)
 
-    const updatedPage = await supabase
+    const signUpUser = await supabase.auth.signUp({
+      email: data.email,
+      password,
+      options: {
+        emailRedirectTo: 'http://localhost:3000/panel',
+        data: {
+          first_name: data.name.split(' ')[0],
+          last_name: data.name.split(' ')[1],
+        },
+      },
+    })
+
+    if (signUpUser.error) {
+      toast({
+        title: 'Ops! Algo deu errado',
+        description: 'Por favor tente novamente',
+        variant: 'destructive',
+      })
+      setIsSubmitting(false)
+      return console.error(signUpUser.error)
+    }
+
+    const createdPage = await supabase
       .from('pages')
-      .update({
-        theme,
+      .insert({
+        title,
+        description,
+        slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${shortUUID}`,
+        theme: storedTheme,
         is_active: true,
         page_structure: dataJSON,
+        user_id: signUpUser.data.user?.id,
       })
       .select('id, slug')
       .single()
 
     setIsSubmitting(false)
 
-    if (updatedPage.error) {
+    if (createdPage.error) {
       toast({
         title: 'Ops! Algo deu errado ao gerar o seu site',
         description: 'Por favor tente novamente',
         variant: 'destructive',
       })
-      return console.error(updatedPage.error)
+      return console.error(createdPage.error)
     }
 
-    router.push(`/pricing/?pageId=${updatedPage.data.id}&userId=${userId}`)
+    router.push(
+      `/pricing/?slug=${createdPage.data.slug}&pageId=${createdPage.data.id}&userId=${signUpUser.data.user?.id}`
+    )
   }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      document.body.className = data?.theme
+      const storedTheme = localStorage.getItem('theme') as themeType
+      if (storedTheme) {
+        setTheme(storedTheme ? storedTheme : themes[0])
+      }
     }
-  }, [data])
+  }, [])
 
   return (
     <div className='min-h-screen relative'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <main className='pt-20 pb-16 text-center lg:text-left max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-            <div className='max-w-4xl text-left'>
+            <section className='max-w-4xl text-left'>
               <FormField
                 control={form.control}
                 name='headline'
@@ -105,7 +136,7 @@ export default function PageEditor() {
                     <FormAlert />
                     <FormControl>
                       <textarea
-                        className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-headline max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none'
+                        className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight text-headline max-w-full bg-transparent break-words overflow-hidden whitespace-normal resize-none headline-title'
                         {...field}
                         ref={headlineTextareaRef}
                       />
@@ -149,7 +180,7 @@ export default function PageEditor() {
                   +500 pessoas amaram este produto
                 </p>
               </div>
-            </div>
+            </section>
           </main>
         </form>
         <FloatButtonPopover
