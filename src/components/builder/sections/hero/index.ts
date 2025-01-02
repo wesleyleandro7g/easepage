@@ -1,4 +1,4 @@
-import { HeroDefault as Default } from './HeroDefault'
-import { HeroCentered as Centered } from './HeroCentered'
+import { HeroDefault as Default } from './hero-default'
+import { HeroCentered as Centered } from './hero-centered'
 
 export const HeroVariants = { Default, Centered }
