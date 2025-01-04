@@ -111,3 +111,5 @@ export const sectionOptions: SectionOptionType[] = [
     ],
   },
 ]
+
+// VAMOS CATEGORIZAR OS COMPONENTES DE ACORDO COM O TIPO DE SEÇÃO, IMPORTANDO TODOS OS COMPONENTES DE SEÇÃO EM UM ÚNICO ARQUIVO
