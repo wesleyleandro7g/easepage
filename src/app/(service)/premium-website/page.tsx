@@ -6,6 +6,7 @@ import 'animate.css'
 import { Zap, Sparkles, Check, MonitorSmartphone } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import Script from 'next/script'
 import Autoplay from 'embla-carousel-autoplay'
 
 import { Button } from '@/components/ui/button'
@@ -27,7 +28,7 @@ export default function LandingPage() {
   return (
     <>
       {/* Meta Pixel Code */}
-      <script>
+      <Script id='facebook-pixel'>
         {`!function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
         n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -38,7 +39,7 @@ export default function LandingPage() {
         'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '580880927898740');
         fbq('track', 'PageView');`}
-      </script>
+      </Script>
       <noscript>
         <img
           height='1'
