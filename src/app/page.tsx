@@ -2,7 +2,7 @@
 
 import LandingPage from './(service)/premium-website/page'
 
-export function Home() {
+export default function Home() {
   return <LandingPage />
 }
 
