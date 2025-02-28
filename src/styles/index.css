@@ -1,0 +1,29 @@
+.headline-default {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.headline-centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.headline-centered .headline-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: center;
+  line-height: 3rem;
+}
