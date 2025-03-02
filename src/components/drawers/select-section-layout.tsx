@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-import { sectionOptions } from '../builder/utils/sections/options'
+import { defaultSections } from '../builder/utils/sections/default'
 
 interface SelectSectionLayoutProps {
   children: ReactNode
@@ -56,7 +56,7 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
         <div className='flex flex-col space-y-4 px-4'>
           <Accordion type='single' collapsible>
             <div className='flex flex-col space-y-4'>
-              {sectionOptions.map((section) => {
+              {defaultSections.map((section) => {
                 return (
                   <AccordionItem key={section.id} value={section.id}>
                     <AccordionTrigger className='flex text-left gap-2 hover:bg-gray-100 p-2 w-full rounded-lg decoration-transparent data-[state=open]:bg-gray-100 data-[state=open]:rounded-b-none'>

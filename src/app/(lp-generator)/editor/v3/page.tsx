@@ -1,17 +1,15 @@
 'use client'
 
 import { CustomVariants } from '@/components/builder/sections'
-import {
-  sectionOptions,
-  type SectionOptionType,
-} from '@/components/builder/utils/sections/options'
+import { type SectionOptionType } from '@/components/builder/utils/sections/options'
+import { defaultSections } from '@/components/builder/utils/sections/default'
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
 import { LayoutTemplate, Plus, Trash } from 'lucide-react'
 import { createElement, useState } from 'react'
 
 export default function PageEditor() {
-  const [sections, setSections] = useState(sectionOptions)
+  const [sections, setSections] = useState(defaultSections)
   const [focusedSection, setFocusedSection] = useState<string | null>(null)
 
   // async function getAllTextContent() {
@@ -28,7 +26,7 @@ export default function PageEditor() {
 
     const id = `${layout.toLowerCase()}-${crypto.randomUUID().split('-')[0]}`
 
-    const variantLayout = sectionOptions.find((item) => item.name === layout)
+    const variantLayout = defaultSections.find((item) => item.name === layout)
 
     const newSection: SectionOptionType = {
       id,
@@ -36,7 +34,7 @@ export default function PageEditor() {
       variant: variant || 'Default',
       variantOptions: variantLayout?.variantOptions,
       component: variantLayout?.component || CustomVariants,
-      content: variantLayout?.content,
+      content: variantLayout?.content || {},
       contentList: variantLayout?.contentList || [],
       description: variantLayout?.description || 'Custom section',
       image: variantLayout?.image || '',
