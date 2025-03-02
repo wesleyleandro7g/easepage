@@ -12,7 +12,7 @@ import {
 } from '../ui/drawer'
 import Image from 'next/image'
 
-import { sectionOptions } from '../builder/utils/section-options'
+import { sectionOptions } from '../builder/utils/sections/options'
 
 interface SelectSectionLayoutVariantProps {
   children: ReactNode

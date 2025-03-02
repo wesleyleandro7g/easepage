@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { HeroVariants } from '../sections'
-import { FeaturesVariants } from '../sections/features'
+import { HeroVariants } from '../../sections'
+import { FeaturesVariants } from '../../sections/features'
 
 type ContentType = { [x: string]: string | null | undefined }
 
@@ -32,9 +32,7 @@ interface SectionProps {
   variant: string
 }
 
-const hash = crypto.randomUUID().split('-')[0]
-
-export const HeroSection = (props: SectionProps): SectionOptionType => ({
+export const Hero = (props: SectionProps): SectionOptionType => ({
   id: props.id,
   name: 'Hero',
   variant: props.variant,
@@ -74,7 +72,7 @@ export const HeroSection = (props: SectionProps): SectionOptionType => ({
   ],
 })
 
-export const FeaturesSection = (props: SectionProps): SectionOptionType => ({
+export const Features = (props: SectionProps): SectionOptionType => ({
   id: props.id,
   name: 'Features',
   variant: props.variant,
@@ -113,35 +111,3 @@ export const FeaturesSection = (props: SectionProps): SectionOptionType => ({
     //   },
   ],
 })
-
-const heroSection = HeroSection({
-  id: `hero-${hash}`,
-  content: {
-    ['title-hero-' + hash]: 'Insira seu belo título aqui',
-    ['description-hero-' + hash]:
-      'Aqui vai uma descrição incrível para o seu título',
-    ['cta-hero-' + hash]: 'E Aqui Deve Ter Um CTA!',
-  },
-  contentList: [
-    'title-hero-' + hash,
-    'description-hero-' + hash,
-    'cta-hero-' + hash,
-  ],
-  variant: 'Default',
-})
-
-const featuresSection = FeaturesSection({
-  id: `features-${hash}`,
-  variant: 'Default',
-  content: {
-    ['title-features-' + hash]: 'Quais são os principais benefícios?',
-    ['description-features-' + hash]:
-      'Descreva quais são os principais benefícios que o seu produto ou serviço oferece.',
-  },
-  contentList: ['title-features-' + hash, 'description-features-' + hash],
-})
-
-export const sectionOptions: SectionOptionType[] = [
-  heroSection,
-  featuresSection,
-]

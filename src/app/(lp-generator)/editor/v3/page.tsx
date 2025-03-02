@@ -4,7 +4,7 @@ import { CustomVariants } from '@/components/builder/sections'
 import {
   sectionOptions,
   type SectionOptionType,
-} from '@/components/builder/utils/section-options'
+} from '@/components/builder/utils/sections/options'
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
 import { LayoutTemplate, Plus, Trash } from 'lucide-react'

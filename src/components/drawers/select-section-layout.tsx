@@ -18,7 +18,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-import { sectionOptions } from '../builder/utils/section-options'
+import { sectionOptions } from '../builder/utils/sections/options'
 
 interface SelectSectionLayoutProps {
   children: ReactNode

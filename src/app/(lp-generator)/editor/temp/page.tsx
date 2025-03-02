@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation'
 
 import { useSectionContent } from '@/context/sectionContext'
 import {
-  HeroSection,
-  FeaturesSection,
+  Hero,
+  Features,
   SectionOptionType,
-} from '@/components/builder/utils/section-options'
+} from '@/components/builder/utils/sections/options'
 
 interface handleSectionGenerateProps {
   sections: {
@@ -25,7 +25,7 @@ export default function TempPage() {
 
   const hash = crypto.randomUUID().split('-')[0]
 
-  const heroSection = HeroSection({
+  const heroSection = Hero({
     id: `hero-${hash}`,
     content: {
       ['title-hero-' + hash]: 'Hero Title',
@@ -40,7 +40,7 @@ export default function TempPage() {
     variant: 'Default',
   })
 
-  const featuresSection = FeaturesSection({
+  const featuresSection = Features({
     id: `features-${hash}`,
     variant: 'Default',
     content: {
@@ -70,7 +70,7 @@ export default function TempPage() {
     setSections(sectionsRequested)
 
     setTimeout(() => {
-      router.push('/editor/v4')
+      router.push('/editor')
       setIsLoading(false)
     }, 500)
   }

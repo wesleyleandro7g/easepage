@@ -1,8 +1,6 @@
 import { CustomVariants } from '@/components/builder/sections'
-import {
-  sectionOptions,
-  type SectionOptionType,
-} from '@/components/builder/utils/section-options'
+import { type SectionOptionType } from '@/components/builder/utils/sections/options'
+import { defaultSections } from '@/components/builder/utils/sections/default'
 import { useSectionContent } from '@/context/sectionContext'
 import { useState } from 'react'
 
@@ -16,7 +14,7 @@ export function useSections() {
 
     const id = `${layout.toLowerCase()}-${crypto.randomUUID().split('-')[0]}`
 
-    const variantLayout = sectionOptions.find((item) => item.name === layout)
+    const variantLayout = defaultSections.find((item) => item.name === layout)
 
     const newSection: SectionOptionType = {
       id,

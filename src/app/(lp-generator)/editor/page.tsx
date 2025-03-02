@@ -7,7 +7,7 @@ import { useSections } from '@/hooks/useSections'
 import { LayoutTemplate, Plus, Trash } from 'lucide-react'
 import { createElement } from 'react'
 
-export default function PageEditor() {
+export default function Editor() {
   const {
     sections,
     focusedSection,

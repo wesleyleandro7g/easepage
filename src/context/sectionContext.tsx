@@ -1,4 +1,4 @@
-import { SectionOptionType } from '@/components/builder/utils/section-options'
+import { SectionOptionType } from '@/components/builder/utils/sections/options'
 import {
   createContext,
   Dispatch,
