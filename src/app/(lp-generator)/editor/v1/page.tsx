@@ -17,7 +17,7 @@ import {
 import { CustomAlert } from '@/components/custom-alert'
 import { useAutoResizeTextarea } from '@/hooks/useAutoResizeTextarea'
 import { formSchema, FormSchemaType } from './formSchema'
-import { FloatButtonPopover } from '@/components/float-button-poppover'
+import { ConfigOptions } from '@/components/builder/config-options'
 
 import { supabase } from '@/db/supabase/client'
 import { useToast } from '@/hooks/use-toast'
@@ -183,7 +183,7 @@ export default function PageEditor() {
             </section>
           </main>
         </form>
-        <FloatButtonPopover
+        <ConfigOptions
           osPublish={form.handleSubmit(onSubmit)}
           form={form}
           isSubmitting={isSubmitting}

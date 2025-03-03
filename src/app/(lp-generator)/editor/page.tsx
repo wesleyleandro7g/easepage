@@ -3,6 +3,7 @@
 import { type SectionOptionType } from '@/components/builder/utils/sections/options'
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
+import { ConfigOptions } from '@/components/builder/config-options'
 import { useSections } from '@/hooks/useSections'
 import { LayoutTemplate, Plus, Trash } from 'lucide-react'
 import { createElement } from 'react'
@@ -90,6 +91,8 @@ export default function Editor() {
           Salvar
         </button>
       </main>
+
+      <ConfigOptions osPublish={() => {}} form={null} isSubmitting={false} />
     </div>
   )
 }

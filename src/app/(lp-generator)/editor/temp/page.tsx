@@ -62,29 +62,7 @@ export default function TempPage() {
     features,
   }
 
-  // async function handleSectionGenerate({
-  //   sections,
-  // }: handleSectionGenerateProps) {
-  //   setIsLoading(true)
-
-  //   const sectionsRequested: SectionOptionType[] = []
-
-  //   sections.forEach((section) => {
-  //     sectionsRequested.push({
-  //       ...sectionsOptions[section.name],
-  //       variant: section.variant,
-  //     })
-  //   })
-
-  //   setSections(sectionsRequested)
-
-  //   setTimeout(() => {
-  //     router.push('/editor')
-  //     setIsLoading(false)
-  //   }, 500)
-  // }
-
-  async function prepareSectionsPrompt(props: prepareSectionsType) {
+  async function generateSectionsContent(props: prepareSectionsType) {
     const { sections } = props
 
     let sectionsPrompts: sectionPromptType = {}
@@ -138,7 +116,7 @@ export default function TempPage() {
       <button
         className='px-4 py-2 bg-black/10 rounded-md'
         onClick={() =>
-          prepareSectionsPrompt({
+          generateSectionsContent({
             sections: [
               { name: 'hero', variant: 'Default' },
               { name: 'features', variant: 'Default' },
