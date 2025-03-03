@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import axios from 'axios'
 
 import { useSectionContent } from '@/context/sectionContext'
 import {
@@ -10,11 +11,30 @@ import {
   SectionOptionType,
 } from '@/components/builder/utils/sections/options'
 
-interface handleSectionGenerateProps {
+type sectionPromptType = {
+  [key: string]:
+    | {
+        [key: string]: {
+          description: string
+          type: string
+        }
+      }
+    | undefined
+}
+
+type prepareSectionsType = {
   sections: {
-    name: 'heroSection' | 'featuresSection'
+    name: 'hero' | 'features'
     variant: string
   }[]
+}
+
+async function fetchContent(context: string, properties: sectionPromptType) {
+  const response = await axios.post('/api/content-generate', {
+    context,
+    properties,
+  })
+  return response.data
 }
 
 export default function TempPage() {
@@ -25,49 +45,86 @@ export default function TempPage() {
 
   const hash = crypto.randomUUID().split('-')[0]
 
-  const heroSection = Hero({
-    id: `hero-${hash}`,
-    content: {
-      ['title-hero-' + hash]: 'Hero Title',
-      ['description-hero-' + hash]: 'Hero Description',
-      ['cta-hero-' + hash]: 'Hero CTA',
-    },
-    contentList: [
-      'title-hero-' + hash,
-      'description-hero-' + hash,
-      'cta-hero-' + hash,
-    ],
+  const hero = Hero({
+    id: `${hash}`,
+    content: {},
     variant: 'Default',
   })
 
-  const featuresSection = Features({
-    id: `features-${hash}`,
+  const features = Features({
+    id: `${hash}`,
     variant: 'Default',
-    content: {
-      ['title-features-' + hash]: 'Features Title',
-      ['description-features-' + hash]: 'Features Description',
-    },
-    contentList: ['title-features-' + hash, 'description-features-' + hash],
+    content: {},
   })
 
   const sectionsOptions = {
-    heroSection,
-    featuresSection,
+    hero,
+    features,
   }
 
-  function handleSectionGenerate({ sections }: handleSectionGenerateProps) {
-    setIsLoading(true)
+  // async function handleSectionGenerate({
+  //   sections,
+  // }: handleSectionGenerateProps) {
+  //   setIsLoading(true)
 
-    const sectionsRequested: SectionOptionType[] = []
+  //   const sectionsRequested: SectionOptionType[] = []
 
-    sections.forEach((section) => {
-      sectionsRequested.push({
+  //   sections.forEach((section) => {
+  //     sectionsRequested.push({
+  //       ...sectionsOptions[section.name],
+  //       variant: section.variant,
+  //     })
+  //   })
+
+  //   setSections(sectionsRequested)
+
+  //   setTimeout(() => {
+  //     router.push('/editor')
+  //     setIsLoading(false)
+  //   }, 500)
+  // }
+
+  async function prepareSectionsPrompt(props: prepareSectionsType) {
+    const { sections } = props
+
+    let sectionsPrompts: sectionPromptType = {}
+
+    for (const section of sections) {
+      const prompt = sectionsOptions[section.name].ai_prompt_properties
+
+      sectionsPrompts = {
+        ...sectionsPrompts,
+        [section.name]: prompt,
+      }
+    }
+
+    const context =
+      'Somos uma empresa especializada em instalação e manutenção de ar condicionando'
+
+    const contentGeneratedWithAI = await fetchContent(context, sectionsPrompts)
+
+    const sectionsWithContent: SectionOptionType[] = []
+
+    for (const section of sections) {
+      const sectionContent = contentGeneratedWithAI[section.name]
+
+      let formattedContentKeys = {}
+
+      Object.keys(sectionContent).forEach((key) => {
+        formattedContentKeys = {
+          ...formattedContentKeys,
+          [`${key}-${hash}`]: sectionContent[key],
+        }
+      })
+
+      sectionsWithContent.push({
         ...sectionsOptions[section.name],
         variant: section.variant,
+        content: formattedContentKeys,
       })
-    })
+    }
 
-    setSections(sectionsRequested)
+    setSections(sectionsWithContent)
 
     setTimeout(() => {
       router.push('/editor')
@@ -81,10 +138,10 @@ export default function TempPage() {
       <button
         className='px-4 py-2 bg-black/10 rounded-md'
         onClick={() =>
-          handleSectionGenerate({
+          prepareSectionsPrompt({
             sections: [
-              { name: 'heroSection', variant: 'Default' },
-              { name: 'featuresSection', variant: 'Default' },
+              { name: 'hero', variant: 'Default' },
+              { name: 'features', variant: 'Default' },
             ],
           })
         }
