@@ -17,7 +17,9 @@ import { useToast } from '@/hooks/use-toast'
 
 import { steps, StepType } from './utils/steps'
 import { onboardingFormScheme } from './utils/onboardingFormScheme'
-import { getLoadingMessage } from './utils/loadingMessages'
+import { usePageContent } from '@/context/page-context'
+import { useContentGeneration } from '@/hooks/useContentGeneration'
+import { buildingMessages } from './utils/buildingMessages'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
@@ -25,7 +27,12 @@ export default function Onboarding() {
   const { toast } = useToast()
   const router = useRouter()
   const [formSteps, setFormSteps] = useState<StepType>('step-1')
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [startBuilding, setStartBuilding] = useState(false)
+  const [currentMessage, setCurrentMessage] = useState(0)
+
+  const { setPageData } = usePageContent()
+
+  const { generateContent } = useContentGeneration()
 
   const form = useForm({
     resolver: zodResolver(onboardingFormScheme),
@@ -40,6 +47,25 @@ export default function Onboarding() {
       phone: '',
     },
   })
+
+  function handleBuildMessages(currentIndex: number) {
+    setStartBuilding(true)
+
+    if (currentIndex === 6) {
+      setTimeout(() => {
+        router.push(`/editor/`)
+      }, 2000)
+
+      return
+    }
+
+    setTimeout(() => {
+      setCurrentMessage((prev) => {
+        return prev + 1
+      })
+      handleBuildMessages(currentIndex + 1)
+    }, 3000)
+  }
 
   function handleNextStep() {
     if (formSteps === 'step-5') return
@@ -58,13 +84,34 @@ export default function Onboarding() {
   }
 
   async function onSubmit(data: OnboardingFormSchemaType) {
+    handleBuildMessages(0)
     const { title, description, name, email, phone, style, theme, type } = data
     // const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
 
     const shortUUID = uuidv4().split('-')[0]
-    const password = uuidv4().split('-')[0]
 
-    setIsSubmitting(true)
+    setPageData({
+      id: shortUUID,
+      title,
+      description,
+      theme,
+      style,
+      type,
+    })
+
+    generateContent({
+      sections: [
+        { name: 'hero', variant: 'Default' },
+        { name: 'features', variant: 'Default' },
+        // { name: 'pricing', variant: 'Default' },
+        // { name: 'testimonials', variant: 'Default' },
+        // { name: 'cta', variant: 'Default' },
+      ],
+    }).then(() => {})
+
+    return console.log(data)
+
+    const password = uuidv4().split('-')[0]
 
     const signUpUser = await supabase.auth.signUp({
       email: email,
@@ -85,7 +132,6 @@ export default function Onboarding() {
         description: 'Por favor tente novamente',
         variant: 'destructive',
       })
-      setIsSubmitting(false)
       return console.error(signUpUser.error)
     }
 
@@ -111,14 +157,8 @@ export default function Onboarding() {
         description: 'Por favor tente novamente',
         variant: 'destructive',
       })
-      setIsSubmitting(false)
       return console.error(createdPage.error)
     }
-
-    router.push(
-      `/editor/${createdPage.data.id}?userId=${signUpUser.data.user?.id}`
-    )
-    setIsSubmitting(false)
   }
 
   const isDisabled =
@@ -130,7 +170,7 @@ export default function Onboarding() {
         form.watch('email').length < 3 ||
         form.watch('phone').length < 3))
 
-  if (isSubmitting) {
+  if (startBuilding) {
     return (
       <div className='min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
         <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
@@ -138,7 +178,7 @@ export default function Onboarding() {
           <span className='text-sm text-black'>Gerando seu site...</span>
         </div>
         <span className='text-center text-xl italic'>
-          &ldquo;{getLoadingMessage()}&quot;
+          {buildingMessages[currentMessage]}
         </span>
       </div>
     )

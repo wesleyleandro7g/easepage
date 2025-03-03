@@ -1,11 +1,11 @@
 import { CustomVariants } from '@/components/builder/sections'
-import { type SectionOptionType } from '@/components/builder/utils/sections/options'
 import { defaultSections } from '@/components/builder/utils/sections/default'
-import { useSectionContent } from '@/context/sectionContext'
+import { usePageContent } from '@/context/page-context'
+import type { SectionOptionType } from '@/types/section'
 import { useState } from 'react'
 
 export function useSections() {
-  const { sections, setSections } = useSectionContent()
+  const { sections, setSections } = usePageContent()
 
   const [focusedSection, setFocusedSection] = useState<string | null>(null)
 

@@ -1,12 +1,9 @@
-'use client'
-
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import axios from 'axios'
 
 import { usePageContent } from '@/context/page-context'
-import { Hero, Features } from '@/components/builder/utils/sections/options'
-import type { SectionOptionType } from '@/types/section'
+import { Features, Hero } from '@/components/builder/utils/sections/options'
+import { SectionOptionType } from '@/types/section'
 
 type sectionPromptType = {
   [key: string]:
@@ -34,9 +31,8 @@ async function fetchContent(context: string, properties: sectionPromptType) {
   return response.data
 }
 
-export default function TempPage() {
+export const useContentGeneration = () => {
   const { setSections } = usePageContent()
-  const router = useRouter()
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -59,7 +55,7 @@ export default function TempPage() {
     features,
   }
 
-  async function generateSectionsContent(props: prepareSectionsType) {
+  async function generateContent(props: prepareSectionsType) {
     const { sections } = props
 
     let sectionsPrompts: sectionPromptType = {}
@@ -102,27 +98,13 @@ export default function TempPage() {
     setSections(sectionsWithContent)
 
     setTimeout(() => {
-      router.push('/editor')
       setIsLoading(false)
-    }, 500)
+      return 'ok'
+    }, 2500)
   }
 
-  return (
-    <div className='h-screen w-full flex flex-col gap-2 justify-center items-center'>
-      <h1 className='text-2xl font-bold'>Temp Page</h1>
-      <button
-        className='px-4 py-2 bg-black/10 rounded-md'
-        onClick={() =>
-          generateSectionsContent({
-            sections: [
-              { name: 'hero', variant: 'Default' },
-              { name: 'features', variant: 'Default' },
-            ],
-          })
-        }
-      >
-        {isLoading ? 'Loading...' : 'Generate Sections'}
-      </button>
-    </div>
-  )
+  return {
+    isLoading,
+    generateContent,
+  }
 }
