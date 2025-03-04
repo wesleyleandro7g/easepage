@@ -17,6 +17,7 @@ type sectionPromptType = {
 }
 
 type prepareSectionsType = {
+  context: string
   sections: {
     name: 'hero' | 'features'
     variant: string
@@ -56,7 +57,7 @@ export const useContentGeneration = () => {
   }
 
   async function generateContent(props: prepareSectionsType) {
-    const { sections } = props
+    const { context, sections } = props
 
     let sectionsPrompts: sectionPromptType = {}
 
@@ -68,9 +69,6 @@ export const useContentGeneration = () => {
         [section.name]: prompt,
       }
     }
-
-    const context =
-      'Somos uma empresa especializada em instalação e manutenção de ar condicionando'
 
     const contentGeneratedWithAI = await fetchContent(context, sectionsPrompts)
 

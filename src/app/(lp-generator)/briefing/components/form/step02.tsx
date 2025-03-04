@@ -1,48 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import { FormControl, FormField, FormItem } from '@/components/ui/form'
+import { InputWithLabel } from '@/components/input-label'
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
+import { siteStyle } from '@/utils/pageItems'
 
 type Step02Props = {
   form: any
   nextStep: any
 }
 
-const siteStyle = [
-  {
-    id: 1,
-    name: 'Moderno e minimalista 🌿',
-    slug: 'modern-minimalist',
-  },
-  {
-    id: 2,
-    name: 'Colorido e vibrante 🌈',
-    slug: 'colorful-vibrant',
-  },
-  {
-    id: 3,
-    name: 'Sofisticado e elegante 💅',
-    slug: 'sophisticated-elegant',
-  },
-  {
-    id: 4,
-    name: 'Divertido e descontraído 😄',
-    slug: 'fun-relaxed',
-  },
-  {
-    id: 5,
-    name: 'Outro 🤔',
-    slug: 'other',
-  },
-]
-
 export function Step02({ form, nextStep }: Step02Props) {
   return (
-    <section className='flex flex-col gap-8 max-w-5xl items-center text-center'>
-      <h1 className='text-3xl md:text-6xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+    <section className='flex flex-col gap-8 max-w-3xl items-center text-center'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
         Qual estilo visual mais combina com o seu negócio?
       </h1>
-      <div className='space-y-8 max-w-3xl w-full'>
+      <div className='space-y-8 w-full'>
         <FormField
           control={form.control}
           name='style'
@@ -56,16 +36,18 @@ export function Step02({ form, nextStep }: Step02Props) {
                       className='flex flex-col items-center justify-center w-full p-4 h-28 rounded-lg bg-black/10 cursor-pointer font-semibold text-sm data-[checked=true]:bg-black data-[checked=true]:text-white transition'
                       data-checked={field.value === style.slug}
                     >
-                      {style.name}
+                      {`${style.name} ${style.emoji}`}
                       <input
                         type='radio'
                         value={style.slug}
                         checked={field.value === style.slug}
                         onChange={(...args) => {
                           field.onChange(...args)
-                          setTimeout(() => {
-                            nextStep()
-                          }, 500)
+                          if (args[0].target.value !== 'other') {
+                            setTimeout(() => {
+                              nextStep()
+                            }, 500)
+                          }
                         }}
                         className='hidden'
                       />
@@ -76,6 +58,31 @@ export function Step02({ form, nextStep }: Step02Props) {
             </FormItem>
           )}
         />
+
+        {form.watch('style') === 'other' && (
+          <FormField
+            control={form.control}
+            name='customStyle'
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className='flex flex-col items-start justify-center w-full text-left'>
+                    <InputWithLabel
+                      label='Qual o tipo de estilo?'
+                      wrapperClassName='max-w-full'
+                      maxLength={60}
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage className='text-left' />
+                <FormDescription className='text-left'>
+                  {form.watch('customStyle')?.length || 0}/60
+                </FormDescription>
+              </FormItem>
+            )}
+          />
+        )}
       </div>
     </section>
   )

@@ -15,7 +15,7 @@ type Step05Props = {
 
 export function Step05({ form }: Step05Props) {
   return (
-    <section className='flex flex-col gap-8 max-w-5xl items-center text-center'>
+    <section className='flex flex-col gap-8 w-full max-w-5xl items-center text-center'>
       <h1 className='text-3xl md:text-6xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
         Última etapa!
       </h1>
@@ -61,7 +61,7 @@ export function Step05({ form }: Step05Props) {
             <FormItem>
               <FormControl>
                 <InputWithLabel
-                  label='Seu telefone:'
+                  label='Seu whatsapp:'
                   type='tel'
                   wrapperClassName='max-w-full'
                   {...field}

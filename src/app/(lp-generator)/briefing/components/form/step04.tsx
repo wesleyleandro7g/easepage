@@ -17,11 +17,11 @@ type Step04Props = {
 
 export function Step04({ form }: Step04Props) {
   return (
-    <section className='flex flex-col gap-8 max-w-5xl items-center text-center'>
-      <h1 className='text-3xl md:text-6xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+    <section className='flex flex-col gap-8 max-w-3xl items-center text-center'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
         Fale um pouco sobre o seu negócio
       </h1>
-      <div className='space-y-4 max-w-3xl w-full text-start animate__animated animate__fadeInUp'>
+      <div className='space-y-4 w-full text-start animate__animated animate__fadeInUp'>
         <FormField
           control={form?.control}
           name='title'
@@ -50,7 +50,7 @@ export function Step04({ form }: Step04Props) {
               <FormControl>
                 <InputTextArea
                   className='min-h-[200px]'
-                  label='Adicione uma breve descrição sobre o negócio:'
+                  label='Adicione uma breve descrição sobre o negócio, produto ou serviço:'
                   placeholder='Ex: Somos uma loja de roupas femininas que preza pela qualidade e conforto.'
                   maxLength={280}
                   wrapperClassName='max-w-full'

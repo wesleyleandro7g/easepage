@@ -20,6 +20,7 @@ import { onboardingFormScheme } from './utils/onboardingFormScheme'
 import { usePageContent } from '@/context/page-context'
 import { useContentGeneration } from '@/hooks/useContentGeneration'
 import { buildingMessages } from './utils/buildingMessages'
+import { productType, siteStyle } from '@/utils/pageItems'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
@@ -38,7 +39,9 @@ export default function Onboarding() {
     resolver: zodResolver(onboardingFormScheme),
     defaultValues: {
       type: 'digital-product',
+      customType: '',
       style: 'modern-minimalist',
+      customStyle: '',
       theme: 'sunrise',
       title: '',
       description: '',
@@ -64,7 +67,7 @@ export default function Onboarding() {
         return prev + 1
       })
       handleBuildMessages(currentIndex + 1)
-    }, 3000)
+    }, 4000)
   }
 
   function handleNextStep() {
@@ -85,7 +88,18 @@ export default function Onboarding() {
 
   async function onSubmit(data: OnboardingFormSchemaType) {
     handleBuildMessages(0)
-    const { title, description, name, email, phone, style, theme, type } = data
+    const {
+      title,
+      description,
+      name,
+      email,
+      phone,
+      style,
+      theme,
+      type,
+      customStyle,
+      customType,
+    } = data
     // const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
 
     const shortUUID = uuidv4().split('-')[0]
@@ -99,7 +113,19 @@ export default function Onboarding() {
       type,
     })
 
+    const pageType =
+      type === 'other'
+        ? customType
+        : productType.find((item) => item.slug === type)?.name
+    const pageStyle =
+      style === 'other'
+        ? customStyle
+        : siteStyle.find((item) => item.slug === style)?.name
+
+    const context = `O site que estamos criando é para ${pageType} com o estilo ${pageStyle}. Gere a copy das seções levando em consideração o tipo, o estilo e a descrição a seguir que foi fornecida pelo usuário: ${description}`
+
     generateContent({
+      context,
       sections: [
         { name: 'hero', variant: 'Default' },
         { name: 'features', variant: 'Default' },
@@ -107,7 +133,9 @@ export default function Onboarding() {
         // { name: 'testimonials', variant: 'Default' },
         // { name: 'cta', variant: 'Default' },
       ],
-    }).then(() => {})
+    })
+
+    console.log(context)
 
     return console.log(data)
 
@@ -162,6 +190,12 @@ export default function Onboarding() {
   }
 
   const isDisabled =
+    (formSteps === 'step-1' &&
+      form.watch('type') === 'other' &&
+      form.watch('customType')?.length < 5) ||
+    (formSteps === 'step-2' &&
+      form.watch('style') === 'other' &&
+      form.watch('customStyle')?.length < 5) ||
     (formSteps === 'step-4' &&
       (form.watch('title').length < 3 ||
         form.watch('description').length < 40)) ||
