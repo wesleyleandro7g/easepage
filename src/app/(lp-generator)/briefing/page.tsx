@@ -13,26 +13,26 @@ import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
 
 import { supabase } from '@/db/supabase/client'
-import { useToast } from '@/hooks/use-toast'
 
 import { steps, StepType } from './utils/steps'
 import { onboardingFormScheme } from './utils/onboardingFormScheme'
 import { usePageContent } from '@/context/page-context'
 import { useContentGeneration } from '@/hooks/useContentGeneration'
-import { buildingMessages } from './utils/buildingMessages'
+// import { buildingMessages } from './utils/buildingMessages'
 import { productType, siteStyle } from '@/utils/pageItems'
+import { useSections } from '@/hooks/useSections'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
 export default function Onboarding() {
-  const { toast } = useToast()
   const router = useRouter()
+
   const [formSteps, setFormSteps] = useState<StepType>('step-1')
   const [startBuilding, setStartBuilding] = useState(false)
-  const [currentMessage, setCurrentMessage] = useState(0)
+  // const [currentMessage, setCurrentMessage] = useState(0)
 
-  const { setPageData } = usePageContent()
-
+  const { setPageData, setSections } = usePageContent()
+  const { convertSectionsInObject } = useSections()
   const { generateContent } = useContentGeneration()
 
   const form = useForm({
@@ -51,24 +51,18 @@ export default function Onboarding() {
     },
   })
 
-  function handleBuildMessages(currentIndex: number) {
-    setStartBuilding(true)
+  // function handleBuildMessages(currentIndex: number) {
+  //   setStartBuilding(true)
 
-    if (currentIndex === 6) {
-      setTimeout(() => {
-        router.push(`/editor/`)
-      }, 2000)
+  //   if (currentIndex === 6) return
 
-      return
-    }
-
-    setTimeout(() => {
-      setCurrentMessage((prev) => {
-        return prev + 1
-      })
-      handleBuildMessages(currentIndex + 1)
-    }, 4000)
-  }
+  //   setTimeout(() => {
+  //     setCurrentMessage((prev) => {
+  //       return prev + 1
+  //     })
+  //     handleBuildMessages(currentIndex + 1)
+  //   }, 4000)
+  // }
 
   function handleNextStep() {
     if (formSteps === 'step-5') return
@@ -87,7 +81,8 @@ export default function Onboarding() {
   }
 
   async function onSubmit(data: OnboardingFormSchemaType) {
-    handleBuildMessages(0)
+    setStartBuilding(true)
+
     const {
       title,
       description,
@@ -100,18 +95,8 @@ export default function Onboarding() {
       customStyle,
       customType,
     } = data
-    // const dataJSON = JSON.stringify(dataToSaveInJson, null, 2)
 
     const shortUUID = uuidv4().split('-')[0]
-
-    setPageData({
-      id: shortUUID,
-      title,
-      description,
-      theme,
-      style,
-      type,
-    })
 
     const pageType =
       type === 'other'
@@ -124,7 +109,7 @@ export default function Onboarding() {
 
     const context = `O site que estamos criando é para ${pageType} com o estilo ${pageStyle}. Gere a copy das seções levando em consideração o tipo, o estilo e a descrição a seguir que foi fornecida pelo usuário: ${description}`
 
-    generateContent({
+    const { sectionsWithContent } = await generateContent({
       context,
       sections: [
         { name: 'hero', variant: 'Default' },
@@ -135,32 +120,36 @@ export default function Onboarding() {
       ],
     })
 
-    console.log(context)
+    setPageData({
+      id: shortUUID,
+      title,
+      description,
+      theme,
+      style: pageStyle,
+      type: pageType,
+    })
+    setSections(sectionsWithContent)
 
-    return console.log(data)
+    const sectionsToSave = convertSectionsInObject(sectionsWithContent)
 
     const password = uuidv4().split('-')[0]
 
     const signUpUser = await supabase.auth.signUp({
-      email: email,
+      email,
       password,
       phone,
       options: {
-        emailRedirectTo: 'http://localhost:3000/panel',
+        emailRedirectTo: 'https://easepage.io/panel',
         data: {
           first_name: name.split(' ')[0],
           last_name: name.split(' ')[1],
+          phone,
         },
       },
     })
 
     if (signUpUser.error) {
-      toast({
-        title: 'Ops! Algo deu errado',
-        description: 'Por favor tente novamente',
-        variant: 'destructive',
-      })
-      return console.error(signUpUser.error)
+      return router.push(`/editor?error=sign_up`)
     }
 
     const createdPage = await supabase
@@ -170,23 +159,20 @@ export default function Onboarding() {
         description,
         slug: `${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${shortUUID}`,
         theme,
-        style,
-        type,
+        style: pageStyle,
+        type: pageType,
         is_active: false,
-        // page_structure: dataJSON,
+        page_structure: sectionsToSave,
         user_id: signUpUser.data.user?.id,
       })
       .select('id, slug')
       .single()
 
     if (createdPage.error) {
-      toast({
-        title: 'Ops! Algo deu errado ao gerar o seu site',
-        description: 'Por favor tente novamente',
-        variant: 'destructive',
-      })
-      return console.error(createdPage.error)
+      return router.push(`/editor?error=create_page`)
     }
+
+    router.push(`/editor?page_id=${createdPage.data.id}`)
   }
 
   const isDisabled =
@@ -211,9 +197,9 @@ export default function Onboarding() {
           <Zap className='w-20 h-20' />
           <span className='text-sm text-black'>Gerando seu site...</span>
         </div>
-        <span className='text-center text-xl italic'>
-          {buildingMessages[currentMessage]}
-        </span>
+        {/* <span className='text-center text-xl italic'>
+          {buildingMessages[currentMessageIndex]}
+        </span> */}
       </div>
     )
   }

@@ -1,12 +1,14 @@
 'use client'
 
-import { type SectionOptionType } from '@/components/builder/utils/sections/options'
+import { createElement } from 'react'
+import { LayoutTemplate, Plus, Trash } from 'lucide-react'
+
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
 import { ConfigOptions } from '@/components/builder/config-options'
+
 import { useSections } from '@/hooks/useSections'
-import { LayoutTemplate, Plus, Trash } from 'lucide-react'
-import { createElement } from 'react'
+import { SectionOptionType } from '@/types/section'
 
 export default function Editor() {
   const {
@@ -15,7 +17,7 @@ export default function Editor() {
     handleSectionBlur,
     handleSectionFocus,
     addNewSection,
-    handleSave,
+    getSectionsEditedContent,
     handleVariantChange,
     removeFocusedSection,
   } = useSections()
@@ -87,7 +89,7 @@ export default function Editor() {
             </div>
           )
         })}
-        <button type='button' onClick={handleSave}>
+        <button type='button' onClick={getSectionsEditedContent}>
           Salvar
         </button>
       </main>

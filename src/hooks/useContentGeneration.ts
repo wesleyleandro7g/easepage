@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-import { usePageContent } from '@/context/page-context'
 import { Features, Hero } from '@/components/builder/utils/sections/options'
 import { SectionOptionType } from '@/types/section'
 
@@ -33,8 +32,6 @@ async function fetchContent(context: string, properties: sectionPromptType) {
 }
 
 export const useContentGeneration = () => {
-  const { setSections } = usePageContent()
-
   const [isLoading, setIsLoading] = useState(false)
 
   const hash = crypto.randomUUID().split('-')[0]
@@ -93,12 +90,9 @@ export const useContentGeneration = () => {
       })
     }
 
-    setSections(sectionsWithContent)
+    setIsLoading(false)
 
-    setTimeout(() => {
-      setIsLoading(false)
-      return 'ok'
-    }, 2500)
+    return { sectionsWithContent }
   }
 
   return {

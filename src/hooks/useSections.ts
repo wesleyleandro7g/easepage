@@ -4,6 +4,16 @@ import { usePageContent } from '@/context/page-context'
 import type { SectionOptionType } from '@/types/section'
 import { useState } from 'react'
 
+type ContentType = {
+  [key: string]: {
+    id: string
+    name: string
+    variant: string
+    content: { [x: string]: string | null | undefined }
+    position: number
+  }
+}
+
 export function useSections() {
   const { sections, setSections } = usePageContent()
 
@@ -66,32 +76,6 @@ export function useSections() {
     setSections(updatedSections)
   }
 
-  function handleSave() {
-    console.log(sections)
-    let contentEdited = {}
-
-    sections.map((section, index) => {
-      let sectionContent = {}
-
-      section.contentList.map((content) => {
-        console.log(content)
-        const value = document.getElementById(content)?.textContent
-        sectionContent = {
-          ...sectionContent,
-          [content]: value,
-          position: index + 1,
-        }
-      })
-
-      contentEdited = {
-        ...contentEdited,
-        [section.id]: sectionContent,
-      }
-    })
-
-    console.log(contentEdited)
-  }
-
   function handleSectionFocus(id: string) {
     setFocusedSection(id)
   }
@@ -100,15 +84,68 @@ export function useSections() {
     setFocusedSection(null)
   }
 
+  function getSectionsEditedContent() {
+    let editedContent: ContentType = {}
+
+    sections.map((section, index) => {
+      section.contentList.map((content) => {
+        const value = document.getElementById(content)?.textContent
+        section.content = {
+          ...section.content,
+          [content]: value,
+        }
+      })
+
+      editedContent = {
+        ...editedContent,
+        [section.id]: {
+          id: section.id,
+          name: section.name,
+          variant: section.variant,
+          content: section.content,
+          position: index + 1,
+        },
+      }
+    })
+
+    return editedContent
+  }
+
+  function convertSectionsInObject(data: SectionOptionType[]) {
+    let dataToSave: ContentType = {}
+
+    data.map((section, index) => {
+      dataToSave = {
+        ...dataToSave,
+        [section.id]: {
+          id: section.id,
+          name: section.name,
+          variant: section.variant,
+          content: section.content,
+          position: index + 1,
+        },
+      }
+    })
+
+    return dataToSave
+  }
+
+  function convertSectionsInArray(data: ContentType) {
+    const dataToSaveArray = Object.values(data)
+    return dataToSaveArray
+  }
+
   return {
     sections,
     focusedSection,
     setFocusedSection,
-    handleSave,
     addNewSection,
+    getSectionsEditedContent,
     removeFocusedSection,
     handleVariantChange,
     handleSectionFocus,
     handleSectionBlur,
+    convertSectionsInObject,
+    convertSectionsInArray,
   }
 }
