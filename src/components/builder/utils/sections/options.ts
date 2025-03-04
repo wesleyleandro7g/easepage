@@ -129,3 +129,8 @@ export const Features = (props: SectionProps): SectionOptionType => ({
     },
   },
 })
+
+export const sectionOptions = {
+  Hero,
+  Features,
+}

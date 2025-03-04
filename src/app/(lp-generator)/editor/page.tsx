@@ -1,7 +1,8 @@
 'use client'
 
-import { createElement } from 'react'
+import { createElement, useEffect } from 'react'
 import { LayoutTemplate, Plus, Trash } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
 
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
@@ -17,10 +18,20 @@ export default function Editor() {
     handleSectionBlur,
     handleSectionFocus,
     addNewSection,
-    getSectionsEditedContent,
     handleVariantChange,
     removeFocusedSection,
+    getSectionsFromDB,
   } = useSections()
+
+  const searchParams = useSearchParams()
+
+  const pageId = searchParams.get('page_id')
+
+  useEffect(() => {
+    if (pageId) {
+      getSectionsFromDB(pageId)
+    }
+  }, [])
 
   return (
     <div className='min-h-screen relative' onClick={handleSectionBlur}>
@@ -89,12 +100,9 @@ export default function Editor() {
             </div>
           )
         })}
-        <button type='button' onClick={getSectionsEditedContent}>
-          Salvar
-        </button>
       </main>
 
-      <ConfigOptions osPublish={() => {}} form={null} isSubmitting={false} />
+      <ConfigOptions />
     </div>
   )
 }
