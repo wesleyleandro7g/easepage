@@ -119,7 +119,7 @@ export function ConfigOptions() {
         variant: 'default',
       })
     } else {
-      router.push(`/checkout?page_id=${pageId}`)
+      router.push(`/checkout?page_id=${pageId}&user_id=${pageData.user_id}`)
     }
   }
 

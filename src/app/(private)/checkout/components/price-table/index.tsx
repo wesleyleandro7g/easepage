@@ -21,12 +21,15 @@ const bennefits = [
   { title: 'Teste A/B', active: false },
 ]
 
-export function PriceTable() {
+interface PaymentButtonProps {
+  page_id: string
+  user_id: string
+}
+
+export function PriceTable(props: PaymentButtonProps) {
+  const { page_id, user_id } = props
+
   const [period, setPeriod] = useState('yearly')
-
-  const searchParams = useSearchParams()
-
-  const pageId = searchParams.get('page_id')
 
   return (
     <Tabs defaultValue='yearly' onValueChange={setPeriod}>
@@ -93,7 +96,8 @@ export function PriceTable() {
           </ul>
           <PaymentButton
             recurrence_type={period as 'yearly' | 'monthly' | 'quarterly'}
-            page_id={pageId!}
+            page_id={page_id}
+            user_id={user_id}
           >
             Assinar agora
           </PaymentButton>

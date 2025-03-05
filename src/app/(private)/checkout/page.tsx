@@ -2,56 +2,39 @@
 
 import 'animate.css'
 import { useEffect, useState } from 'react'
-import { Check, Copy, MoveRight, Zap } from 'lucide-react'
-import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
-import QRCode from 'qrcode'
+import { useSearchParams, useRouter } from 'next/navigation'
 
-import { useToast } from '@/hooks/use-toast'
-import { supabase } from '@/db/supabase/client'
-
-import { Progress } from '@/components/ui/progress'
-
-import { createChargeByPix } from '@/actions/createChargeByPix'
-import { unsecuredCopyToClipboard } from '@/utils/copy-to-clipboard'
-import { PaymentButton } from '@/components/payment-button'
 import { PriceTable } from './components/price-table'
-
-const pagePrice = process.env.NEXT_PUBLIC_PAGE_PRICE
+import { supabase } from '@/db/supabase/client'
 
 export default function Checkout() {
   const searchParams = useSearchParams()
+  const router = useRouter()
 
-  const pageSlug = searchParams.get('slug')
-  const pageId = searchParams.get('pageId')
-  const userId = searchParams.get('userId')
+  const [userId, setUserId] = useState<string | null>(null)
 
-  const { toast } = useToast()
+  const page_id = searchParams.get('page_id')
+  const user_id = searchParams.get('user_id')
 
-  const [processingPayment, setProcessingPayment] = useState(false)
-
-  async function handleCreateCharge() {
-    setProcessingPayment(true)
-
-    const createdBilling = await supabase
-      .from('billings')
-      .insert({
-        amount: pagePrice || '67.00',
-        plan: 'launch',
-        method: 'pix',
-        status: 'pending',
-        txid: '',
-        page_id: pageId,
-        user_id: userId,
-      })
-      .select('id')
+  function getUserId() {
+    supabase
+      .from('pages')
+      .select('user_id')
+      .eq('id', page_id)
       .single()
-
-    console.log('createdBilling', createdBilling)
-
-    setProcessingPayment(false)
+      .then((data) => {
+        router.replace(
+          `/checkout?page_id=${page_id}&user_id=${data.data?.user_id}`
+        )
+        setUserId(data.data?.user_id)
+      })
   }
+
+  useEffect(() => {
+    if (!user_id) {
+      getUserId()
+    }
+  }, [])
 
   return (
     <div className='flex flex-col items-center w-full min-h-screen sunrise py-12'>
@@ -66,7 +49,7 @@ export default function Checkout() {
         </div>
 
         <div className='w-full md:max-w-sm'>
-          <PriceTable />
+          <PriceTable page_id={page_id!} user_id={user_id || userId!} />
         </div>
       </div>
     </div>

@@ -14,10 +14,11 @@ type PaymentButtonProps = {
   children: React.ReactNode
   recurrence_type: 'monthly' | 'quarterly' | 'yearly'
   page_id: string
+  user_id: string
 }
 
 export function PaymentButton(props: PaymentButtonProps) {
-  const { children, page_id, recurrence_type } = props
+  const { children, page_id, user_id, recurrence_type } = props
 
   const stripePromise = loadStripe(
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY ?? ''
@@ -29,6 +30,7 @@ export function PaymentButton(props: PaymentButtonProps) {
       body: JSON.stringify({
         recurrence_type,
         page_id,
+        user_id,
       }),
       headers: {
         'Content-Type': 'application/json',

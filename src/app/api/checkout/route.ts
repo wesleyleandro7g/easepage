@@ -1,13 +1,18 @@
+import { createServer } from '@/db/supabase/server'
 import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '')
+  const supabase = createServer()
 
-  const { recurrence_type, page_id } = (await request.json()) as {
-    recurrence_type: 'monthly' | 'quarterly' | 'yearly'
-    page_id: string
-  }
+  const { recurrence_type, page_id, user_id, amount } =
+    (await request.json()) as {
+      recurrence_type: 'monthly' | 'quarterly' | 'yearly'
+      page_id: string
+      user_id: string
+      amount: string
+    }
 
   if (
     !recurrence_type ||
@@ -20,6 +25,20 @@ export async function POST(request: Request) {
   }
 
   try {
+    const createdBilling = await supabase
+      .from('billings')
+      .insert({
+        amount,
+        plan: recurrence_type,
+        method: 'card',
+        status: 'pending',
+        txid: '',
+        page_id,
+        user_id,
+      })
+      .select('id')
+      .single()
+
     const priceOptions = {
       monthly: process.env.STRIPE_MONTHLY_PRICE_ID,
       quarterly: process.env.STRIPE_QUARTERLY_PRICE_ID,
@@ -40,15 +59,15 @@ export async function POST(request: Request) {
       payment_method_types: ['card'],
       return_url: `${request.headers.get(
         'origin'
-      )}/payment-confirmation?session_id={CHECKOUT_SESSION_ID}&page_id=${page_id}`,
-      // cancel_url: `${request.headers.get(
-      //   'origin'
-      // )}/checkout?session_id={CHECKOUT_SESSION_ID}&page_id=${page_id}`,
+      )}/checkout/payment-confirmation?session_id={CHECKOUT_SESSION_ID}&order_id=${
+        createdBilling.data?.id
+      }`,
     })
 
     return NextResponse.json({
       id: session.id,
       client_secret: session.client_secret,
+      status: session.status,
       page_id,
     })
   } catch (error) {
