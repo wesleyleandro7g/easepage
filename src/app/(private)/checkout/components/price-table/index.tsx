@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { Check } from 'lucide-react'
-import { useSearchParams } from 'next/navigation'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { PaymentButton } from '@/components/payment-button'

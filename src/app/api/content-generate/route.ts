@@ -14,20 +14,20 @@ export async function POST(request: Request) {
   try {
     const { context, properties } = (await request.json()) as BodyRequestType
 
-    return NextResponse.json({
-      hero: {
-        'title-hero': 'Climatize Seu Espaço com Conforto e Eficiência',
-        'description-hero':
-          'Somos especialistas em instalação e manutenção de ar condicionado, garantindo um clima perfeito em qualquer estação. Com anos de experiência, oferecemos serviços personalizáveis para residências e empresas, assegurando a máxima eficiência e economia de energia.',
-        'cta-hero': 'Solicite Seu Orçamento',
-      },
-      features: {
-        'title-features':
-          'Por Que Escolher Nossos Serviços de Ar Condicionado?',
-        'description-features':
-          'Nossos técnicos certificados oferecem uma combinação exclusiva de expertise e atenção aos detalhes em cada instalação e serviço de manutenção. Usamos apenas equipamentos de alta qualidade e oferecemos suporte pós-instalação para garantir satisfação total. Descubra soluções eficazes e sustentáveis que melhoram o ar que você respira.',
-      },
-    })
+    // return NextResponse.json({
+    //   hero: {
+    //     'title-hero': 'Climatize Seu Espaço com Conforto e Eficiência',
+    //     'description-hero':
+    //       'Somos especialistas em instalação e manutenção de ar condicionado, garantindo um clima perfeito em qualquer estação. Com anos de experiência, oferecemos serviços personalizáveis para residências e empresas, assegurando a máxima eficiência e economia de energia.',
+    //     'cta-hero': 'Solicite Seu Orçamento',
+    //   },
+    //   features: {
+    //     'title-features':
+    //       'Por Que Escolher Nossos Serviços de Ar Condicionado?',
+    //     'description-features':
+    //       'Nossos técnicos certificados oferecem uma combinação exclusiva de expertise e atenção aos detalhes em cada instalação e serviço de manutenção. Usamos apenas equipamentos de alta qualidade e oferecemos suporte pós-instalação para garantir satisfação total. Descubra soluções eficazes e sustentáveis que melhoram o ar que você respira.',
+    //   },
+    // })
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-2024-08-06',

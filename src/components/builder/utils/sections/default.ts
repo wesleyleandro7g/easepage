@@ -1,4 +1,5 @@
-import { Features, Hero, SectionOptionType } from './options'
+import { SectionOptionType } from '@/types/section'
+import { Features, Hero } from './options'
 
 const hash = crypto.randomUUID().split('-')[0]
 
