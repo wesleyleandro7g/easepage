@@ -4,8 +4,9 @@ import Stripe from 'stripe'
 export async function POST(request: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY ?? '')
 
-  const { recurrence_type } = (await request.json()) as {
+  const { recurrence_type, page_id } = (await request.json()) as {
     recurrence_type: 'monthly' | 'quarterly' | 'yearly'
+    page_id: string
   }
 
   if (
@@ -39,12 +40,16 @@ export async function POST(request: Request) {
       payment_method_types: ['card'],
       return_url: `${request.headers.get(
         'origin'
-      )}/payment-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      )}/payment-confirmation?session_id={CHECKOUT_SESSION_ID}&page_id=${page_id}`,
+      // cancel_url: `${request.headers.get(
+      //   'origin'
+      // )}/checkout?session_id={CHECKOUT_SESSION_ID}&page_id=${page_id}`,
     })
 
     return NextResponse.json({
       id: session.id,
       client_secret: session.client_secret,
+      page_id,
     })
   } catch (error) {
     console.error(error)

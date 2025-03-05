@@ -1,6 +1,6 @@
 'use client'
 
-import LandingPage from './(service)/premium-website/page'
+import LandingPage from './(public)/premium-website/page'
 
 export default function Home() {
   return <LandingPage />

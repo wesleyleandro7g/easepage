@@ -5,9 +5,5 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return (
-    <Suspense>
-      <div className='w-full min-h-screen sunrise'>{children}</div>
-    </Suspense>
-  )
+  return <Suspense>{children}</Suspense>
 }
