@@ -128,6 +128,7 @@ export default function Onboarding() {
       style: pageStyle,
       type: pageType,
     })
+
     setSections(sectionsWithContent)
 
     const sectionsToSave = convertSectionsInObject(sectionsWithContent)

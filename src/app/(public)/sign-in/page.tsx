@@ -5,10 +5,10 @@ import { supabase } from '@/db/supabase/client'
 export default function SignIn() {
   async function signInWithEmail() {
     const { data, error } = await supabase.auth.signInWithOtp({
-      email: 'wesleyleandro.dev+teste3@gmail.com',
+      email: 'wesleyleandro.dev+teste2@gmail.com',
       options: {
-        shouldCreateUser: true,
-        emailRedirectTo: 'http://localhost:3000/pricing',
+        shouldCreateUser: false,
+        emailRedirectTo: 'http://localhost:3000/panel',
       },
     })
 
