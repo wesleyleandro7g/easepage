@@ -2,8 +2,9 @@
 
 import { ReactNode } from 'react'
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
+import { PageProvider } from '@/context/page-context'
 // import { SessionProvider } from 'next-auth/react'
-// import { Toaster } from '@/components/ui/sonner'
+import { Toaster } from '@/components/ui/toaster'
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const client = new QueryClient({
@@ -16,8 +17,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   return (
     <QueryClientProvider client={client}>
-      {children}
-      {/* <Toaster /> */}
+      <PageProvider>{children}</PageProvider>
+      <Toaster />
     </QueryClientProvider>
   )
 }

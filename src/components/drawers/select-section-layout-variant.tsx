@@ -12,7 +12,7 @@ import {
 } from '../ui/drawer'
 import Image from 'next/image'
 
-import { sectionOptions } from '../builder/utils/section-options'
+import { defaultSections } from '../builder/utils/sections/default'
 
 interface SelectSectionLayoutVariantProps {
   children: ReactNode
@@ -44,7 +44,7 @@ export function SelectSectionLayoutVariant(
 
         <div className='flex flex-col space-y-4 px-4'>
           <div className='flex flex-col space-y-4'>
-            {sectionOptions
+            {defaultSections
               .find((sectionLayout) => sectionLayout.name === layoutName)
               ?.variants.map((variant) => (
                 <button

@@ -2,13 +2,14 @@ import { sectionFocusStyle } from '@/components/builder/utils/section-focus-styl
 import { cn } from '@/lib/utils'
 
 interface SectionProps {
+  id: string
   focused?: boolean
   onClick?: () => void
   content?: { [x: string]: string | null | undefined }
 }
 
 export function FeaturesDefault(props: SectionProps) {
-  const { focused = false, onClick, content } = props
+  const { focused = false, onClick, content, id } = props
 
   return (
     <section
@@ -21,20 +22,20 @@ export function FeaturesDefault(props: SectionProps) {
     >
       <div className='flex flex-col max-w-[800px]'>
         <h1
-          id='features-title'
+          id={`title-${id}`}
           contentEditable
           suppressContentEditableWarning
           className='outline-none text-5xl sm:text-6xl font-bold leading-[3.5rem] tracking-tight text-gray-900'
         >
-          {content?.['features-title']}
+          {content?.['title-' + id]}
         </h1>
         <p
-          id='features-description'
+          id={`description-${id}`}
           contentEditable
           suppressContentEditableWarning
           className='outline-none mt-4 text-lg text-gray-600'
         >
-          {content?.['features-description']}
+          {content?.['description-' + id]}
         </p>
       </div>
       <div className='grid grid-cols-3 w-full gap-4 py-8'>
