@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Check } from 'lucide-react'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { usePageContent } from '@/context/page-context'
+import { useUser } from '@/hooks/useUser'
 // import { PaymentButton } from '@/components/payment-button'
 
 const links = {
@@ -14,8 +14,8 @@ const links = {
 }
 
 const bennefits = [
-  { title: 'Site no ar por 1 ano', active: true },
   { title: 'Temas profissionais', active: true },
+  { title: 'IA Exclusiva', active: true },
   { title: 'Domínio personalizado', active: false },
   { title: 'Dashboard analítica', active: false },
   { title: 'Upload de imagens', active: false },
@@ -28,13 +28,13 @@ const bennefits = [
 ]
 
 export function PriceTable() {
-  const { userData } = usePageContent()
+  const { user } = useUser()
 
   const [period, setPeriod] = useState<'yearly' | 'monthly' | 'quarterly'>(
     'yearly'
   )
 
-  const prepolutated = `?email=${userData.email}&name=${userData.name}&phone=${userData.phone}`
+  const prepolutated = `?email=${user?.email}&name=${user?.user_metadata.first_name}&phone=${user?.user_metadata.phone}`
 
   return (
     <Tabs

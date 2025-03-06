@@ -1,16 +1,15 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 
 import { Header } from '@/components/header'
 
+const pagesWithoutHeader = ['/checkout', '/editor']
+
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const searchParams = useSearchParams()
-  const isNewProject = searchParams.get('is_new')
+  const pathName = usePathname()
 
-  console.log(isNewProject)
-
-  if (isNewProject === 'true') {
+  if (pagesWithoutHeader.includes(pathName)) {
     return children
   }
 

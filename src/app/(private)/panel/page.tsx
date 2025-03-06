@@ -52,7 +52,10 @@ export default function Panel() {
               <span className='text-black/80 text-sm font-light'>
                 {page.slogan}
               </span>
-              <Link target='_blank' href={`${baseURL}/${page.slug}`}>
+              <Link
+                target='_blank'
+                href={page.domain ? page.domain : `${baseURL}/${page.slug}`}
+              >
                 <span className='flex flex-row gap-2 w-fit py-1 px-3 bg-black text-white rounded-full text-xs mt-2 justify-center items-center'>
                   {page.domain ? page.domain : `/${page.slug}`}
                   <ExternalLink className='size-3' />
