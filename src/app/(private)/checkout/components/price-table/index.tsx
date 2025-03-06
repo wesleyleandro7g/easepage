@@ -27,14 +27,18 @@ const bennefits = [
   { title: 'Teste A/B', active: false },
 ]
 
-export function PriceTable() {
+interface PriceTableProps {
+  src?: string | null
+}
+
+export function PriceTable({ src }: PriceTableProps) {
   const { user } = useUser()
 
   const [period, setPeriod] = useState<'yearly' | 'monthly' | 'quarterly'>(
     'yearly'
   )
 
-  const prepolutated = `?email=${user?.email}&name=${user?.user_metadata.first_name}&phone=${user?.user_metadata.phone}`
+  const prepolutated = `?email=${user?.email}&name=${user?.user_metadata.first_name}&phone=${user?.user_metadata.phone}&src=${src}`
 
   return (
     <Tabs

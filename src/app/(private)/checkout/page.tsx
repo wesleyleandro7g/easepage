@@ -156,7 +156,7 @@ export default function Checkout() {
         </div>
 
         <div className='w-full md:max-w-sm'>
-          <PriceTable />
+          <PriceTable src={page_id} />
         </div>
 
         <ul className='text-start flex md:hidden flex-col gap-2'>

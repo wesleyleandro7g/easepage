@@ -55,7 +55,7 @@ interface Subscription {
   charges: Charges
 }
 
-export interface WebhookEvent {
+export interface WebhookEventType {
   order_id: string
   order_ref: string
   order_status: string
