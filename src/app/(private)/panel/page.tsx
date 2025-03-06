@@ -1,31 +1,36 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { ExternalLink, Zap } from 'lucide-react'
+import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import { useQueryMyPages } from '@/db/queries/query-my-pages'
 import { useUser } from '@/hooks/useUser'
-import Link from 'next/link'
 
 export default function Panel() {
   const { user } = useUser()
-
   const { data } = useQueryMyPages({ user_id: user?.id })
+  const [baseURL, setBaseURL] = useState('')
 
-  const baseURL = window.location.origin
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setBaseURL(window.location.origin)
+    }
+  }, [])
 
   return (
-    <div className='flex w-full justify-center py-4 px-12'>
+    <div className='flex w-full justify-center py-4 px-4 md:px-12'>
       <div className='flex flex-col w-full max-w-7xl gap-4 justify-between items-start'>
-        <div className='flex justify-between items-center w-full'>
+        <div className='flex flex-col md:flex-row justify-between md:items-center w-full gap-2'>
           <span className='font-light text-lg'>
             Crie sites em um passe de mágica
           </span>
-          <Button>
+          <Button className='w-full md:w-fit'>
             Criar novo site <Zap className='text-white size-6' />{' '}
           </Button>
         </div>
-        <div className='grid grid-cols-3 gap-4 w-full'>
+        <div className='grid grid-1 md:grid-cols-3 gap-4 w-full'>
           {data?.map((page) => (
             <div
               key={page.id}
