@@ -15,10 +15,5 @@ export function encodedRedirect(
   return redirect(`${path}?${type}=${encodeURIComponent(message)}`)
 }
 
-export const protectedRoutes = [
-  '/panel',
-  '/onboarding',
-  '/billing',
-  '/account',
-  // '/checkout',
-]
+export const protectedRoutes = ['/panel', '/editor']
+export const authRoutes = ['/sign-in', '/auth/callback']

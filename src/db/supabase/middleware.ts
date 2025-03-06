@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
-import { protectedRoutes } from './utils'
+import { authRoutes, protectedRoutes } from './utils'
 
 export const updateSession = async (request: NextRequest) => {
   try {
@@ -39,12 +39,16 @@ export const updateSession = async (request: NextRequest) => {
       request.nextUrl.pathname.startsWith(route)
     )
 
+    const startsWithAuthRoute = authRoutes.find((route) =>
+      request.nextUrl.pathname.startsWith(route)
+    )
+
     if (startsWithProtectRoute && (!user.data.user || user.error)) {
       return NextResponse.redirect(new URL('/sign-in', request.url))
     }
 
-    if (request.nextUrl.pathname === '/sign-in' && user.data.user) {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
+    if (startsWithAuthRoute && user.data.user) {
+      return NextResponse.redirect(new URL('/panel', request.url))
     }
 
     return response
