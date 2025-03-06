@@ -16,4 +16,4 @@ export function encodedRedirect(
 }
 
 export const protectedRoutes = ['/panel', '/editor']
-export const authRoutes = ['/sign-in', '/auth/callback']
+export const authRoutes = ['/sign-in', '/auth/callback', '/briefing']

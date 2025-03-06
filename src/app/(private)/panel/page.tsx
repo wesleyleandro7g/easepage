@@ -26,9 +26,11 @@ export default function Panel() {
           <span className='font-light text-lg'>
             Crie sites em um passe de mágica
           </span>
-          <Button className='w-full md:w-fit'>
-            Criar novo site <Zap className='text-white size-6' />{' '}
-          </Button>
+          <Link className='w-full md:w-fit' href='/new-project/briefing'>
+            <Button className='w-full md:w-fit'>
+              Criar novo site <Zap className='text-white size-6' />{' '}
+            </Button>
+          </Link>
         </div>
         <div className='grid grid-1 md:grid-cols-3 gap-4 w-full'>
           {data?.map((page) => (

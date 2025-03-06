@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { MoveLeft, MoveRight, Zap } from 'lucide-react'
 import { v4 as uuidv4 } from 'uuid'
 import { useRouter } from 'next/navigation'
+import { useUser } from '@/hooks/useUser'
+import Link from 'next/link'
 
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
@@ -24,13 +26,18 @@ import { useSections } from '@/hooks/useSections'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
-export default function Onboarding() {
+interface BriefingProps {
+  isNewProject?: boolean
+}
+
+export default function Briefing({ isNewProject }: BriefingProps) {
   const router = useRouter()
 
   const [formSteps, setFormSteps] = useState<StepType>('step-1')
   const [startBuilding, setStartBuilding] = useState(false)
   // const [currentMessage, setCurrentMessage] = useState(0)
 
+  const { user } = useUser()
   const { setPageData, setSections } = usePageContent()
   const { convertSectionsInObject } = useSections()
   const { generateContent } = useContentGeneration()
@@ -45,9 +52,9 @@ export default function Onboarding() {
       theme: 'sunrise',
       title: '',
       description: '',
-      name: '',
-      email: '',
-      phone: '',
+      name: user?.user_metadata.first_name || '',
+      email: user?.email || '',
+      phone: user?.phone || '',
     },
   })
 
@@ -65,7 +72,10 @@ export default function Onboarding() {
   // }
 
   function handleNextStep() {
-    if (formSteps === 'step-5') return
+    if (formSteps === 'step-5' || (isNewProject && formSteps === 'step-4')) {
+      return
+    }
+
     setFormSteps((prev) => {
       const stepNumber = parseInt(prev.split('-')[1])
       return `step-${stepNumber + 1}` as StepType
@@ -133,17 +143,44 @@ export default function Onboarding() {
 
     const sectionsToSave = convertSectionsInObject(sectionsWithContent)
 
+    if (user?.id) {
+      const createdPage = await supabase
+        .from('pages')
+        .insert({
+          title,
+          description,
+          slug: `${title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')}-${shortUUID}`,
+          theme,
+          style: pageStyle,
+          type: pageType,
+          is_active: false,
+          page_structure: sectionsToSave,
+          user_id: user?.id,
+        })
+        .select('id, slug')
+        .single()
+
+      if (createdPage.error) {
+        return router.push(`/editor?error=create_page`)
+      }
+
+      router.push(`/editor?page_id=${createdPage.data.id}&is_new=true`)
+      return
+    }
+
     const password = uuidv4().split('-')[0]
 
     const signUpUser = await supabase.auth.signUp({
       email,
       password,
-      phone,
+      phone: phone || '',
       options: {
         emailRedirectTo: 'https://easepage.io/panel',
         data: {
-          first_name: name.split(' ')[0],
-          last_name: name.split(' ')[1],
+          first_name: name?.split(' ')[0],
+          last_name: name?.split(' ')[1],
           phone,
         },
       },
@@ -205,9 +242,13 @@ export default function Onboarding() {
     )
   }
 
+  const activeSubmitButton =
+    formSteps === 'step-5' || (formSteps === 'step-4' && isNewProject)
+
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen w-full'>
       <Progress value={Number(formSteps.split('-')[1]) * 20} />
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className='flex flex-col items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
@@ -218,6 +259,16 @@ export default function Onboarding() {
               })}
 
               <div className='flex flex-row w-full justify-end max-w-3xl gap-2 mt-8'>
+                <Link href='/panel'>
+                  <Button
+                    variant='outline'
+                    className='text-headline px-4 w-fit data-[disabled=true]:hidden focus:bg-transparent focus:text-black'
+                    data-disabled={!isNewProject}
+                    type='button'
+                  >
+                    Cancelar
+                  </Button>
+                </Link>
                 <Button
                   variant='outline'
                   className='text-headline px-4 w-fit data-[disabled=true]:hidden focus:bg-transparent focus:text-black'
@@ -230,11 +281,11 @@ export default function Onboarding() {
                 <Button
                   className='animate__animated animate__bounceInUp w-full md:w-fit disabled:opacity-50'
                   onClick={handleNextStep}
-                  type={formSteps !== 'step-5' ? 'button' : 'submit'}
+                  type={activeSubmitButton ? 'submit' : 'button'}
                   disabled={isDisabled}
                 >
-                  {formSteps === 'step-5' ? 'Gerar meu site' : 'Próximo'}
-                  {formSteps === 'step-5' ? <Zap /> : <MoveRight />}
+                  {activeSubmitButton ? 'Gerar meu site' : 'Próximo'}
+                  {activeSubmitButton ? <Zap /> : <MoveRight />}
                 </Button>
               </div>
             </main>
