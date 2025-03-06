@@ -16,13 +16,11 @@ export async function POST(request: Request) {
   const clientServer = createServer()
 
   await clientServer
-    .from('service_orders')
-    .upsert({
-      status: data.order_status,
-      method: data.payment_method,
-      session_id: data.order_id,
+    .from('pages')
+    .update({
+      is_active: true,
     })
-    .eq('email', data.Customer.email)
+    .eq('id', data.TrackingParameters.src)
 
   //   if (data.webhook_event_type === 'order_approved') {
   //     const costumerName = data.Customer.first_name
