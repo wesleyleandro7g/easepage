@@ -1,4 +1,4 @@
-import { createServer } from '@/db/supabase/server'
+// import { createServer } from '@/db/supabase/server'
 // import twilio from 'twilio'
 
 import { WebhookEvent } from './type'
@@ -11,16 +11,18 @@ export async function POST(request: Request) {
   //     process.env.TWILIO_AUTH_TOKEN
   //   )
 
-  const clientServer = createServer()
+  console.log('Webhook received:', data)
 
-  await clientServer
-    .from('service_orders')
-    .upsert({
-      status: data.order_status,
-      method: data.payment_method,
-      session_id: data.order_id,
-    })
-    .eq('email', data.Customer.email)
+  // const clientServer = createServer()
+
+  // await clientServer
+  //   .from('service_orders')
+  //   .upsert({
+  //     status: data.order_status,
+  //     method: data.payment_method,
+  //     session_id: data.order_id,
+  //   })
+  //   .eq('email', data.Customer.email)
 
   //   if (data.webhook_event_type === 'order_approved') {
   //     const costumerName = data.Customer.first_name

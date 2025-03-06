@@ -47,6 +47,7 @@ import { themes, setTheme } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
 
 import { supabase } from '@/db/supabase/client'
+import Link from 'next/link'
 
 export function ConfigOptions() {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
@@ -61,6 +62,7 @@ export function ConfigOptions() {
   const searchParams = useSearchParams()
 
   const pageId = searchParams.get('page_id')
+  const isNewProject = searchParams.get('is_new')
 
   const form = useForm({
     resolver: zodResolver(configFormSchema),
@@ -119,7 +121,7 @@ export function ConfigOptions() {
         variant: 'default',
       })
     } else {
-      router.push(`/checkout?page_id=${pageId}&user_id=${pageData.user_id}`)
+      router.push(`/checkout?page_id=${pageId}`)
     }
   }
 
@@ -354,6 +356,18 @@ export function ConfigOptions() {
                   data-issubmitting={isSubmitting}
                 />
               </Button>
+              {isNewProject && (
+                <Link href='/panel'>
+                  <Button
+                    className='w-full gap-2 data-[issubmitting=true]:animate-pulse bg-transparent text-black border border-black hover:bg-transparent hover:text-black'
+                    data-issubmitting={isSubmitting}
+                    disabled={isSubmitting}
+                    type='button'
+                  >
+                    Sair do editor
+                  </Button>
+                </Link>
+              )}
               <div className='absolute bottom-[-7px] right-[6%] transform -translate-x-[0%] w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-t-8 border-t-white rounded-t-sm'></div>
             </div>
           </form>
