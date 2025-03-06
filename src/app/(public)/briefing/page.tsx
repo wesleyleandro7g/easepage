@@ -26,11 +26,7 @@ import { useSections } from '@/hooks/useSections'
 
 type OnboardingFormSchemaType = z.infer<typeof onboardingFormScheme>
 
-interface BriefingProps {
-  isNewProject?: boolean
-}
-
-export default function Briefing({ isNewProject }: BriefingProps) {
+export default function Briefing() {
   const router = useRouter()
 
   const [formSteps, setFormSteps] = useState<StepType>('step-1')
@@ -41,6 +37,8 @@ export default function Briefing({ isNewProject }: BriefingProps) {
   const { setPageData, setSections } = usePageContent()
   const { convertSectionsInObject } = useSections()
   const { generateContent } = useContentGeneration()
+
+  const isNewProject = !!user?.id
 
   const form = useForm({
     resolver: zodResolver(onboardingFormScheme),
