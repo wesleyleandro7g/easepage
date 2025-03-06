@@ -4,11 +4,18 @@ import { useState } from 'react'
 import { Check } from 'lucide-react'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { PaymentButton } from '@/components/payment-button'
+import { useUser } from '@/hooks/useUser'
+// import { PaymentButton } from '@/components/payment-button'
+
+const links = {
+  monthly: process.env.NEXT_PUBLIC_CHECKOUT_MONTLY_PLAN_URL,
+  quarterly: process.env.NEXT_PUBLIC_CHECKOUT_QUARTERLY_PLAN_URL,
+  yearly: process.env.NEXT_PUBLIC_CHECKOUT_YEARLY_PLAN_URL,
+}
 
 const bennefits = [
-  { title: 'Site no ar por 1 ano', active: true },
   { title: 'Temas profissionais', active: true },
+  { title: 'IA Exclusiva', active: true },
   { title: 'Domínio personalizado', active: false },
   { title: 'Dashboard analítica', active: false },
   { title: 'Upload de imagens', active: false },
@@ -20,18 +27,22 @@ const bennefits = [
   { title: 'Teste A/B', active: false },
 ]
 
-interface PaymentButtonProps {
-  page_id: string
-  user_id: string
-}
+export function PriceTable() {
+  const { user } = useUser()
 
-export function PriceTable(props: PaymentButtonProps) {
-  const { page_id, user_id } = props
+  const [period, setPeriod] = useState<'yearly' | 'monthly' | 'quarterly'>(
+    'yearly'
+  )
 
-  const [period, setPeriod] = useState('yearly')
+  const prepolutated = `?email=${user?.email}&name=${user?.user_metadata.first_name}&phone=${user?.user_metadata.phone}`
 
   return (
-    <Tabs defaultValue='yearly' onValueChange={setPeriod}>
+    <Tabs
+      defaultValue='yearly'
+      onValueChange={(value) =>
+        setPeriod(value as 'yearly' | 'monthly' | 'quarterly')
+      }
+    >
       <div className='flex flex-col items-center gap-5 w-full'>
         <div
           data-primary={period === 'yearly'}
@@ -93,13 +104,19 @@ export function PriceTable(props: PaymentButtonProps) {
               </li>
             ))}
           </ul>
-          <PaymentButton
+          <a
+            href={`${links[period]}${prepolutated}`}
+            className='flex items-center justify-center gap-2 text-md font-bold px-8 py-3 rounded-lg w-full bg-white text-[#171E2C] shadow-xl hover:bg-black/90 animate__animated focus:bg-white hover:bg-white cursor-pointer'
+          >
+            Assinar agora
+          </a>
+          {/* <PaymentButton
             recurrence_type={period as 'yearly' | 'monthly' | 'quarterly'}
             page_id={page_id}
             user_id={user_id}
           >
             Assinar agora
-          </PaymentButton>
+          </PaymentButton> */}
         </div>
       </div>
     </Tabs>
