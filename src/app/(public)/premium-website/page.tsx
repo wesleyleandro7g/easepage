@@ -73,7 +73,7 @@ export default function LandingPage() {
               </a>
             </div>
             <div className='flex items-center justify-end space-x-2 text-white'>
-              <Link href='/premium-website/briefing' className='w-fit'>
+              <Link href='/briefing' className='w-fit'>
                 <Button
                   variant='outline'
                   size='lg'
@@ -99,7 +99,7 @@ export default function LandingPage() {
                 veja suas vendas decolarem! 🚀
               </p>
               <Link
-                href='/premium-website/briefing'
+                href='/briefing'
                 className='w-full md:w-fit mt-4 z-20 animate__animated animate__bounceInUp'
               >
                 <Button className='w-full md:w-full animate-gradient'>
@@ -367,10 +367,7 @@ export default function LandingPage() {
                     Copy pensada para gerar vendas
                   </li>
                 </ul>
-                <Link
-                  href='/premium-website/briefing'
-                  className='w-full md:w-fit z-20'
-                >
+                <Link href='/briefing' className='w-full md:w-fit z-20'>
                   <Button className='w-full md:w-fit mt-8 animate-gradient'>
                     Criar meu site
                     <Zap />
@@ -460,10 +457,7 @@ export default function LandingPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link
-                    href='/premium-website/briefing'
-                    className='w-full z-20'
-                  >
+                  <Link href='/briefing' className='w-full z-20'>
                     <Button className='w-full bg-white text-black hover:bg-white hover:text-black'>
                       Criar meu site
                       <Zap />

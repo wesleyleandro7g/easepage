@@ -13,7 +13,7 @@ type Step03Props = {
 export function Step03({ form, nextStep }: Step03Props) {
   return (
     <section className='flex flex-col gap-8 max-w-3xl items-center text-center'>
-      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp gradient-text-white'>
         Escolha o tema que mais combina com o seu negócio
       </h1>
       <div className='space-y-8 w-full'>

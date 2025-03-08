@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang='pt-BR' className={prompt.className}>
       <AppProvider>
-        <body className='antialiased sunrise'>{children}</body>
+        <body className='antialiased bg-easebg-800'>{children}</body>
       </AppProvider>
       <Toaster />
     </html>

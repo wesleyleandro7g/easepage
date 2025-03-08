@@ -37,9 +37,9 @@ export default function Checkout() {
 
   if (isLoading) {
     return (
-      <div className='flex flex-col items-center justify-center w-full min-h-screen sunrise py-12'>
-        <h1 className='text-3xl text-center md:text-left font-bold leading-[3rem] text-headline'>
-          ⏳ Carregando...
+      <div className='flex flex-col items-center justify-center w-full min-h-screen py-12'>
+        <h1 className='text-3xl text-center md:text-left font-bold leading-[3rem] gradient-text-white'>
+          <span className='no-gradient-text'>⏳</span> Carregando...
         </h1>
       </div>
     )
@@ -47,11 +47,11 @@ export default function Checkout() {
 
   if (data?.is_active) {
     return (
-      <div className='flex flex-col items-center justify-center w-full min-h-screen sunrise py-12 px-8 gap-2'>
-        <h1 className='text-7xl text-center font-bold tracking-tight animate__animated animate__bounceInUp text-headline'>
+      <div className='flex flex-col items-center justify-center w-full min-h-screen py-12 px-8 gap-2'>
+        <h1 className='text-7xl text-center font-bold tracking-tight animate__animated animate__bounceInUp'>
           🚀
         </h1>
-        <h1 className='text-5xl sm:text-6xl text-center font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp text-headline'>
+        <h1 className='text-5xl sm:text-6xl text-center font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp gradient-text-white'>
           Sua página está ativa e ONLINE!
         </h1>
         <p className='text-lg font-normal leading-5 text-center text-subheadline max-w-2xl animate__animated animate__bounceInUp'>
@@ -82,11 +82,11 @@ export default function Checkout() {
 
   if (error) {
     return (
-      <div className='flex flex-col items-center justify-center w-full min-h-screen sunrise py-12 px-8 gap-2'>
-        <h1 className='text-7xl text-center font-bold tracking-tight animate__animated animate__bounceInUp text-headline'>
+      <div className='flex flex-col items-center justify-center w-full min-h-screen py-12 px-8 gap-2'>
+        <h1 className='text-7xl text-center font-bold tracking-tight animate__animated animate__bounceInUp'>
           🥲
         </h1>
-        <h1 className='text-4xl sm:text-4xl text-center font-bold leading-[2.6rem] tracking-tight animate__animated animate__bounceInUp text-headline'>
+        <h1 className='text-4xl sm:text-4xl text-center font-bold leading-[2.6rem] tracking-tight animate__animated animate__bounceInUp gradient-text-white'>
           Houve um erro ao ativar sua página, mas NÃO SE PREOCUPE!
         </h1>
         <p className='text-lg font-normal leading-5 text-center text-subheadline max-w-2xl animate__animated animate__bounceInUp'>
@@ -117,39 +117,44 @@ export default function Checkout() {
   }
 
   return (
-    <div className='flex flex-col items-center w-full min-h-screen sunrise py-12 px-8'>
+    <div className='flex flex-col items-center w-full min-h-screen py-12 px-8 bg-easebg-800 bg-circle-pattern'>
       <div className='flex flex-col md:flex-row gap-8 max-w-4xl text-center items-center md:justify-between'>
         <div className='flex flex-1 flex-col gap-4'>
-          <h1 className='text-5xl sm:text-6xl text-left font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp text-headline'>
-            Pronto Para Lançar a Sua Máquina de Vendas? 🚀
+          <h1 className='text-5xl sm:text-6xl text-left font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp gradient-text-white'>
+            Pronto Para Lançar a Sua Máquina de Vendas?{' '}
+            <span className='no-gradient-text'>🚀</span>
           </h1>
-          <p className='text-lg font-normal leading-5 text-left text-subheadline max-w-2xl animate__animated animate__bounceInUp'>
+          <p className='text-lg font-light text-left text-white max-w-2xl animate__animated animate__bounceInUp'>
+            🚨 OFERTA DE LANÇAMENTO!!! 🚨 Garanta seu site com até 80% de
+            desconto por tempo limitado!
+          </p>
+          {/* <p className='text-lg font-light text-left text-white max-w-2xl animate__animated animate__bounceInUp'>
             Seu site está pronto para impulsionar suas vendas e fortalecer sua
             autoridade. Dê o último passo e coloque sua presença online no ar!
-          </p>
+          </p> */}
 
           <ul className='text-start hidden md:flex flex-col gap-2'>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <ShieldCheck className='text-black w-5 h-5' /> 7 Dias de Garantia
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <ShieldCheck className='text-white w-5 h-5' /> 7 Dias de Garantia
             </li>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <Headset className='text-black w-5 h-5' /> Suporte Prioritário
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <Headset className='text-white w-5 h-5' /> Suporte Prioritário
               Direto no WhatsApp
             </li>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <Trophy className='text-black w-5 h-5' /> Acesso às Atualizações
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <Trophy className='text-white w-5 h-5' /> Acesso às Atualizações
               Futuras
             </li>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <WandSparkles className='text-black w-5 h-5' /> Personalize seu
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <WandSparkles className='text-white w-5 h-5' /> Personalize seu
               Site a Qualquer Momento
             </li>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <Sparkles className='text-black w-5 h-5' /> Gere o Conteúdo com
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <Sparkles className='text-white w-5 h-5' /> Gere o Conteúdo com
               Facilidade usando nossa IA
             </li>
-            <li className='text-black text-md inline-flex items-center gap-2'>
-              <Palette className='text-black w-5 h-5' /> Temas Profissionais e
+            <li className='text-white text-md inline-flex items-center gap-2'>
+              <Palette className='text-white w-5 h-5' /> Temas Profissionais e
               Exclusivos
             </li>
           </ul>
@@ -160,27 +165,27 @@ export default function Checkout() {
         </div>
 
         <ul className='text-start flex md:hidden flex-col gap-2'>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <ShieldCheck className='text-black w-5 h-5' /> 7 Dias de Garantia
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <ShieldCheck className='text-white w-5 h-5' /> 7 Dias de Garantia
           </li>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <Headset className='text-black w-5 h-5' /> Suporte Prioritário
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <Headset className='text-white w-5 h-5' /> Suporte Prioritário
             Direto no WhatsApp
           </li>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <Trophy className='text-black w-5 h-5' /> Acesso às Atualizações
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <Trophy className='text-white w-5 h-5' /> Acesso às Atualizações
             Futuras
           </li>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <WandSparkles className='text-black w-5 h-5' /> Personalize seu Site
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <WandSparkles className='text-white w-5 h-5' /> Personalize seu Site
             a Qualquer Momento
           </li>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <Sparkles className='text-black w-5 h-5' /> Gere o Conteúdo com
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <Sparkles className='text-white w-5 h-5' /> Gere o Conteúdo com
             Facilidade usando nossa IA
           </li>
-          <li className='text-black text-md inline-flex items-center gap-2'>
-            <Palette className='text-black w-5 h-5' /> Temas Profissionais e
+          <li className='text-white text-md inline-flex items-center gap-2'>
+            <Palette className='text-white w-5 h-5' /> Temas Profissionais e
             Exclusivos
           </li>
         </ul>

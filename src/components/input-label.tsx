@@ -7,10 +7,11 @@ interface InputWithLabelProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
   wrapperClassName?: string
+  labelClassName?: string
 }
 
 export function InputWithLabel(props: InputWithLabelProps) {
-  const { label, wrapperClassName, ...rest } = props
+  const { label, wrapperClassName, labelClassName, ...rest } = props
 
   return (
     <div
@@ -19,7 +20,9 @@ export function InputWithLabel(props: InputWithLabelProps) {
         wrapperClassName
       )}
     >
-      <Label htmlFor={props.name}>{label}</Label>
+      <Label htmlFor={props.name} className={labelClassName}>
+        {label}
+      </Label>
       <Input {...rest} />
     </div>
   )

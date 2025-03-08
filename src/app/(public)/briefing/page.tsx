@@ -230,12 +230,9 @@ export default function Briefing() {
     return (
       <div className='min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
         <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
-          <Zap className='w-20 h-20' />
-          <span className='text-sm text-black'>Gerando seu site...</span>
+          <Zap className='w-20 h-20 text-white' />
+          <span className='text-lg text-white'>Gerando seu site...</span>
         </div>
-        {/* <span className='text-center text-xl italic'>
-          {buildingMessages[currentMessageIndex]}
-        </span> */}
       </div>
     )
   }
@@ -244,7 +241,7 @@ export default function Briefing() {
     formSteps === 'step-5' || (formSteps === 'step-4' && isNewProject)
 
   return (
-    <div className='min-h-screen w-full'>
+    <div className='min-h-screen w-full bg-circle-pattern'>
       <Progress value={Number(formSteps.split('-')[1]) * 20} />
 
       <Form {...form}>
@@ -256,11 +253,11 @@ export default function Briefing() {
                 nextStep: handleNextStep,
               })}
 
-              <div className='flex flex-row w-full justify-end max-w-3xl gap-2 mt-8'>
+              <div className='flex flex-row w-full justify-end max-w-3xl gap-2 mt-8 animate__animated animate__bounceInUp'>
                 <Link href='/panel'>
                   <Button
                     variant='outline'
-                    className='text-headline px-4 w-fit data-[disabled=true]:hidden focus:bg-transparent focus:text-black'
+                    className='px-4 w-fit data-[disabled=true]:hidden focus:bg-easebg-500 border border-white focus:text-white text-white'
                     data-disabled={!isNewProject}
                     type='button'
                   >
@@ -269,7 +266,7 @@ export default function Briefing() {
                 </Link>
                 <Button
                   variant='outline'
-                  className='text-headline px-4 w-fit data-[disabled=true]:hidden focus:bg-transparent focus:text-black'
+                  className='px-4 w-fit data-[disabled=true]:hidden bg-transparent focus:text-white text-white hover:border border-white'
                   onClick={handlePrevStep}
                   data-disabled={formSteps === 'step-1'}
                   type='button'
@@ -277,7 +274,7 @@ export default function Briefing() {
                   <MoveLeft />
                 </Button>
                 <Button
-                  className='animate__animated animate__bounceInUp w-full md:w-fit disabled:opacity-50'
+                  className='w-full md:w-fit animate-gradient'
                   onClick={handleNextStep}
                   type={activeSubmitButton ? 'submit' : 'button'}
                   disabled={isDisabled}

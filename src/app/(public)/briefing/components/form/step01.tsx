@@ -19,7 +19,7 @@ type Step01Props = {
 export function Step01({ form, nextStep }: Step01Props) {
   return (
     <section className='flex flex-col gap-8 max-w-3xl items-center text-center w-full'>
-      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp gradient-text-white'>
         O que você quer vender ou exibir no seu site?
       </h1>
       <div className='space-y-8 w-full animate__animated animate__fadeInUp'>
@@ -33,7 +33,7 @@ export function Step01({ form, nextStep }: Step01Props) {
                   {productType.map((product) => (
                     <label
                       key={product.id}
-                      className='flex flex-col items-center justify-center w-full p-4 h-28 rounded-lg bg-black/10 cursor-pointer font-semibold text-sm data-[checked=true]:bg-black data-[checked=true]:text-white transition'
+                      className='flex flex-col items-center justify-center w-full p-4 h-28 rounded-lg text-white cursor-pointer font-semibold text-sm data-[checked=true]:bg-white data-[checked=true]:text-black data-[checked=true]:border-white transition border border-white/20 hover:border-white'
                       data-checked={field.value === product.slug}
                     >
                       {`${product.name} ${product.emoji}`}
@@ -69,13 +69,14 @@ export function Step01({ form, nextStep }: Step01Props) {
                     <InputWithLabel
                       label='Qual o tipo de produto?'
                       wrapperClassName='max-w-full'
+                      placeholder='Ex: Roupas, acessórios, etc.'
                       maxLength={60}
                       {...field}
                     />
                   </div>
                 </FormControl>
                 <FormMessage className='text-left' />
-                <FormDescription className='text-left'>
+                <FormDescription className='text-left text-white'>
                   {form.watch('customType')?.length || 0}/60
                 </FormDescription>
               </FormItem>

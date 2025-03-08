@@ -19,7 +19,7 @@ type Step02Props = {
 export function Step02({ form, nextStep }: Step02Props) {
   return (
     <section className='flex flex-col gap-8 max-w-3xl items-center text-center'>
-      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp gradient-text-white'>
         Qual estilo visual mais combina com o seu negócio?
       </h1>
       <div className='space-y-8 w-full'>
@@ -33,7 +33,7 @@ export function Step02({ form, nextStep }: Step02Props) {
                   {siteStyle.map((style) => (
                     <label
                       key={style.id}
-                      className='flex flex-col items-center justify-center w-full p-4 h-28 rounded-lg bg-black/10 cursor-pointer font-semibold text-sm data-[checked=true]:bg-black data-[checked=true]:text-white transition'
+                      className='flex flex-col items-center justify-center w-full p-4 h-28 rounded-lg text-white cursor-pointer font-semibold text-sm data-[checked=true]:bg-white data-[checked=true]:text-black data-[checked=true]:border-white transition border border-white/20 hover:border-white'
                       data-checked={field.value === style.slug}
                     >
                       {`${style.name} ${style.emoji}`}
@@ -70,13 +70,14 @@ export function Step02({ form, nextStep }: Step02Props) {
                     <InputWithLabel
                       label='Qual o tipo de estilo?'
                       wrapperClassName='max-w-full'
+                      placeholder='Qual estilo visual mais combina com o seu negócio?'
                       maxLength={60}
                       {...field}
                     />
                   </div>
                 </FormControl>
                 <FormMessage className='text-left' />
-                <FormDescription className='text-left'>
+                <FormDescription className='text-left text-white'>
                   {form.watch('customStyle')?.length || 0}/60
                 </FormDescription>
               </FormItem>

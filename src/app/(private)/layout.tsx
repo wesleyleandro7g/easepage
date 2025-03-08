@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className='flex flex-col w-full min-h-screen overflow-hidden bg-white sunrise'>
+    <div className='flex flex-col w-full min-h-screen overflow-hidden bg-easebg-800 bg-circle-pattern'>
       <Header />
       <main className='flex w-full h-full overflow-auto'>{children}</main>
     </div>

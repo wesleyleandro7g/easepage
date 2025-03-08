@@ -191,6 +191,8 @@ export function ConfigOptions() {
                                   placeholder='Ex: Loja da Maria'
                                   maxLength={30}
                                   wrapperClassName='max-w-full'
+                                  className='text-black/80 border-black/60 focus-visible:border-black'
+                                  labelClassName='text-black/80'
                                   {...field}
                                 />
                               </FormControl>
@@ -208,11 +210,12 @@ export function ConfigOptions() {
                             <FormItem>
                               <FormControl>
                                 <InputTextArea
-                                  className='min-h-[80px]'
+                                  className='min-h-[80px] text-black/80 border-black/60 focus-visible:border-black'
                                   label='Adicione um slogan:'
                                   placeholder='Ex: A melhor da cidade!'
                                   maxLength={40}
                                   wrapperClassName='max-w-full'
+                                  labelClassName='text-black/80'
                                   {...field}
                                 />
                               </FormControl>
@@ -305,6 +308,8 @@ export function ConfigOptions() {
                                   placeholder='Ex: (11) 99999-9999'
                                   maxLength={40}
                                   wrapperClassName='max-w-full'
+                                  className='text-black/80 border-black/60 focus-visible:border-black'
+                                  labelClassName='text-black/80'
                                   {...field}
                                 />
                               </FormControl>
@@ -319,11 +324,12 @@ export function ConfigOptions() {
                             <FormItem>
                               <FormControl>
                                 <InputTextArea
-                                  className='min-h-[80px]'
+                                  className='min-h-[80px] text-black/80 border-black/60 focus-visible:border-black'
                                   label='Mensagem inicial:'
                                   placeholder='Ex: Olá, vim pelo seu site e quero conhecer melhor a sua empresa.'
                                   maxLength={80}
                                   wrapperClassName='max-w-full'
+                                  labelClassName='text-black/80'
                                   {...field}
                                 />
                               </FormControl>
@@ -341,7 +347,7 @@ export function ConfigOptions() {
               </Accordion>
 
               <Button
-                className='w-full gap-2 data-[issubmitting=true]:animate-pulse'
+                className='w-full gap-2 data-[issubmitting=true]:animate-pulse animate-gradient'
                 data-issubmitting={isSubmitting}
                 disabled={isSubmitting}
                 type='submit'

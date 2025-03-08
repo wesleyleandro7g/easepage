@@ -47,12 +47,12 @@ export function PriceTable({ src }: PriceTableProps) {
         setPeriod(value as 'yearly' | 'monthly' | 'quarterly')
       }
     >
-      <div className='flex flex-col items-center gap-5 w-full'>
+      <div className='flex flex-col items-center gap-5 w-full animate__animated animate__bounceInUp'>
         <div
           data-primary={period === 'yearly'}
-          className='mt-5 flex flex-col items-start gap-5 p-6 rounded-3xl max-w-sm md:max-w-md w-full data-[primary=true]:bg-gradient-to-bl from-[#3E26E8] to-[#7331F1] bg-[#171E2C] shadow-xl animate__animated animate__bounceInUp'
+          className='mt-5 flex flex-col items-start gap-5 p-6 rounded-3xl max-w-sm md:max-w-md w-full animate-gradient shadow-xl'
         >
-          <TabsList className='grid w-full grid-cols-3 '>
+          <TabsList className='grid w-full grid-cols-3 bg-white'>
             <TabsTrigger
               className='data-[state=active]:bg-gradient-to-bl from-[#3E26E8] to-[#7331F1]'
               value='yearly'
@@ -60,13 +60,13 @@ export function PriceTable({ src }: PriceTableProps) {
               Anual
             </TabsTrigger>
             <TabsTrigger
-              className='data-[state=active]:bg-[#171E2C]'
+              className='data-[state=active]:bg-gradient-to-bl from-[#3E26E8] to-[#7331F1]'
               value='quarterly'
             >
               Trimestral
             </TabsTrigger>
             <TabsTrigger
-              className='data-[state=active]:bg-[#171E2C]'
+              className='data-[state=active]:bg-gradient-to-bl from-[#3E26E8] to-[#7331F1]'
               value='monthly'
             >
               Mensal
@@ -75,19 +75,19 @@ export function PriceTable({ src }: PriceTableProps) {
           <div className='w-full flex flex-col items-start'>
             <TabsContent value='monthly'>
               <h2 className='text-white text-6xl font-extrabold text-start'>
-                R$49
+                R$29
                 <span className='text-sm font-light'>,00/mês</span>
               </h2>
             </TabsContent>
             <TabsContent value='quarterly'>
               <h2 className='text-white text-6xl font-extrabold text-start'>
-                R$39
+                R$19
                 <span className='text-sm font-light'>,00/mês</span>
               </h2>
             </TabsContent>
             <TabsContent value='yearly'>
               <h2 className='text-white text-6xl font-extrabold text-start'>
-                R$19
+                R$9
                 <span className='text-sm font-light'>,00/mês</span>
               </h2>
             </TabsContent>
@@ -110,7 +110,7 @@ export function PriceTable({ src }: PriceTableProps) {
           </ul>
           <a
             href={`${links[period]}${prepolutated}`}
-            className='flex items-center justify-center gap-2 text-md font-bold px-8 py-3 rounded-lg w-full bg-white text-[#171E2C] shadow-xl hover:bg-black/90 animate__animated focus:bg-white hover:bg-white cursor-pointer'
+            className='flex items-center justify-center gap-2 text-md font-bold px-8 py-3 rounded-lg w-full bg-white text-[#171E2C] shadow-xl hover:bg-black/90 focus:bg-white hover:bg-white cursor-pointer'
           >
             Assinar agora
           </a>

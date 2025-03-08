@@ -18,7 +18,7 @@ type Step04Props = {
 export function Step04({ form }: Step04Props) {
   return (
     <section className='flex flex-col gap-8 max-w-3xl items-center text-center'>
-      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp text-headline'>
+      <h1 className='text-3xl md:text-5xl font-extrabold tracking-tight animate__animated animate__fadeInUp gradient-text-white'>
         Fale um pouco sobre o seu negócio
       </h1>
       <div className='space-y-4 w-full text-start animate__animated animate__fadeInUp'>
@@ -37,7 +37,9 @@ export function Step04({ form }: Step04Props) {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>{form.watch('title').length}/40</FormDescription>
+              <FormDescription className='text-white'>
+                {form.watch('title').length}/40
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -57,7 +59,7 @@ export function Step04({ form }: Step04Props) {
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className='text-white'>
                 {form.watch('description').length}/280
               </FormDescription>
               <FormMessage />

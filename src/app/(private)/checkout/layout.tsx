@@ -5,5 +5,9 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <Suspense>{children}</Suspense>
+  return (
+    <Suspense>
+      <div className='bg-easebg-800'>{children}</div>
+    </Suspense>
+  )
 }

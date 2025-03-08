@@ -23,7 +23,7 @@ export default function Panel() {
     <div className='flex w-full justify-center py-4 px-4 md:px-12'>
       <div className='flex flex-col w-full max-w-7xl gap-4 justify-between items-start'>
         <div className='flex flex-col md:flex-row justify-between md:items-center w-full gap-2'>
-          <span className='font-light text-lg'>
+          <span className='font-light text-lg text-white'>
             Crie sites em um passe de mágica
           </span>
           <Link className='w-full md:w-fit' href='/new-project/briefing'>
@@ -36,10 +36,10 @@ export default function Panel() {
           {data?.map((page) => (
             <div
               key={page.id}
-              className='flex flex-col bg-[#00000010] border border-black/10 p-4 rounded-lg hover:bg-[#00000020] transition-all duration-200'
+              className='flex flex-col bg-transparent border p-4 rounded-lg transition-all duration-200 border-white/20 hover:border-white'
             >
               <div className='flex flex-row justify-between items-start gap-2'>
-                <span className='text-black font-bold text-lg'>
+                <span className='text-white font-bold text-lg'>
                   {page.title}
                 </span>
                 <span
@@ -49,14 +49,14 @@ export default function Panel() {
                   {page.is_active ? 'Ativo' : 'Inativo'}
                 </span>
               </div>
-              <span className='text-black/80 text-sm font-light'>
+              <span className='text-white/80 text-sm font-light'>
                 {page.slogan}
               </span>
               <Link
                 target='_blank'
                 href={page.domain ? page.domain : `${baseURL}/${page.slug}`}
               >
-                <span className='flex flex-row gap-2 w-fit py-1 px-3 bg-black text-white rounded-full text-xs mt-2 justify-center items-center'>
+                <span className='flex flex-row gap-2 w-fit py-1 px-3 bg-white text-black rounded-full text-xs mt-2 justify-center items-center'>
                   {page.domain ? page.domain : `/${page.slug}`}
                   <ExternalLink className='size-3' />
                 </span>

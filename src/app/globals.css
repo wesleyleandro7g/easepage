@@ -113,9 +113,9 @@ body {
   background: linear-gradient(45deg, #8d44f6, #3e40f4, #ff69b4, #ffc300);
   background-size: 400% 400%;
   animation: gradientAnimation 6s ease infinite;
-  &:hover {
-    box-shadow: 0 0 40px rgba(141, 68, 246, 0.7),
-      0 0 30px rgba(62, 64, 244, 0.7);
+
+  &:disabled {
+    background: #191C1F
   }
 }
 
@@ -133,6 +133,54 @@ body {
   background-size: 400% 400%;
   animation: gradientAnimation 6s ease infinite;
 }
+
+.gradient-text-white {
+  /* background: linear-gradient(to right, #fbbf24, #ef4444); */
+  color: transparent;
+  background: linear-gradient(90deg, #ccc, #fff, #ccc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.no-gradient-text {
+  color: initial;
+  background: none;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+}
+
+.bg-grid-pattern {
+  background-image: url('/grid-pattern-60.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.bg-circle-pattern {
+  background: rgba(141, 68, 246, 20%);
+  background: radial-gradient(
+    circle,
+    rgba(141, 68, 246, 20%) 0%,
+    rgba(3, 1, 20, 1) 52%
+  );
+}
+
+/* .bg-circle-pattern::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 50%;
+  background: url('/linear-lines.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  z-index: -1;
+} */
 
 @layer base {
   :root {

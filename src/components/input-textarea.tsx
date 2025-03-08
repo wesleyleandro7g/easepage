@@ -7,10 +7,11 @@ interface InputWithLabelProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string
   wrapperClassName?: string
+  labelClassName?: string
 }
 
 export function InputTextArea(props: InputWithLabelProps) {
-  const { label, wrapperClassName, ...rest } = props
+  const { label, wrapperClassName, labelClassName, ...rest } = props
 
   return (
     <div
@@ -19,7 +20,9 @@ export function InputTextArea(props: InputWithLabelProps) {
         wrapperClassName
       )}
     >
-      <Label htmlFor={props.name}>{label}</Label>
+      <Label htmlFor={props.name} className={labelClassName}>
+        {label}
+      </Label>
       <Textarea {...rest} />
     </div>
   )
