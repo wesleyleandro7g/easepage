@@ -52,6 +52,7 @@ import { supabase } from '@/db/supabase/client'
 export function ConfigPopup() {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [showTips, setShowTips] = useState(false)
 
   const router = useRouter()
   const { toast } = useToast()
@@ -130,7 +131,7 @@ export function ConfigPopup() {
       return toast({
         title: 'Sucesso!',
         description: 'As alterações foram salvas e publicadas',
-        variant: 'default',
+        variant: 'success',
       })
     } else {
       router.push(`/checkout?page_id=${pageId}`)
@@ -159,10 +160,41 @@ export function ConfigPopup() {
     form.setValue('theme', pageData?.theme || themes[0])
   }, [pageData])
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowTips(true)
+      setTimeout(() => {
+        setShowTips(false)
+      }, 16000)
+    }, 6000)
+  }, [])
+
   return (
     <Popover>
-      <PopoverTrigger className='bg-gradient-to-bl from-[#F8ACFF] to-[#FFF95B] p-2 rounded-full shadow-xl fixed right-5 bottom-8'>
-        <Zap className='w-8 h-8 fill-[#D9D9D9]' />
+      <PopoverTrigger
+        data-tips={showTips}
+        className='animate-gradient p-2 rounded-full data-[tips=true]:rounded-lg shadow-xl fixed right-5 bottom-8 transition-all duration-100'
+      >
+        <div
+          className={`h-[40px] flex items-center justify-center gap-2 rounded-full p-0 w-[40px] data-[tips=true]:w-[280px] data-[tips=true]:h-[380px] transition-all duration-300`}
+          data-tips={showTips}
+        >
+          {showTips && (
+            <div
+              className='flex flex-col justify-center items-center w-full h-full'
+              onClick={() => setShowTips(false)}
+            >
+              <span className='text-white'>
+                👋 Clique aqui para acessar mais configurações e para publicar
+                seu site!
+              </span>
+            </div>
+          )}
+          <Zap
+            data-tips={showTips}
+            className='w-8 h-8 flex data-[tips=true]:hidden fill-[#ffffff]'
+          />
+        </div>
       </PopoverTrigger>
       <PopoverContent className='w-screen max-w-full md:max-w-sm shadow-none mx-auto bg-transparent border-0 ring-0'>
         <Form {...form}>
