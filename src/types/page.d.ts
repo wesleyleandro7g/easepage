@@ -5,6 +5,7 @@ export type PageDataType = {
   slogan?: string
   slug?: string
   theme?: string
+  font?: string
   style?: string
   type?: string
   is_active?: boolean

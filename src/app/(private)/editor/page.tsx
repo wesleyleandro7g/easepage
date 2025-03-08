@@ -11,6 +11,7 @@ import {
   Zap,
 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 import { AddSection } from '@/components/drawers/add-section'
 import { ChangeVariant } from '@/components/drawers/change-variant'
@@ -20,8 +21,9 @@ import { useSections } from '@/hooks/useSections'
 import { SectionOptionType } from '@/types/section'
 import { ManageLinks } from '@/components/drawers/manage-links'
 import { usePageContent } from '@/context/page-context'
-import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+
+import { fonts } from '@/config/fonts'
 
 export default function Editor() {
   const {
@@ -41,6 +43,8 @@ export default function Editor() {
   const searchParams = useSearchParams()
 
   const pageId = searchParams.get('page_id')
+
+  const font = fonts.find((item) => item.name === pageData.font)?.font.className
 
   useEffect(() => {
     if (pageId) {
@@ -85,7 +89,7 @@ export default function Editor() {
 
   return (
     <div
-      className={`min-h-screen relative ${pageData.theme}`}
+      className={`min-h-screen relative ${pageData.theme} ${font}`}
       onClick={handleSectionBlur}
     >
       <main

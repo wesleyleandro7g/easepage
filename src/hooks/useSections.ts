@@ -206,6 +206,7 @@ export function useSections() {
       title: data.title,
       description: data.description,
       theme: data.theme,
+      font: data.font,
       style: data.style,
       slug: data.slug,
       type: data.type,

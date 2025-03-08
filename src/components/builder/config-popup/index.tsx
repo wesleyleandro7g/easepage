@@ -45,12 +45,14 @@ import { useSections } from '@/hooks/useSections'
 import { useToast } from '@/hooks/use-toast'
 
 import { themes } from '@/config/theme'
+import { fonts } from '@/config/fonts'
 import type { themeType } from '@/config/theme/theme'
 
 import { supabase } from '@/db/supabase/client'
 
 export function ConfigPopup() {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
+  const [selectedFont, setSelectedFont] = useState(fonts[0].name)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showTips, setShowTips] = useState(false)
 
@@ -70,6 +72,7 @@ export function ConfigPopup() {
     defaultValues: {
       style: pageData?.style || 'modern-minimalist',
       theme: pageData?.theme || themes[0],
+      font: pageData?.font || 'Prompt',
       title: pageData?.title || '',
       slogan: pageData?.slogan || '',
       whatsapp: pageData?.whatsapp || '',
@@ -88,10 +91,19 @@ export function ConfigPopup() {
     }))
   }
 
+  function handleChangeFont(font: string) {
+    setSelectedFont(font)
+    form.setValue('font', font)
+    setPageData((prev) => ({
+      ...prev,
+      font,
+    }))
+  }
+
   async function onSubmit(data: ConfigFormSchemaType) {
     setIsSubmitting(true)
 
-    const { title, slogan, theme, whatsapp, whatsapp_message } = data
+    const { title, slogan, theme, font, whatsapp, whatsapp_message } = data
 
     const editedContent = getSectionsEditedContent()
 
@@ -101,6 +113,7 @@ export function ConfigPopup() {
         title,
         slogan,
         theme,
+        font,
         whatsapp,
         whatsapp_message,
         page_structure: editedContent,
@@ -121,6 +134,7 @@ export function ConfigPopup() {
       title,
       slogan,
       theme,
+      font,
       whatsapp,
       whatsapp_message,
     }))
@@ -143,6 +157,8 @@ export function ConfigPopup() {
       setSelectedTheme(
         pageData.theme ? (pageData.theme as themeType) : themes[0]
       )
+      setSelectedFont(pageData.font ? pageData.font : fonts[0].name)
+      form.setValue('font', pageData.font ? pageData.font : fonts[0].name)
       form.setValue('theme', pageData.theme ? pageData.theme : themes[0])
     }
   }, [])
@@ -158,6 +174,7 @@ export function ConfigPopup() {
     )
     form.setValue('style', pageData?.style || 'modern-minimalist')
     form.setValue('theme', pageData?.theme || themes[0])
+    form.setValue('font', pageData?.font || 'Prompt')
   }, [pageData])
 
   useEffect(() => {
@@ -289,8 +306,8 @@ export function ConfigPopup() {
                         return (
                           <label
                             key={theme}
-                            className={`flex items-center justify-center w-full h-[62px] rounded-lg border border-black/20 data-[isSubmitting=true]:opacity-50 ${theme}`}
-                            data-isSubmitting={isSubmitting}
+                            className={`flex items-center justify-center w-full h-[62px] rounded-lg border border-black/20 data-[issubmitting=true]:opacity-50 cursor-pointer ${theme}`}
+                            data-issubmitting={isSubmitting}
                           >
                             <input
                               type='radio'
@@ -322,7 +339,32 @@ export function ConfigPopup() {
                   <AccordionContent className='text-black/70 text-start'>
                     <div>
                       <span className='text-sm'>Fontes</span>
-                      <div className='grid grid-cols-6 gap-2'></div>
+                      <div className='grid grid-cols-3 gap-2'>
+                        {fonts.map((font) => {
+                          return (
+                            <label
+                              key={font.name}
+                              className={`flex items-center justify-center w-full py-2 rounded-lg border border-black/20 data-[issubmitting=true]:opacity-50 data-[selected=true]:bg-gray-300 cursor-pointer`}
+                              data-issubmitting={isSubmitting}
+                              data-selected={selectedFont === font.name}
+                            >
+                              <input
+                                type='radio'
+                                name='font'
+                                value={font.name}
+                                className='hidden'
+                                onChange={() => handleChangeFont(font.name)}
+                                disabled={isSubmitting}
+                              />
+                              <span
+                                className={`text-easebg-500 ${font.font.className}`}
+                              >
+                                {font.name}
+                              </span>
+                            </label>
+                          )
+                        })}
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
