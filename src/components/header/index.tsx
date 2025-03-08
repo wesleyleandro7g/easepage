@@ -21,7 +21,7 @@ export function Header() {
   }
 
   return (
-    <header className='flex w-full justify-center border-b border-white/20 bg-easebg-500 p-4 md:px-12'>
+    <header className='flex w-full justify-center border-b border-white/20 bg-white p-4 md:px-12'>
       <div className='flex w-full max-w-7xl gap-8 justify-between items-center'>
         <div className='flex justify-center gap-8'>
           <Image

@@ -27,12 +27,14 @@ export function useSections() {
   function addNewSection(layout: string, variant: string) {
     if (focusedSection === null) return
 
-    const id = `${layout.toLowerCase()}-${crypto.randomUUID().split('-')[0]}`
+    const hash = crypto.randomUUID().split('-')[0]
 
-    const variantLayout = defaultSections.find((item) => item.name === layout)
+    const variantLayout = defaultSections(hash).find(
+      (item) => item.name === layout
+    )
 
     const newSection: SectionOptionType = {
-      id,
+      id: `${layout.toLowerCase()}-${hash}`,
       name: variantLayout?.name || 'Custom',
       variant: variant || 'Default',
       variantOptions: variantLayout?.variantOptions,
@@ -52,16 +54,6 @@ export function useSections() {
     setFocusedSection(newSection.id)
   }
 
-  function removeFocusedSection() {
-    if (focusedSection === null) return
-
-    const updatedSections = sections.filter(
-      (section) => section.id !== focusedSection
-    )
-    setSections(updatedSections)
-    setFocusedSection(null)
-  }
-
   function handleVariantChange(
     id: string,
     newVariant: string,
@@ -79,6 +71,16 @@ export function useSections() {
       return section
     })
     setSections(updatedSections)
+  }
+
+  function removeFocusedSection() {
+    if (focusedSection === null) return
+
+    const updatedSections = sections.filter(
+      (section) => section.id !== focusedSection
+    )
+    setSections(updatedSections)
+    setFocusedSection(null)
   }
 
   function handleSectionFocus(id: string) {

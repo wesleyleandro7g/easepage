@@ -28,6 +28,7 @@ interface SelectSectionLayoutProps {
 export function SelectSectionLayout(props: SelectSectionLayoutProps) {
   const { children, onLayoutSelect } = props
   const [isMobile, setIsMobile] = useState(false)
+  const hash = crypto.randomUUID().split('-')[0]
 
   useEffect(() => {
     const handleResize = () => {
@@ -43,7 +44,7 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
     <Drawer direction={isMobile ? 'bottom' : 'left'}>
       <DrawerTrigger>{children}</DrawerTrigger>
       <DrawerOverlay className='fixed inset-0 bg-black/40' />
-      <DrawerContent className='w-full h-auto md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
+      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
         <DrawerIndicator className='md:hidden' />
         <DrawerHeader>
           <DrawerTitle>Adicionar nova seção</DrawerTitle>
@@ -56,7 +57,7 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
         <div className='flex flex-col space-y-4 px-4'>
           <Accordion type='single' collapsible>
             <div className='flex flex-col space-y-4'>
-              {defaultSections.map((section) => {
+              {defaultSections(hash).map((section) => {
                 return (
                   <AccordionItem key={section.id} value={section.id}>
                     <AccordionTrigger className='flex text-left gap-2 hover:bg-gray-100 p-2 w-full rounded-lg decoration-transparent data-[state=open]:bg-gray-100 data-[state=open]:rounded-b-none'>
@@ -70,7 +71,7 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
                         />
                         <div>
                           <span className='font-semibold text-sm'>
-                            {section.name}
+                            {section.label}
                           </span>
                           <p className='text-xs'>{section.description}</p>
                         </div>
@@ -97,7 +98,7 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
                             </div>
                             <div>
                               <span className='font-semibold text-sm'>
-                                {variant.name}
+                                {variant.label}
                               </span>
                               <p className='text-xs'>{variant.description}</p>
                             </div>

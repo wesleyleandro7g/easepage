@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import {
   Drawer,
@@ -24,14 +24,25 @@ export function SelectSectionLayoutVariant(
   props: SelectSectionLayoutVariantProps
 ) {
   const { children, onLayoutSelect, layoutName } = props
+  const [isMobile, setIsMobile] = useState(false)
+  const hash = crypto.randomUUID().split('-')[0]
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
-    <Drawer direction='left'>
+    <Drawer direction={isMobile ? 'bottom' : 'left'}>
       <DrawerTrigger>{children}</DrawerTrigger>
-
       <DrawerOverlay className='fixed inset-0 bg-black/40' />
-      <DrawerContent className='w-full h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
-        <DrawerIndicator className='hidden' />
+      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
+        <DrawerIndicator className='md:hidden' />
         <DrawerHeader>
           <div>
             <DrawerTitle>Selecione o estilo da seção</DrawerTitle>
@@ -44,7 +55,7 @@ export function SelectSectionLayoutVariant(
 
         <div className='flex flex-col space-y-4 px-4'>
           <div className='flex flex-col space-y-4'>
-            {defaultSections
+            {defaultSections(hash)
               .find((sectionLayout) => sectionLayout.name === layoutName)
               ?.variants.map((variant) => (
                 <button

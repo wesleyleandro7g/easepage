@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
 import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
-import { ConfigOptions } from '@/components/builder/config-options'
+import { ConfigPopup } from '@/components/builder/config-popup'
 
 import { useSections } from '@/hooks/useSections'
 import { SectionOptionType } from '@/types/section'
@@ -40,7 +40,7 @@ export default function Editor() {
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
       >
         {sections.map((section: SectionOptionType) => {
-          const { component, id, variant, content, contentList } = section
+          const { component, id, name, variant, content, contentList } = section
 
           return (
             <div key={id}>
@@ -70,7 +70,7 @@ export default function Editor() {
                     </button>
                   </SelectSectionLayout>
                   <SelectSectionLayoutVariant
-                    layoutName='Hero'
+                    layoutName={name}
                     onLayoutSelect={(variant: string) => {
                       handleVariantChange(id, variant, contentList)
                     }}
@@ -102,7 +102,7 @@ export default function Editor() {
         })}
       </main>
 
-      <ConfigOptions />
+      <ConfigPopup />
     </div>
   )
 }

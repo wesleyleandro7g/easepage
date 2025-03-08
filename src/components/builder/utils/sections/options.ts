@@ -7,23 +7,25 @@ import { FeaturesVariants } from '../../sections/features'
 interface SectionProps {
   id: string
   content: ContentType
+  contentList?: string[]
   variant: string
 }
 
 export const Hero = (props: SectionProps): SectionOptionType => ({
   id: 'hero-' + props.id,
   name: 'Hero',
+  label: 'Seção Hero',
   variant: props.variant,
   variantOptions: ['Default', 'Centered'],
   description: 'Seção hero padrão',
   image: '/assets/sections-layout/hero-section-layout-default.svg',
   component: HeroVariants,
-  content: {
+  content: props.content || {
     ['title-hero-' + props.id]: '',
     ['description-hero-' + props.id]: '',
     ['cta-hero-' + props.id]: '',
   },
-  contentList: [
+  contentList: props.contentList || [
     'title-hero-' + props.id,
     'description-hero-' + props.id,
     'cta-hero-' + props.id,
@@ -32,6 +34,7 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
     {
       id: 'hero-section-default',
       name: 'Default',
+      label: 'Padrão',
       description: 'Seção hero padrão',
       component: 'HeroVariants',
       image: '/assets/sections-layout/hero-section-layout-default.svg',
@@ -39,6 +42,7 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
     {
       id: 'hero-section-centered',
       name: 'Centered',
+      label: 'Centralizada',
       description: 'Seção hero centralizada',
       component: 'HeroVariants',
       image: '/assets/sections-layout/hero-section-layout-centered.svg',
@@ -76,16 +80,17 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
 export const Features = (props: SectionProps): SectionOptionType => ({
   id: 'features-' + props.id,
   name: 'Features',
+  label: 'Seção Recursos',
   variant: props.variant,
   variantOptions: ['Default', 'Right'],
   description: 'Seção feature padrão',
   image: '/assets/sections-layout/features-section-layout-default.svg',
   component: FeaturesVariants,
-  content: {
+  content: props.content || {
     ['title-features-' + props.id]: '',
     ['description-features-' + props.id]: '',
   },
-  contentList: [
+  contentList: props.contentList || [
     'title-features-' + props.id,
     'description-features-' + props.id,
   ],
@@ -93,14 +98,16 @@ export const Features = (props: SectionProps): SectionOptionType => ({
     {
       id: 'features-section-default',
       name: 'Default',
-      description: 'Seção Features Padrão',
+      label: 'Padrão',
+      description: 'Seção de Recursos Padrão',
       component: 'FeaturesVariants',
       image: '/assets/sections-layout/features-section-layout-default.svg',
     },
     {
       id: 'features-section-right',
       name: 'Right',
-      description: 'Seção Features à Direita',
+      label: 'Alinhado à Direita',
+      description: 'Seção de Recursos Alinhado à Direita',
       component: 'FeaturesVariants',
       image: '/assets/sections-layout/features-section-layout-right.svg',
     },

@@ -49,7 +49,7 @@ import type { themeType } from '@/config/theme/theme'
 import { supabase } from '@/db/supabase/client'
 import Link from 'next/link'
 
-export function ConfigOptions() {
+export function ConfigPopup() {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
   const [isSubmitting, setIsSubmitting] = useState(false)
 

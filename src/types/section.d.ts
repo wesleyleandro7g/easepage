@@ -4,6 +4,7 @@ export type ContentType = { [x: string]: string | null | undefined }
 export type SectionOptionType = {
   id: string
   name: string
+  label?: string
   variant: string
   variantOptions?: string[]
   description: string
@@ -15,6 +16,7 @@ export type SectionOptionType = {
   variants: {
     id: string
     name: string
+    label?: string
     description: string
     component: any
     image: string
