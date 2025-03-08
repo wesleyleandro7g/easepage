@@ -1,15 +1,23 @@
 'use client'
 
 import { createElement, useEffect } from 'react'
-import { LayoutTemplate, Plus, Trash } from 'lucide-react'
+import {
+  LayoutDashboard,
+  Palette,
+  Plus,
+  Trash,
+  WandSparkles,
+  Link as LinkIcon,
+} from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 
-import { SelectSectionLayout } from '@/components/drawers/select-section-layout'
-import { SelectSectionLayoutVariant } from '@/components/drawers/select-section-layout-variant'
+import { AddSection } from '@/components/drawers/add-section'
+import { ChangeVariant } from '@/components/drawers/change-variant'
 import { ConfigPopup } from '@/components/builder/config-popup'
 
 import { useSections } from '@/hooks/useSections'
 import { SectionOptionType } from '@/types/section'
+import { ManageLinks } from '@/components/drawers/manage-links'
 
 export default function Editor() {
   const {
@@ -57,7 +65,7 @@ export default function Editor() {
 
               {focusedSection === id && (
                 <div className='flex w-full justify-end space-x-2 mt-4 mb-4'>
-                  <SelectSectionLayout
+                  <AddSection
                     onLayoutSelect={(layout: string, variant: string) => {
                       addNewSection(layout, variant)
                     }}
@@ -68,8 +76,8 @@ export default function Editor() {
                     >
                       <Plus />
                     </button>
-                  </SelectSectionLayout>
-                  <SelectSectionLayoutVariant
+                  </AddSection>
+                  <ChangeVariant
                     layoutName={name}
                     onLayoutSelect={(variant: string) => {
                       handleVariantChange(id, variant, contentList)
@@ -79,9 +87,34 @@ export default function Editor() {
                       type='button'
                       className='bg-black/10 rounded-md p-2 w-fit h-fit'
                     >
-                      <LayoutTemplate />
+                      <LayoutDashboard />
                     </button>
-                  </SelectSectionLayoutVariant>
+                  </ChangeVariant>
+
+                  <ManageLinks sectionId={id} buttonId={section.buttonId}>
+                    <button
+                      type='button'
+                      className='bg-black/10 rounded-md p-2 w-fit h-fit disabled:opacity-50 disabled:cursor-not-allowed'
+                    >
+                      <LinkIcon />
+                    </button>
+                  </ManageLinks>
+
+                  <button
+                    type='button'
+                    className='bg-black/10 rounded-md p-2 w-fit h-fit disabled:opacity-50 disabled:cursor-not-allowed'
+                    disabled
+                  >
+                    <WandSparkles />
+                  </button>
+
+                  <button
+                    type='button'
+                    className='bg-black/10 rounded-md p-2 w-fit h-fit disabled:opacity-50 disabled:cursor-not-allowed'
+                    disabled
+                  >
+                    <Palette />
+                  </button>
 
                   {sections.length > 1 && (
                     <button

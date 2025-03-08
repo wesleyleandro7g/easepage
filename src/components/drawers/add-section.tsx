@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
+import { X } from 'lucide-react'
 import Image from 'next/image'
 
 import {
@@ -20,14 +21,17 @@ import {
 
 import { defaultSections } from '../builder/utils/sections/default'
 
-interface SelectSectionLayoutProps {
+interface AddSectionProps {
   children: ReactNode
   onLayoutSelect: (layoutName: string, layoutVariant: string) => void
 }
 
-export function SelectSectionLayout(props: SelectSectionLayoutProps) {
+export function AddSection(props: AddSectionProps) {
   const { children, onLayoutSelect } = props
+
   const [isMobile, setIsMobile] = useState(false)
+  const [isOpened, setIsOpened] = useState(false)
+
   const hash = crypto.randomUUID().split('-')[0]
 
   useEffect(() => {
@@ -41,17 +45,29 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
   }, [])
 
   return (
-    <Drawer direction={isMobile ? 'bottom' : 'left'}>
-      <DrawerTrigger>{children}</DrawerTrigger>
+    <Drawer
+      direction={isMobile ? 'bottom' : 'left'}
+      open={isOpened}
+      onClose={() => setIsOpened(false)}
+    >
+      <DrawerTrigger onClick={() => setIsOpened(true)}>
+        {children}
+      </DrawerTrigger>
       <DrawerOverlay className='fixed inset-0 bg-black/40' />
       <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
-        <DrawerIndicator className='md:hidden' />
-        <DrawerHeader>
-          <DrawerTitle>Adicionar nova seção</DrawerTitle>
-          <DrawerDescription>
-            Não se preocupe, você pode alterar o estilo da seção a qualquer
-            momento.
+        <DrawerIndicator className='md:hidden bg-black/20' />
+        <DrawerHeader className='relative'>
+          <DrawerTitle className='text-start'>
+            Adicione uma Nova Seção
+          </DrawerTitle>
+          <DrawerDescription className='text-start text-black/60 font-light'>
+            A Seção é um bloco de conteúdo que pode ser adicionado à sua página.
+            Escolha o tipo de Seção e uma Variante para adicionar!
           </DrawerDescription>
+          <X
+            className='cursor-pointer absolute top-0 md:top-3 right-5'
+            onClick={() => setIsOpened(false)}
+          />
         </DrawerHeader>
 
         <div className='flex flex-col space-y-4 px-4'>
@@ -67,13 +83,15 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
                           alt='Section layout'
                           width={100}
                           height={100}
-                          className='rounded-md border border-gray-200'
+                          className='rounded-md border border-gray-200 '
                         />
-                        <div>
+                        <div className='w-full'>
                           <span className='font-semibold text-sm'>
                             {section.label}
                           </span>
-                          <p className='text-xs'>{section.description}</p>
+                          <p className='text-xs font-light text-black/60'>
+                            {section.description}
+                          </p>
                         </div>
                       </div>
                     </AccordionTrigger>
@@ -83,9 +101,10 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
                           <button
                             key={variant.id}
                             className='flex text-left gap-2 p-2 rounded-md'
-                            onClick={() =>
+                            onClick={() => {
                               onLayoutSelect(section.name, variant.name)
-                            }
+                              setIsOpened(false)
+                            }}
                           >
                             <div className=''>
                               <Image
@@ -100,7 +119,9 @@ export function SelectSectionLayout(props: SelectSectionLayoutProps) {
                               <span className='font-semibold text-sm'>
                                 {variant.label}
                               </span>
-                              <p className='text-xs'>{variant.description}</p>
+                              <p className='text-xs font-light text-black/60'>
+                                {variant.description}
+                              </p>
                             </div>
                           </button>
                         ))}

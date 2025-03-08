@@ -15,6 +15,8 @@ type ContentType = {
     name: string
     variant: string
     content: { [x: string]: string | null | undefined }
+    link?: string
+    buttonId?: string
     position: number
   }
 }
@@ -44,6 +46,7 @@ export function useSections() {
       description: variantLayout?.description || 'Custom section',
       image: variantLayout?.image || '',
       variants: variantLayout?.variants || [],
+      buttonId: variantLayout?.buttonId || '',
     }
 
     const updatedSections = [...sections]
@@ -52,6 +55,16 @@ export function useSections() {
     updatedSections.splice(insertIndex, 0, newSection)
     setSections(updatedSections)
     setFocusedSection(newSection.id)
+  }
+
+  function addSectionLink(id: string, link: string) {
+    const updatedSections = sections.map((section) => {
+      if (section.id === id) {
+        return { ...section, link }
+      }
+      return section
+    })
+    setSections(updatedSections)
   }
 
   function handleVariantChange(
@@ -110,6 +123,8 @@ export function useSections() {
           name: section.name,
           variant: section.variant,
           content: section.content,
+          link: section.link,
+          buttonId: section.buttonId,
           position: index + 1,
         },
       }
@@ -129,6 +144,8 @@ export function useSections() {
           name: section.name,
           variant: section.variant,
           content: section.content,
+          link: section.link,
+          buttonId: section.buttonId,
           position: index + 1,
         },
       }
@@ -173,6 +190,8 @@ export function useSections() {
 
       sectionDataValue[index].id = sectionId
       sectionDataValue[index].variant = section.variant
+      sectionDataValue[index].link = section.link
+      sectionDataValue[index].buttonId = section.buttonId
       sectionDataValue[index].content = section.content
       sectionDataValue[index].contentList = contentList
     })
@@ -199,6 +218,7 @@ export function useSections() {
     focusedSection,
     setFocusedSection,
     addNewSection,
+    addSectionLink,
     getSectionsEditedContent,
     removeFocusedSection,
     handleVariantChange,

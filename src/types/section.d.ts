@@ -10,6 +10,8 @@ export type SectionOptionType = {
   description: string
   image: string
   focused?: boolean
+  link?: string
+  buttonId?: string
   content: ContentType
   contentList: string[]
   component: any

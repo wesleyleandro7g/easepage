@@ -37,14 +37,14 @@ export function HeroCentered(props: SectionProps) {
         >
           {content?.['description-' + id]}
         </p>
-        <button
+        <span
           id={`cta-${id}`}
           contentEditable
           suppressContentEditableWarning
           className='px-8 py-3 mt-10 bg-black text-white rounded-xl'
         >
           {content?.['cta-' + id]}
-        </button>
+        </span>
       </div>
     </section>
   )

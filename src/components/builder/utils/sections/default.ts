@@ -16,6 +16,7 @@ const heroSection = (hash: string) =>
       'description-hero-' + hash,
       'cta-hero-' + hash,
     ],
+    buttonId: 'cta-hero-' + hash,
   })
 
 const featuresSection = (hash: string) =>

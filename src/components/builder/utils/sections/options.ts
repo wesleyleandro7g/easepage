@@ -9,6 +9,7 @@ interface SectionProps {
   content: ContentType
   contentList?: string[]
   variant: string
+  buttonId?: string
 }
 
 export const Hero = (props: SectionProps): SectionOptionType => ({
@@ -17,7 +18,8 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
   label: 'Seção Hero',
   variant: props.variant,
   variantOptions: ['Default', 'Centered'],
-  description: 'Seção hero padrão',
+  description:
+    'Geramente essa é a primeira seção de uma página. Ela é usada para chamar a atenção do visitante e direcioná-lo para a ação desejada.',
   image: '/assets/sections-layout/hero-section-layout-default.svg',
   component: HeroVariants,
   content: props.content || {
@@ -30,12 +32,13 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
     'description-hero-' + props.id,
     'cta-hero-' + props.id,
   ],
+  buttonId: props.buttonId || 'cta-hero-' + props.id,
   variants: [
     {
       id: 'hero-section-default',
       name: 'Default',
       label: 'Padrão',
-      description: 'Seção hero padrão',
+      description: 'Com imagem à direita',
       component: 'HeroVariants',
       image: '/assets/sections-layout/hero-section-layout-default.svg',
     },
@@ -43,7 +46,7 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
       id: 'hero-section-centered',
       name: 'Centered',
       label: 'Centralizada',
-      description: 'Seção hero centralizada',
+      description: 'Sem imagem e centralizada',
       component: 'HeroVariants',
       image: '/assets/sections-layout/hero-section-layout-centered.svg',
     },
@@ -83,7 +86,8 @@ export const Features = (props: SectionProps): SectionOptionType => ({
   label: 'Seção Recursos',
   variant: props.variant,
   variantOptions: ['Default', 'Right'],
-  description: 'Seção feature padrão',
+  description:
+    'Essa seção é ideal para destacar funcionalidades do seu produto, serviço ou empresa.',
   image: '/assets/sections-layout/features-section-layout-default.svg',
   component: FeaturesVariants,
   content: props.content || {
