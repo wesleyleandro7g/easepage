@@ -25,6 +25,8 @@ export function useSections() {
   const { sections, setSections, setPageData } = usePageContent()
 
   const [focusedSection, setFocusedSection] = useState<string | null>(null)
+  const [loadingSections, setLoadingSections] = useState<boolean>(true)
+  const [hasSectionError, setHasSectionError] = useState<boolean>(false)
 
   function addNewSection(layout: string, variant: string) {
     if (focusedSection === null) return
@@ -160,6 +162,8 @@ export function useSections() {
   }
 
   async function getSectionsFromDB(pageId: string) {
+    setLoadingSections(true)
+
     const { data } = await supabase
       .from('pages')
       .select()
@@ -167,6 +171,8 @@ export function useSections() {
       .single()
 
     if (!data || !data.page_structure) {
+      setLoadingSections(false)
+      setHasSectionError(true)
       return console.log('no data')
     }
 
@@ -211,6 +217,7 @@ export function useSections() {
       whatsapp_message: data.whatsapp_message,
     })
     setSections(sectionDataValue)
+    setLoadingSections(false)
   }
 
   return {
@@ -227,5 +234,7 @@ export function useSections() {
     convertSectionsInObject,
     convertSectionsInArray,
     getSectionsFromDB,
+    loadingSections,
+    hasSectionError,
   }
 }

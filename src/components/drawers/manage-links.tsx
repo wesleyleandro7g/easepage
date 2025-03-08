@@ -84,7 +84,7 @@ export function ManageLinks(props: ManageLinksProps) {
       </DrawerTrigger>
 
       <DrawerOverlay className='fixed inset-0 bg-black/40' />
-      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
+      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px] bg-white'>
         <DrawerIndicator className='md:hidden bg-black/20' />
         <DrawerHeader className='relative'>
           <DrawerTitle className='text-start'>

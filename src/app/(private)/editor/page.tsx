@@ -8,6 +8,7 @@ import {
   Trash,
   WandSparkles,
   Link as LinkIcon,
+  Zap,
 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 
@@ -18,6 +19,9 @@ import { ConfigPopup } from '@/components/builder/config-popup'
 import { useSections } from '@/hooks/useSections'
 import { SectionOptionType } from '@/types/section'
 import { ManageLinks } from '@/components/drawers/manage-links'
+import { usePageContent } from '@/context/page-context'
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
 
 export default function Editor() {
   const {
@@ -29,7 +33,10 @@ export default function Editor() {
     handleVariantChange,
     removeFocusedSection,
     getSectionsFromDB,
+    loadingSections,
+    hasSectionError,
   } = useSections()
+  const { pageData } = usePageContent()
 
   const searchParams = useSearchParams()
 
@@ -41,8 +48,46 @@ export default function Editor() {
     }
   }, [])
 
+  if (hasSectionError) {
+    return (
+      <div className='flex flex-col items-center justify-center w-full min-h-screen py-12 px-8 gap-2'>
+        <h1 className='text-7xl text-center font-bold tracking-tight animate__animated animate__bounceInUp'>
+          🥲
+        </h1>
+        <h1 className='text-4xl sm:text-4xl text-center font-bold leading-[2.6rem] tracking-tight animate__animated animate__bounceInUp gradient-text-white'>
+          Houve um erro ao carregar sua página!
+        </h1>
+        <p className='text-lg font-normal leading-5 text-center max-w-2xl animate__animated animate__bounceInUp text-white'>
+          Volte para o painel e tente novamente, se o erro persistir, entre em
+          contato com o suporte.
+        </p>
+        <div className='flex flex-col md:flex-row justify-between w-full md:w-fit gap-2 mt-8 animate__animated animate__bounceInUp'>
+          <Link href='/panel' className='w-full md:w-fit'>
+            <Button className='w-full md:w-fit bg-white text-black '>
+              Voltar para o painel
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  if (loadingSections) {
+    return (
+      <div className='w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
+        <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
+          <Zap className='w-20 h-20 text-white' />
+          <span className='text-lg text-white'>Carregando seu site...</span>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className='min-h-screen relative' onClick={handleSectionBlur}>
+    <div
+      className={`min-h-screen relative ${pageData.theme}`}
+      onClick={handleSectionBlur}
+    >
       <main
         className='pt-20 pb-16 text-center lg:text-left max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8'
         onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}

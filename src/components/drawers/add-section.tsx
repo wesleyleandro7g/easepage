@@ -54,7 +54,7 @@ export function AddSection(props: AddSectionProps) {
         {children}
       </DrawerTrigger>
       <DrawerOverlay className='fixed inset-0 bg-black/40' />
-      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px]'>
+      <DrawerContent className='w-full h-[90%] md:h-screen rounded-t-[10px] md:rounded-t-none md:w-[400px] bg-white'>
         <DrawerIndicator className='md:hidden bg-black/20' />
         <DrawerHeader className='relative'>
           <DrawerTitle className='text-start'>
@@ -75,8 +75,12 @@ export function AddSection(props: AddSectionProps) {
             <div className='flex flex-col space-y-4'>
               {defaultSections(hash).map((section) => {
                 return (
-                  <AccordionItem key={section.id} value={section.id}>
-                    <AccordionTrigger className='flex text-left gap-2 hover:bg-gray-100 p-2 w-full rounded-lg decoration-transparent data-[state=open]:bg-gray-100 data-[state=open]:rounded-b-none'>
+                  <AccordionItem
+                    key={section.id}
+                    value={section.id}
+                    className='border-gray-200 data-[state=open]:border-none'
+                  >
+                    <AccordionTrigger className='flex text-left gap-2 hover:bg-gray-100 p-2 w-full rounded-lg decoration-transparent data-[state=open]:bg-gray-200 data-[state=open]:rounded-b-none'>
                       <div className='flex gap-2'>
                         <Image
                           src={section.image}
@@ -96,7 +100,7 @@ export function AddSection(props: AddSectionProps) {
                       </div>
                     </AccordionTrigger>
                     <AccordionContent className='bg-gray-100 rounded-b-lg'>
-                      <div className='flex flex-col space-y-2 ml-4 pt-2'>
+                      <div className='flex flex-col space-y-2 ml-0 pt-2'>
                         {section.variants.map((variant) => (
                           <button
                             key={variant.id}
@@ -110,8 +114,8 @@ export function AddSection(props: AddSectionProps) {
                               <Image
                                 src={variant.image}
                                 alt='Variant layout'
-                                width={80}
-                                height={80}
+                                width={100}
+                                height={100}
                                 className='rounded-md border border-gray-200'
                               />
                             </div>

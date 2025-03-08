@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSearchParams, useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 import {
   Accordion,
@@ -43,11 +44,10 @@ import { usePageContent } from '@/context/page-context'
 import { useSections } from '@/hooks/useSections'
 import { useToast } from '@/hooks/use-toast'
 
-import { themes, setTheme } from '@/config/theme'
+import { themes } from '@/config/theme'
 import type { themeType } from '@/config/theme/theme'
 
 import { supabase } from '@/db/supabase/client'
-import Link from 'next/link'
 
 export function ConfigPopup() {
   const [selectedTheme, setSelectedTheme] = useState(themes[0])
@@ -56,7 +56,7 @@ export function ConfigPopup() {
   const router = useRouter()
   const { toast } = useToast()
 
-  const { pageData } = usePageContent()
+  const { pageData, setPageData } = usePageContent()
   const { getSectionsEditedContent } = useSections()
 
   const searchParams = useSearchParams()
@@ -79,9 +79,12 @@ export function ConfigPopup() {
   })
 
   function handleChangeTheme(theme: themeType) {
-    setTheme(theme)
     setSelectedTheme(theme)
     form.setValue('theme', theme)
+    setPageData((prev) => ({
+      ...prev,
+      theme,
+    }))
   }
 
   async function onSubmit(data: ConfigFormSchemaType) {
@@ -112,6 +115,15 @@ export function ConfigPopup() {
       })
     }
 
+    setPageData((prev) => ({
+      ...prev,
+      title,
+      slogan,
+      theme,
+      whatsapp,
+      whatsapp_message,
+    }))
+
     setIsSubmitting(false)
 
     if (pageData.is_active) {
@@ -127,11 +139,10 @@ export function ConfigPopup() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const storedTheme = localStorage.getItem('theme') as themeType
-
-      setTheme(storedTheme ? storedTheme : themes[0])
-      setSelectedTheme(storedTheme ? storedTheme : themes[0])
-      form.setValue('theme', storedTheme ? storedTheme : themes[0])
+      setSelectedTheme(
+        pageData.theme ? (pageData.theme as themeType) : themes[0]
+      )
+      form.setValue('theme', pageData.theme ? pageData.theme : themes[0])
     }
   }, [])
 
@@ -153,10 +164,10 @@ export function ConfigPopup() {
       <PopoverTrigger className='bg-gradient-to-bl from-[#F8ACFF] to-[#FFF95B] p-2 rounded-full shadow-xl fixed right-5 bottom-8'>
         <Zap className='w-8 h-8 fill-[#D9D9D9]' />
       </PopoverTrigger>
-      <PopoverContent className='w-screen max-w-full md:max-w-sm shadow-none mx-auto bg-transparent border-0'>
+      <PopoverContent className='w-screen max-w-full md:max-w-sm shadow-none mx-auto bg-transparent border-0 ring-0'>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border outline-none relative'>
+            <div className='flex flex-col gap-2 p-4 w-full bg-white shadow-xl rounded-lg border border-gray-200 outline-none relative'>
               <div className='flex flex-col gap-0'>
                 <h5 className='text-md text-black font-semibold'>
                   Configure o seu site
