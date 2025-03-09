@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Check } from 'lucide-react'
+import Link from 'next/link'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useUser } from '@/hooks/useUser'
@@ -114,6 +115,12 @@ export function PriceTable({ src }: PriceTableProps) {
           >
             Assinar agora
           </a>
+          <Link
+            href='/panel'
+            className='w-full text-white/40 underline text-sm -mt-2'
+          >
+            Acessar Painel
+          </Link>
           {/* <PaymentButton
             recurrence_type={period as 'yearly' | 'monthly' | 'quarterly'}
             page_id={page_id}

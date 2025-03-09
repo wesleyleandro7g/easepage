@@ -1,7 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { ExternalLink, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -11,13 +10,6 @@ import { useUser } from '@/hooks/useUser'
 export default function Panel() {
   const { user } = useUser()
   const { data, isLoading } = useQueryMyPages({ user_id: user?.id })
-  const [baseURL, setBaseURL] = useState('')
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setBaseURL(window.location.origin)
-    }
-  }, [])
 
   if (isLoading) {
     return (
@@ -40,12 +32,12 @@ export default function Panel() {
             Crie sites em um passe de mágica
           </span>
           <Link className='w-full md:w-fit' href='/new-project/briefing'>
-            <Button className='w-full md:w-fit bg-easebg-500 text-white border border-white/20'>
-              Criar novo site <Zap className='text-white size-6' />{' '}
+            <Button className='w-full md:w-fit bg-white text-black border border-white/20 hover:bg-white hover:text-black hover:opacity-80 transition-all duration-200'>
+              Criar novo site <Zap className='text-black size-6' />{' '}
             </Button>
           </Link>
         </div>
-        <div className='grid grid-1 md:grid-cols-3 gap-4 w-full'>
+        <div className='grid grid-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 w-full'>
           {data?.map((page) => (
             <Link key={page.id} href={`/project/${page.id}`}>
               <div
@@ -66,15 +58,9 @@ export default function Panel() {
                 <span className='text-white/80 text-sm font-light'>
                   {page.slogan}
                 </span>
-                <Link
-                  target='_blank'
-                  href={page.domain ? page.domain : `${baseURL}/${page.slug}`}
-                >
-                  <span className='flex flex-row gap-2 w-fit py-1 px-3 bg-white text-black rounded-full text-xs mt-2 justify-center items-center'>
-                    {page.domain ? page.domain : `/${page.slug}`}
-                    <ExternalLink className='size-3' />
-                  </span>
-                </Link>
+                <span className='flex flex-row gap-2 w-fit py-1 px-3 bg-white text-black rounded-full text-xs mt-2 justify-center items-center'>
+                  {page.domain ? page.domain : `/${page.slug}`}
+                </span>
               </div>
             </Link>
           ))}

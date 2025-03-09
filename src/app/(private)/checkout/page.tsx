@@ -2,24 +2,16 @@
 
 import 'animate.css'
 
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { ExternalLink, LayoutDashboard, Settings } from 'lucide-react'
+import Link from 'next/link'
+
+import { useQueryPageStatus } from '@/db/queries/query-page-status'
+import { Button } from '@/components/ui/button'
 
 import { PriceTable } from './components/price-table'
-import { useQueryPageStatus } from '@/db/queries/query-page-status'
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import {
-  ExternalLink,
-  Headset,
-  LayoutDashboard,
-  Palette,
-  Settings,
-  ShieldCheck,
-  Sparkles,
-  Trophy,
-  WandSparkles,
-} from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Bennefits } from './components/bennefits'
 
 export default function Checkout() {
   const searchParams = useSearchParams()
@@ -133,62 +125,18 @@ export default function Checkout() {
             autoridade. Dê o último passo e coloque sua presença online no ar!
           </p> */}
 
-          <ul className='text-start hidden md:flex flex-col gap-2'>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <ShieldCheck className='text-white w-5 h-5' /> 7 Dias de Garantia
-            </li>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <Headset className='text-white w-5 h-5' /> Suporte Prioritário
-              Direto no WhatsApp
-            </li>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <Trophy className='text-white w-5 h-5' /> Acesso às Atualizações
-              Futuras
-            </li>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <WandSparkles className='text-white w-5 h-5' /> Personalize seu
-              Site a Qualquer Momento
-            </li>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <Sparkles className='text-white w-5 h-5' /> Gere o Conteúdo com
-              Facilidade usando nossa IA
-            </li>
-            <li className='text-white text-md inline-flex items-center gap-2'>
-              <Palette className='text-white w-5 h-5' /> Temas Profissionais e
-              Exclusivos
-            </li>
-          </ul>
+          <div className='hidden md:flex'>
+            <Bennefits />
+          </div>
         </div>
 
         <div className='w-full md:max-w-sm'>
           <PriceTable src={page_id} />
         </div>
 
-        <ul className='text-start flex md:hidden flex-col gap-2'>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <ShieldCheck className='text-white w-5 h-5' /> 7 Dias de Garantia
-          </li>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <Headset className='text-white w-5 h-5' /> Suporte Prioritário
-            Direto no WhatsApp
-          </li>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <Trophy className='text-white w-5 h-5' /> Acesso às Atualizações
-            Futuras
-          </li>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <WandSparkles className='text-white w-5 h-5' /> Personalize seu Site
-            a Qualquer Momento
-          </li>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <Sparkles className='text-white w-5 h-5' /> Gere o Conteúdo com
-            Facilidade usando nossa IA
-          </li>
-          <li className='text-white text-md inline-flex items-center gap-2'>
-            <Palette className='text-white w-5 h-5' /> Temas Profissionais e
-            Exclusivos
-          </li>
-        </ul>
+        <div className='flex md:hidden'>
+          <Bennefits />
+        </div>
       </div>
     </div>
   )
