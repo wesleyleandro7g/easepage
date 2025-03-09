@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import type { ContentType, SectionOptionType } from '@/types/section'
-import { HeroVariants } from '../../sections'
+import { HeroVariants, HeroBuildVariants } from '../../sections/hero'
 import { FeaturesVariants } from '../../sections/features'
 
 interface SectionProps {
@@ -10,6 +10,7 @@ interface SectionProps {
   contentList?: string[]
   variant: string
   buttonId?: string
+  isBuild?: boolean
 }
 
 export const Hero = (props: SectionProps): SectionOptionType => ({
@@ -21,7 +22,7 @@ export const Hero = (props: SectionProps): SectionOptionType => ({
   description:
     'Geramente essa é a primeira seção de uma página. Ela é usada para chamar a atenção do visitante e direcioná-lo para a ação desejada.',
   image: '/assets/sections-layout/hero-section-layout-default.svg',
-  component: HeroVariants,
+  component: props.isBuild ? HeroBuildVariants : HeroVariants,
   content: props.content || {
     ['title-hero-' + props.id]: '',
     ['description-hero-' + props.id]: '',

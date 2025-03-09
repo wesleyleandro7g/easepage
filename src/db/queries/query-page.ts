@@ -2,8 +2,10 @@
 
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/db/supabase/client'
+import { SectionOptionType } from '@/types/section'
+import { sectionOptions } from '@/components/builder/utils/sections/options'
 
-interface useFetchPageProps {
+interface useQueryPageBySlugProps {
   slug?: string
 }
 
@@ -11,7 +13,7 @@ interface useQueryPageById {
   pageId?: string
 }
 
-export function useFetchPage({ slug }: useFetchPageProps) {
+export function useQueryPageBySlug({ slug }: useQueryPageBySlugProps) {
   return useQuery({
     queryKey: ['page', slug],
     queryFn: async () => {
@@ -19,22 +21,61 @@ export function useFetchPage({ slug }: useFetchPageProps) {
         return
       }
 
-      const data = await supabase.from('pages').select('*').eq('slug', slug)
+      const { data, error } = await supabase
+        .from('pages')
+        .select('*')
+        .eq('slug', slug)
+        .single()
 
-      if (data.error) {
-        throw new Error(data.error.message)
+      if (error) {
+        throw new Error(error.message)
       }
 
-      if (data.data?.[0]) {
-        const { page_structure, ...rest } = data.data[0]
+      const sectionDataValue: SectionOptionType[] = []
+      const dataContent = data.page_structure
 
-        return {
-          ...rest,
-          page_structure: JSON.parse(page_structure),
-        }
+      Object.keys(dataContent).forEach((sectionId, index) => {
+        const section = dataContent[sectionId]
+        const sectionOption =
+          sectionOptions[section.name as keyof typeof sectionOptions]
+
+        sectionDataValue.push(
+          sectionOption({
+            id: '',
+            variant: section.variant,
+            content: {},
+            isBuild: true,
+          })
+        )
+
+        const contentList = Object.keys(section.content)
+
+        sectionDataValue[index].id = sectionId
+        sectionDataValue[index].variant = section.variant
+        sectionDataValue[index].link = section.link
+        sectionDataValue[index].buttonId = section.buttonId
+        sectionDataValue[index].content = section.content
+        sectionDataValue[index].contentList = contentList
+      })
+
+      const pageData = {
+        title: data.title,
+        description: data.description,
+        theme: data.theme,
+        font: data.font,
+        style: data.style,
+        slug: data.slug,
+        type: data.type,
+        slogan: data.slogan,
+        is_active: data.is_active,
+        id: data.id,
+        user_id: data.user_id,
+        whatsapp: data.whatsapp,
+        whatsapp_message: data.whatsapp_message,
+        sections: sectionDataValue,
       }
 
-      return data.data?.[0]
+      return pageData
     },
   })
 }

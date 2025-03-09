@@ -1,68 +1,77 @@
 'use client'
 
-import { useEffect } from 'react'
-import Link from 'next/link'
+import { createElement, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 
-import { useFetchPage } from '@/db/queries/query-page'
+import { useQueryPageBySlug } from '@/db/queries/query-page'
+import { fonts } from '@/config/fonts'
 
 export default function PageEditor() {
   const { slug } = useParams()
 
-  const { data, isLoading, isError } = useFetchPage({ slug: slug as string })
+  const { data, isLoading, isError, error } = useQueryPageBySlug({
+    slug: slug as string,
+  })
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (data?.title) {
+        document.title = `${data.title} ${
+          data?.slogan ? `| ${data.slogan}` : ''
+        }`
+      }
+
       if (data?.theme) {
         document.body.className = `antialiased ${data.theme}`
+      }
+
+      if (data?.font) {
+        const font = fonts.find((font) => font.name === data.font)?.font
+          .className
+
+        if (font) {
+          document.body.className = `${document.body.className} ${font}`
+        }
       }
     }
   }, [data])
 
   if (isLoading) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div>carregando...</div>
+      <div className='w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
+        <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
+          <span className='text-lg text-white'>Carregando...</span>
+        </div>
       </div>
     )
   }
 
   if (isError) {
     return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div>Erro ao carregar a página</div>
+      <div className='w-full min-h-screen flex flex-col items-center justify-center gap-4 p-8 max-w-3xl mx-auto'>
+        <div className='flex flex-col items-center justify-center animate-pulse gap-2'>
+          <span className='text-lg text-white'>
+            Ooops! Houve um erro ao carregar a página.
+          </span>
+          <span className='text-md text-white'>{error.name}</span>
+          <span className='text-sm text-white'>{error.message}</span>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className='min-h-screen'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
-        <main className='pt-20 pb-16 text-center lg:text-left'>
-          <div className='flex flex-col gap-3 max-w-4xl text-left'>
-            <h1 className='text-5xl sm:text-6xl font-bold leading-[3rem] tracking-tight animate__animated animate__bounceInUp text-headline'>
-              {data?.page_structure?.headline}
-            </h1>
-            <p className='text-lg font-normal text-subheadline max-w-2xl animate__animated animate__bounceInUp'>
-              {data?.page_structure?.subheadline}
-            </p>
-            <div className='mt-10 flex flex-col sm:flex-row items-start gap-3'>
-              <Link
-                href={data?.page_structure?.heroButtonLink}
-                className='w-full animate__animated animate__bounceInUp'
-                target='_blank'
-              >
-                <button className='flex items-center justify-center gap-2 text-lg px-8 py-3 rounded-full w-full bg-black text-white shadow-xl hover:bg-black/90 animate__animated animate__pulse animate__infinite'>
-                  {data?.page_structure?.heroButtonText}
-                </button>
-              </Link>
-              <p className='text-sm text-gray-600'>
-                +500 pessoas amaram este produto
-              </p>
-            </div>
-          </div>
-        </main>
-      </div>
-    </div>
+    <main className='min-h-screen pt-20 pb-16 text-center lg:text-left max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8'>
+      {data?.sections.map((section) => {
+        const { component, id, variant, content, link } = section
+
+        return createElement(component[variant], {
+          id,
+          variant,
+          content,
+          link,
+        })
+      })}
+    </main>
   )
 }

@@ -1,6 +1,5 @@
 import { sectionFocusStyle } from '@/components/builder/utils/section-focus-style'
 import { cn } from '@/lib/utils'
-import Image from 'next/image'
 
 interface SectionProps {
   id: string
@@ -9,7 +8,7 @@ interface SectionProps {
   content?: { [x: string]: string | null | undefined }
 }
 
-export function HeroDefault(props: SectionProps) {
+export function HeroCenteredBuild(props: SectionProps) {
   const { focused = false, onClick, content, id } = props
 
   return (
@@ -17,11 +16,11 @@ export function HeroDefault(props: SectionProps) {
       data-focused={focused}
       className={cn(
         sectionFocusStyle,
-        'flex w-full text-left min-h-[60vh] gap-4 py-12 px-4'
+        'flex flex-col justify-center items-center w-full min-h-[40vh] py-12 px-4'
       )}
       onClick={onClick}
     >
-      <div className='flex flex-1 flex-col items-start space-y-4'>
+      <div className='flex flex-1 flex-col justify-center items-center text-center gap-0 max-w-[800px]'>
         <h1
           id={`title-${id}`}
           contentEditable
@@ -34,21 +33,18 @@ export function HeroDefault(props: SectionProps) {
           id={`description-${id}`}
           contentEditable
           suppressContentEditableWarning
-          className='outline-none mt-4 text-lg text-gray-600'
+          className='outline-none mt-4 text-lg text-gray-600 max-w-[600px]'
         >
           {content?.['description-' + id]}
         </p>
-        <a
+        <span
           id={`cta-${id}`}
           contentEditable
           suppressContentEditableWarning
           className='px-8 py-3 mt-10 bg-black text-white rounded-xl'
         >
           {content?.['cta-' + id]}
-        </a>
-      </div>
-      <div className='flex flex-1 relative'>
-        <Image src='/img-mock1.svg' alt='Hero Section' fill />
+        </span>
       </div>
     </section>
   )
