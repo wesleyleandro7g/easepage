@@ -66,6 +66,7 @@ export function ConfigPopup() {
 
   const pageId = searchParams.get('page_id')
   const isNewProject = searchParams.get('is_new')
+  const isEditProject = searchParams.get('is_edit')
 
   const form = useForm({
     resolver: zodResolver(configFormSchema),
@@ -238,7 +239,7 @@ export function ConfigPopup() {
                   </AccordionTrigger>
                   <AccordionContent className='text-black/70 text-start'>
                     <div>
-                      <div className='space-y-4 max-w-3xl w-full text-start animate__animated animate__fadeInUp'>
+                      <div className='space-y-4 max-w-3xl w-full text-start'>
                         <FormField
                           control={form?.control}
                           name='title'
@@ -380,7 +381,7 @@ export function ConfigPopup() {
                   </AccordionTrigger>
                   <AccordionContent className='text-black/70 text-start'>
                     <div>
-                      <div className='space-y-4 max-w-3xl w-full text-start animate__animated animate__fadeInUp'>
+                      <div className='space-y-4 max-w-3xl w-full text-start'>
                         <FormField
                           control={form?.control}
                           name='whatsapp'
@@ -447,7 +448,7 @@ export function ConfigPopup() {
                   data-issubmitting={isSubmitting}
                 />
               </Button>
-              {isNewProject && (
+              {(isNewProject || isEditProject) && (
                 <Link href='/panel'>
                   <Button
                     className='w-full gap-2 data-[issubmitting=true]:animate-pulse bg-transparent text-black border border-black hover:bg-transparent hover:text-black'

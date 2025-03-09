@@ -17,7 +17,7 @@ export default {
     extend: {
       colors: {
         easebg: {
-          500: '#191C1F',
+          500: '#111111',
           800: '#030114',
         },
       },

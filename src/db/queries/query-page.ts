@@ -7,8 +7,8 @@ interface useFetchPageProps {
   slug?: string
 }
 
-interface useFetchPageByIdProps {
-  id?: string
+interface useQueryPageById {
+  pageId?: string
 }
 
 export function useFetchPage({ slug }: useFetchPageProps) {
@@ -39,34 +39,25 @@ export function useFetchPage({ slug }: useFetchPageProps) {
   })
 }
 
-export function useFetchPageById({ id }: useFetchPageByIdProps) {
+export function useQueryPageById({ pageId }: useQueryPageById) {
   return useQuery({
-    queryKey: ['page-id', id],
+    queryKey: ['page-id', pageId],
     queryFn: async () => {
-      if (!id) {
+      if (!pageId) {
         return
       }
 
       const data = await supabase
         .from('pages')
         .select('*')
-        .eq('id', id)
+        .eq('id', pageId)
         .single()
 
       if (data.error) {
         throw new Error(data.error.message)
       }
 
-      if (data.data) {
-        const { page_structure, ...rest } = data.data
-
-        return {
-          ...rest,
-          page_structure: JSON.parse(page_structure),
-        }
-      }
-
-      return data.data?.[0]
+      return data.data
     },
   })
 }
