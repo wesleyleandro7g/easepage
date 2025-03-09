@@ -29,17 +29,17 @@ const bennefits = [
 ]
 
 interface PriceTableProps {
-  src?: string | null
+  pageId?: string | null
 }
 
-export function PriceTable({ src }: PriceTableProps) {
+export function PriceTable({ pageId }: PriceTableProps) {
   const { user } = useUser()
 
   const [period, setPeriod] = useState<'yearly' | 'monthly' | 'quarterly'>(
     'yearly'
   )
 
-  const prepolutated = `?email=${user?.email}&name=${user?.user_metadata.first_name}&phone=${user?.user_metadata.phone}&src=${src}`
+  const prepolutated = `?prefilled_email=${user?.email}&locale=pt&client_reference_id=${pageId}`
 
   return (
     <Tabs

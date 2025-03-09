@@ -131,7 +131,7 @@ export default function Checkout() {
         </div>
 
         <div className='w-full md:max-w-sm'>
-          <PriceTable src={page_id} />
+          <PriceTable pageId={page_id} />
         </div>
 
         <div className='flex md:hidden'>
