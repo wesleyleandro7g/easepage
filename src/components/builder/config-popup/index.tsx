@@ -449,7 +449,7 @@ export function ConfigPopup() {
                 />
               </Button>
               {(isNewProject || isEditProject) && (
-                <Link href='/panel'>
+                <Link href={`project/${pageData.id}`}>
                   <Button
                     className='w-full gap-2 data-[issubmitting=true]:animate-pulse bg-transparent text-black border border-black hover:bg-transparent hover:text-black'
                     data-issubmitting={isSubmitting}

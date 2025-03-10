@@ -9,7 +9,7 @@ export default function Layout({
   return (
     <>
       <Suspense>
-        <div className='min-h-screen sunrise'>{children}</div>
+        <div className='min-h-screen'>{children}</div>
       </Suspense>
       <Script src='https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js' />
     </>
